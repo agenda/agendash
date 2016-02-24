@@ -34,16 +34,12 @@
 }
 
 #details-pane {
-  display: none;
   padding: 10px;
   flex: 1 0 370px;
   order: 2;
   box-shadow: 0px -2px 3px 0px #eee;
   margin-top: 10px;
   overflow: scroll;
-}
-#details-pane.active {
-  display: block;
 }
 
 @media (min-width: 1200px) {
@@ -74,8 +70,8 @@
   padding: 0 10px 20px;
 }
 
-.table-tbody-striped>tbody:nth-of-type(odd) {
-  background-color: #f9f9f9;
+#job-list tr {
+  cursor: pointer;
 }
 
 .sub-header {

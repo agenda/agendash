@@ -14,7 +14,12 @@ $(function () {
     model: OverviewItemModel
   })
 
-  var JobItemModel = Backbone.Model.extend({})
+  var JobItemModel = Backbone.Model.extend({
+    idAttribute: '_id',
+    defaults: {
+      selected: false
+    }
+  })
   var JobItemCollection = Backbone.Collection.extend({
     model: JobItemModel
   })
@@ -80,19 +85,21 @@ $(function () {
 
   var JobItemView = Backbone.View.extend({
     model: JobItemModel,
+    tagName: 'tr',
     template: _.template($('#job-item-template').html()),
     initialize: function () {
       _.bindAll(this, 'render', 'handleClick')
+      this.listenTo(this.model, 'change', this.render)
     },
     events: {
       'click': 'handleClick'
     },
     handleClick: function (e) {
-      App.trigger('showJobDetails', this.model)
+      this.model.set('selected', !this.model.get('selected'))
     },
     render: function () {
-      var html = this.template(this.model.toJSON())
-      this.setElement(html)
+      this.$el.html(this.template(this.model.toJSON()))
+      this.$el.toggleClass('active', this.model.get('selected'))
       return this
     }
   })
@@ -143,11 +150,35 @@ $(function () {
     }
   })
 
-  var JobDetailsView = Backbone.View.extend({
+  var JobDetailsPaneView = Backbone.View.extend({
     el: '#details-pane',
-    jobItemDetailsTemplate: _.template($('#job-item-details-template').html()),
+    initialize: function (options) {
+      this.jobItems = options.jobItems
+      _.bindAll(this, 'render')
+      this.listenTo(this.jobItems, 'update', this.render)
+      this.listenTo(this.jobItems, 'change', this.render)
+      this.render()
+    },
+    render: function () {
+      var selectedJobs = this.jobItems
+      .where({selected: true})
+      .map(function (jobItem) {
+        var jobDetailsView = new JobDetailsView({
+          model: jobItem
+        })
+        return jobDetailsView.render().$el
+      })
+      this.$el.empty().toggle(!!selectedJobs.length).append(selectedJobs)
+      return this
+    }
+  })
+
+  var JobDetailsView = Backbone.View.extend({
+    model: JobItemModel,
+    template: _.template($('#job-item-details-template').html()),
     initialize: function () {
-      _.bindAll(this, 'showJob', 'close', 'requeueJob')
+      _.bindAll(this, 'render', 'close', 'requeueJob', 'allowDeleteJob', 'deleteJob')
+      this.listenTo(this.model, 'change', this.render)
     },
     events: {
       'click .close': 'close',
@@ -158,7 +189,6 @@ $(function () {
     showJob: function (jobItem) {
       this.model = jobItem
       this.$el.empty().append(this.jobItemDetailsTemplate(jobItem.toJSON()))
-      this.$el.addClass('active')
     },
     requeueJob: function (e) {
       $.post('api/job/' + this.model.get('job')._id + '/requeue')
@@ -171,12 +201,15 @@ $(function () {
     deleteJob: function (e) {
       $.post('api/job/' + this.model.get('job')._id + '/delete')
       .success(function () {
-        this.$el.removeClass('active')
         App.trigger('refreshData')
-      }.bind(this))
+      })
     },
     close: function () {
-      this.$el.removeClass('active')
+      this.model.set('selected', false)
+    },
+    render: function () {
+      this.$el.html(this.template(this.model.toJSON()))
+      return this
     }
   })
 
@@ -208,7 +241,9 @@ $(function () {
       this.jobListView = new JobListView({
         jobItems: this.jobItems
       })
-      this.jobDetailsView = new JobDetailsView()
+      this.jobDetailsPaneView = new JobDetailsPaneView({
+        jobItems: this.jobItems
+      })
 
       this.listenTo(this, 'requestChange', this.handleRequestChange)
       this.listenTo(this, 'showJobDetails', this.handleShowJobDetails)

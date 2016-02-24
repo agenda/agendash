@@ -34,7 +34,7 @@
             <small class="active-state"></small>
           </h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table">
               <thead>
                 <tr>
                   <th>Status</th>
@@ -79,22 +79,20 @@
     </script>
 
     <script type="text/template" id="job-item-template">
-      <tr role="button">
-        <td>
-          <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
-          <% if (queued) { %><span class="label label-info">Queued</span><% } %>
-          <% if (running) { %><span class="label label-warning">Running</span><% } %>
-          <% if (completed) { %><span class="label label-success">Completed</span><% } %>
-          <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
-        </td>
-        <td>
-          <%- job.name %>
-        </td>
-        <td><% if (job.lastRunAt) { %><%- moment(job.lastRunAt).fromNow() %><% } %></td>
-        <td><% if (job.nextRunAt) { %><%- moment(job.nextRunAt).fromNow() %><% } %></td>
-        <td><% if (job.lastFinishedAt) { %><%- moment(job.lastFinishedAt).fromNow() %><% } %></td>
-        <td><% if (job.lockedAt) { %><%- moment(job.lockedAt).fromNow() %><% } %></td>
-      </tr>
+      <td>
+        <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
+        <% if (queued) { %><span class="label label-info">Queued</span><% } %>
+        <% if (running) { %><span class="label label-warning">Running</span><% } %>
+        <% if (completed) { %><span class="label label-success">Completed</span><% } %>
+        <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
+      </td>
+      <td>
+        <%- job.name %>
+      </td>
+      <td><% if (job.lastRunAt) { %><%- moment(job.lastRunAt).fromNow() %><% } %></td>
+      <td><% if (job.nextRunAt) { %><%- moment(job.nextRunAt).fromNow() %><% } %></td>
+      <td><% if (job.lastFinishedAt) { %><%- moment(job.lastFinishedAt).fromNow() %><% } %></td>
+      <td><% if (job.lockedAt) { %><%- moment(job.lockedAt).fromNow() %><% } %></td>
     </script>
 
     <script type="text/template" id="job-item-details-template">

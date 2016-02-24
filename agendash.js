@@ -172,6 +172,7 @@ function getJobs (job, state, callback) {
     }},
     {$project: {
       job: '$job',
+      _id: '$job._id',
       running: {$and: [
         '$lastRunAt',
         {$gt: [ '$lastRunAt', '$lastFinishedAt' ]}
