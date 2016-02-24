@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var program = require('commander');
+var program = require('commander')
 program
   .option('-d, --db <db>', '[required] Mongo connection string, same as Agenda connection string')
   .option('-c, --collection <collection>', '[optional] Mongo collection, same as Agenda collection name, default agendaJobs', 'agendaJobs')

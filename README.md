@@ -25,13 +25,13 @@ npm install --save agendash
 Agendash comes with a standalone Express app which you can use like this:
 
 ```bash
-./bin/agendash-standalone --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
 ```
 
 or like this, for default collection `agendaJobs` and default port `3000`:
 
 ```bash
-./bin/agendash-standalone --db=mongodb://localhost/agendaDb
+./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb
 ```
 
 ### Middleware usage
