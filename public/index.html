@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Agendash</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="app">
+      <div id="sidebar">
+        <div class="sidebar-header">
+          <h1 class="page-title">Agendash</h1>
+          <div class="form-group">
+            <label for="overviewFilter">Filter by name</label>
+            <input type="text" class="overview-filter form-control">
+          </div>
+          <div class="form-group">
+            <label for="overviewFilter">Refresh interval (seconds)</label>
+            <input type="number" value="2" class="refresh-interval form-control">
+          </div>
+        </div>
+        <div id="job-overview-list"></div>
+      </div>
+      <div id="main-pane">
+        <div id="list-pane">
+          <h2 id="active-title" class="sub-header">
+            <span class="active-job"></span>
+            <small class="active-state"></small>
+          </h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Name</th>
+                  <th>Last run started</th>
+                  <th>Next run starts</th>
+                  <th>Last finished</th>
+                  <th>Locked</th>
+                </tr>
+              </thead>
+              <tbody id="job-list"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="details-pane"></div>
+      </div>
+    </div>
+
+    <script type="text/template" id="overview-item-template">
+      <ul class="nav nav-sidebar">
+        <li data-state="">
+          <a class="text-muted" href="#">
+            <strong><%- displayName %></strong>
+            <span class="label label-default pull-right"><%- total %></span>
+            <div class="progress">
+              <div class="progress-bar progress-bar-info" style="flex-grow: <%- Math.log(1 + scheduled) %>"></div>
+              <div class="progress-bar progress-bar-primary" style="flex-grow: <%- Math.log(1 + queued) %>"></div>
+              <div class="progress-bar progress-bar-warning" style="flex-grow: <%- Math.log(1 + running) %>"></div>
+              <div class="progress-bar progress-bar-success" style="flex-grow: <%- Math.log(1 + completed) %>"></div>
+              <div class="progress-bar progress-bar-danger" style="flex-grow: <%- Math.log(1 + failed) %>"></div>
+            </div>
+          </a>
+        </li>
+        <ul class="nav nav-sidebar">
+          <li data-state="scheduled"><a class="text-info" href="#">Scheduled<span class="label label-info pull-right"><%- scheduled %></span></a></li>
+          <li data-state="queued"><a class="text-primary" href="#">Queued<span class="label label-primary pull-right"><%- queued %></span></a></li>
+          <li data-state="running"><a class="text-warning" href="#">Running<span class="label label-warning pull-right"><%- running %></span></a></li>
+          <li data-state="completed"><a class="text-success" href="#">Completed<span class="label label-success pull-right"><%- completed %></span></a></li>
+          <li data-state="failed"><a class="text-danger" href="#">Failed<span class="label label-danger pull-right"><%- failed %></span></a></li>
+        </ul>
+      </ul>
+    </script>
+
+    <script type="text/template" id="job-item-template">
+      <tr role="button">
+        <td>
+          <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
+          <% if (queued) { %><span class="label label-info">Queued</span><% } %>
+          <% if (running) { %><span class="label label-warning">Running</span><% } %>
+          <% if (completed) { %><span class="label label-success">Completed</span><% } %>
+          <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
+        </td>
+        <td>
+          <%- job.name %>
+        </td>
+        <td><% if (job.lastRunAt) { %><%- moment(job.lastRunAt).fromNow() %><% } %></td>
+        <td><% if (job.nextRunAt) { %><%- moment(job.nextRunAt).fromNow() %><% } %></td>
+        <td><% if (job.lastFinishedAt) { %><%- moment(job.lastFinishedAt).fromNow() %><% } %></td>
+        <td><% if (job.lockedAt) { %><%- moment(job.lockedAt).fromNow() %><% } %></td>
+      </tr>
+    </script>
+
+    <script type="text/template" id="job-item-details-template">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="panel-title"><%- job.name %></h3>
+          <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
+          <% if (queued) { %><span class="label label-info">Queued</span><% } %>
+          <% if (running) { %><span class="label label-warning">Running</span><% } %>
+          <% if (completed) { %><span class="label label-success">Completed</span><% } %>
+          <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
+        </div>
+        <div class="panel-body">
+          <% if (job.lastRunAt) { %><p>Last run <%- moment(job.lastRunAt).format('ll LTS') %></p><% } %>
+          <% if (job.nextRunAt) { %><p>Next run <%- moment(job.nextRunAt).format('ll LTS') %></p><% } %>
+          <% if (job.lastFinishedAt) { %><p>Last finished <%- moment(job.lastFinishedAt).format('ll LTS') %></p><% } %>
+          <% if (job.lockedAt) { %><p>Locked <%- moment(job.lockedAt).format('ll LTS') %></p><% } %>
+
+          <strong>Job data</strong>
+          <pre><%- JSON.stringify(job.data, null, 2) %></pre>
+          <% if (failed) { %>
+            <strong>Failure reason</strong>
+            <pre><%- JSON.stringify(job.failReason || '', null, 2) %></pre>
+          <% } %>
+        </div>
+        <div class="panel-footer clearfix">
+          <button type="button" class="btn btn-danger btn-sm" data-action="requeue">Requeue</button>
+          <button type="button" class="btn btn-danger btn-sm pull-right" data-action="delete">Delete permanently</button>
+        </div>
+      </div>
+    </script>
+
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/lodash.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/backbone-min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/main.js"></script>
+
+  </body>
+</html>

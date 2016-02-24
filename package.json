@@ -1,0 +1,30 @@
+{
+  "name": "agendash",
+  "version": "0.0.1",
+  "description": "Agenda Dashboard",
+  "main": "agendash.js",
+  "bin": "agendash-standalone.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "agenda"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeframbach/agendash.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joeframbach/agendash/issues"
+  },
+  "homepage": "https://github.com/joeframbach/agendash#readme",
+  "license": "MIT",
+  "dependencies": {
+    "agenda": ">0.7.0",
+    "async": "^1.0.0",
+    "body-parser": "^1.15.0",
+    "commander": "^2.9.0",
+    "express": "^4.0.0",
+    "mongodb": "^2.0.0"
+  }
+}
