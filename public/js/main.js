@@ -2,7 +2,7 @@
 $(function () {
   var CurrentRequestModel = Backbone.Model.extend({
     defaults: {
-      refreshInterval: 10000,
+      refreshInterval: 2000,
       overviewFilterRegex: /.*/
     }
   })

@@ -2,6 +2,18 @@
 
 A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
 
+---
+
+### Screenshots
+
+![Auto-refresh list of jobs](all-jobs.png)
+
+---
+
+![See job details, requeue or delete jobs](job-details.png)
+
+---
+
 ### Install
 
 ```

@@ -47,7 +47,7 @@
 }
 
 @media (min-width: 1200px) {
-  #main {
+  #main-pane {
     flex-direction: row;
   }
   #details-pane {
