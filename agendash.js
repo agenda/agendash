@@ -6,8 +6,8 @@ module.exports = function (_agenda) {
   agenda = _agenda
   return {
     api: api,
-    requeueJob: requeueJob,
-    deleteJob: deleteJob
+    requeueJobs: requeueJobs,
+    deleteJobs: deleteJobs
   }
 }
 
@@ -30,21 +30,24 @@ function api (job, state, callback) {
   })
 }
 
-function requeueJob (jobId, callback) {
+function requeueJobs (jobIds, callback) {
   if (!agenda) {
     return callback('Agenda instance is not ready')
   }
   try {
     agenda._collection
-    .find({_id: new ObjectId(jobId)})
-    .limit(1)
-    .next(function (err, job) {
-      if (err || !job) {
-        return callback('Job not found')
+    .find({_id: {$in: jobIds.map((jobId) => new ObjectId(jobId))}})
+    .toArray(function (err, jobs) {
+      if (err || !jobs.length) {
+        return callback('Jobs not found')
       }
-      var newJob = agenda.create(job.name, job.data)
-      .save(function () {
-        callback(null, newJob)
+      async.series(jobs.map((job) => (done) => {
+        var newJob = agenda.create(job.name, job.data)
+        .save(function () {
+          done(null, newJob)
+        })
+      }), function (err, results) {
+        callback(err, results)
       })
     })
   } catch (e) {
@@ -52,14 +55,14 @@ function requeueJob (jobId, callback) {
   }
 }
 
-function deleteJob (jobId, callback) {
+function deleteJobs (jobIds, callback) {
   if (!agenda) {
     return callback('Agenda instance is not ready')
   }
   try {
-    agenda.cancel({_id: new ObjectId(jobId)}, function (err, deleted) {
+    agenda.cancel({_id: {$in: jobIds.map((jobId) => new ObjectId(jobId))}}, function (err, deleted) {
       if (err || !deleted) {
-        callback('Job not deleted')
+        callback('Jobs not deleted')
       }
       callback()
     })

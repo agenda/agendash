@@ -112,7 +112,7 @@ $(function () {
       this.listenTo(this.jobItems, 'update', this.render)
       this.render()
     },
-    render: function () {
+    render: _.throttle(function () {
       this.$el.empty().append(this.jobItems.map(function (jobItem) {
         var jobItemView = new JobItemView({
           model: jobItem
@@ -120,7 +120,7 @@ $(function () {
         return jobItemView.render().$el
       }))
       return this
-    }
+    }, 300)
   })
 
   var SidebarView = Backbone.View.extend({
@@ -154,12 +154,55 @@ $(function () {
     el: '#details-pane',
     initialize: function (options) {
       this.jobItems = options.jobItems
+      _.bindAll(this, 'render', 'getSelectedJobs', 'requeueJobs', 'allowDeleteJobs', 'deleteJobs')
+      this.listenTo(this.jobItems, 'update', this.render)
+      this.listenTo(this.jobItems, 'change', this.render)
+      this.render()
+    },
+    events: {
+      'click [data-action=requeue-jobs]': 'requeueJobs',
+      'click [data-action=delete-jobs]': 'allowDeleteJobs',
+      'click [data-action=delete-jobs].deleteable': 'deleteJobs'
+    },
+    getSelectedJobs: function () {
+      return this.jobItems.where({selected: true})
+    },
+    render: function () {
+      var selectedJobCount = this.getSelectedJobs().length
+      this.$('.number-selected').text(selectedJobCount)
+      this.$el.toggle(!!selectedJobCount)
+      this.$('[data-action=delete-jobs]').removeClass('deleteable').text('Delete selected')
+      return this
+    },
+    requeueJobs: function () {
+      var selectedJobIds = this.getSelectedJobs().map((j) => j.get('_id'))
+      postJobs('requeue', selectedJobIds)
+      .success(function () {
+        App.trigger('refreshData')
+      })
+    },
+    allowDeleteJobs: function () {
+      this.$('[data-action=delete-jobs]').addClass('deleteable').text('Confirm delete selection')
+    },
+    deleteJobs: function () {
+      var selectedJobIds = this.getSelectedJobs().map((j) => j.get('_id'))
+      postJobs('delete', selectedJobIds)
+      .success(function () {
+        App.trigger('refreshData')
+      })
+    }
+  })
+
+  var JobDetailsListView = Backbone.View.extend({
+    el: '#details-list',
+    initialize: function (options) {
+      this.jobItems = options.jobItems
       _.bindAll(this, 'render')
       this.listenTo(this.jobItems, 'update', this.render)
       this.listenTo(this.jobItems, 'change', this.render)
       this.render()
     },
-    render: function () {
+    render: _.throttle(function () {
       var selectedJobs = this.jobItems
       .where({selected: true})
       .map(function (jobItem) {
@@ -170,7 +213,7 @@ $(function () {
       })
       this.$el.empty().toggle(!!selectedJobs.length).append(selectedJobs)
       return this
-    }
+    }, 300)
   })
 
   var JobDetailsView = Backbone.View.extend({
@@ -191,15 +234,17 @@ $(function () {
       this.$el.empty().append(this.jobItemDetailsTemplate(jobItem.toJSON()))
     },
     requeueJob: function (e) {
-      $.post('api/job/' + this.model.get('job')._id + '/requeue')
-      $(e.currentTarget).remove()
-      App.trigger('refreshData')
+      postJobs('requeue', [this.model.get('job')._id])
+      .success(function () {
+        $(e.currentTarget).remove()
+        App.trigger('refreshData')
+      })
     },
     allowDeleteJob: function (e) {
       $(e.currentTarget).addClass('deleteable').text('Confirm deletion')
     },
     deleteJob: function (e) {
-      $.post('api/job/' + this.model.get('job')._id + '/delete')
+      postJobs('delete', [this.model.get('job')._id])
       .success(function () {
         App.trigger('refreshData')
       })
@@ -210,6 +255,28 @@ $(function () {
     render: function () {
       this.$el.html(this.template(this.model.toJSON()))
       return this
+    }
+  })
+
+  var SelectJobsView = Backbone.View.extend({
+    el: '#select-jobs',
+    initialize: function (options) {
+      this.jobItems = options.jobItems
+      _.bindAll(this, 'selectAll', 'selectNone')
+    },
+    events: {
+      'click [data-action=select-all]': 'selectAll',
+      'click [data-action=select-none]': 'selectNone'
+    },
+    selectAll: function () {
+      this.jobItems.forEach(function (jobItem) {
+        jobItem.set({selected: true})
+      })
+    },
+    selectNone: function () {
+      this.jobItems.forEach(function (jobItem) {
+        jobItem.set({selected: false})
+      })
     }
   })
 
@@ -242,6 +309,12 @@ $(function () {
         jobItems: this.jobItems
       })
       this.jobDetailsPaneView = new JobDetailsPaneView({
+        jobItems: this.jobItems
+      })
+      this.jobDetailsListView = new JobDetailsListView({
+        jobItems: this.jobItems
+      })
+      this.selectJobsView = new SelectJobsView({
         jobItems: this.jobItems
       })
 
@@ -278,4 +351,14 @@ $(function () {
   })
 
   var App = new AppView()
+
+  function postJobs (action, jobIds) {
+    return $.ajax({
+      type: 'POST',
+      url: 'api/jobs/' + action,
+      data: JSON.stringify({jobIds: jobIds}),
+      contentType: 'application/json',
+      dataType: 'json'
+    })
+  }
 })

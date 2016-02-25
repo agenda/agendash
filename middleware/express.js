@@ -15,15 +15,15 @@ app.get('/api', function (req, res, next) {
   })
 })
 
-app.post('/api/job/:id/requeue', function (req, res, next) {
-  agendash.requeueJob(req.params.id, function (err, newJob) {
-    if (err || !newJob) return res.status(404).json(err)
-    res.json(newJob)
+app.post('/api/jobs/requeue', function (req, res, next) {
+  agendash.requeueJobs(req.body.jobIds, function (err, newJobs) {
+    if (err || !newJobs) return res.status(404).json(err)
+    res.json(newJobs)
   })
 })
 
-app.post('/api/job/:id/delete', function (req, res, next) {
-  agendash.deleteJob(req.params.id, function (err, deleted) {
+app.post('/api/jobs/delete', function (req, res, next) {
+  agendash.deleteJobs(req.body.jobIds, function (err, deleted) {
     if (err) return res.status(404).json(err)
     return res.json({deleted: true})
   })

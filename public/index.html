@@ -29,10 +29,17 @@
       </div>
       <div id="main-pane">
         <div id="list-pane">
-          <h2 id="active-title" class="sub-header">
-            <span class="active-job"></span>
-            <small class="active-state"></small>
-          </h2>
+          <div class="page-header">
+            <h2 id="active-title">
+              <span class="active-job"></span>
+              <small class="active-state"></small>
+            </h2>
+            <ul id="select-jobs" class="nav nav-pills">
+              <li role="presentation"><a role="button" data-action="select-all">Select all</a></li>
+              <li role="presentation"><a role="button" data-action="select-none">Select none</a></li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -49,7 +56,13 @@
             </table>
           </div>
         </div>
-        <div id="details-pane"></div>
+        <div id="details-pane">
+          <h2 class="sub-header"><span class="number-selected">0</span> <small>selected</small></h2>
+          <button type="button" class="btn btn-danger btn-xs" data-action="requeue-jobs">Requeue selected</button>
+          <button type="button" class="btn btn-danger btn-xs pull-right" data-action="delete-jobs">Delete selected</button>
+          <hr />
+          <div id="details-list"></div>
+        </div>
       </div>
     </div>
 
@@ -60,11 +73,11 @@
             <strong><%- displayName %></strong>
             <span class="label label-default pull-right"><%- total %></span>
             <div class="progress">
-              <div class="progress-bar progress-bar-info" style="flex-grow: <%- Math.log(1 + scheduled) %>"></div>
-              <div class="progress-bar progress-bar-primary" style="flex-grow: <%- Math.log(1 + queued) %>"></div>
-              <div class="progress-bar progress-bar-warning" style="flex-grow: <%- Math.log(1 + running) %>"></div>
-              <div class="progress-bar progress-bar-success" style="flex-grow: <%- Math.log(1 + completed) %>"></div>
-              <div class="progress-bar progress-bar-danger" style="flex-grow: <%- Math.log(1 + failed) %>"></div>
+              <div class="progress-bar progress-bar-info" style="flex-grow: <%- Math.log2(1 + scheduled) %>"></div>
+              <div class="progress-bar progress-bar-primary" style="flex-grow: <%- Math.log2(1 + queued) %>"></div>
+              <div class="progress-bar progress-bar-warning" style="flex-grow: <%- Math.log2(1 + running) %>"></div>
+              <div class="progress-bar progress-bar-success" style="flex-grow: <%- Math.log2(1 + completed) %>"></div>
+              <div class="progress-bar progress-bar-danger" style="flex-grow: <%- Math.log2(1 + failed) %>"></div>
             </div>
           </a>
         </li>
@@ -89,10 +102,10 @@
       <td>
         <%- job.name %>
       </td>
-      <td><% if (job.lastRunAt) { %><%- moment(job.lastRunAt).fromNow() %><% } %></td>
-      <td><% if (job.nextRunAt) { %><%- moment(job.nextRunAt).fromNow() %><% } %></td>
-      <td><% if (job.lastFinishedAt) { %><%- moment(job.lastFinishedAt).fromNow() %><% } %></td>
-      <td><% if (job.lockedAt) { %><%- moment(job.lockedAt).fromNow() %><% } %></td>
+      <td><% if (job.lastRunAt) { %><time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).fromNow() %></time><% } %></td>
+      <td><% if (job.nextRunAt) { %><time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).fromNow() %></time><% } %></td>
+      <td><% if (job.lastFinishedAt) { %><time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).fromNow() %></time><% } %></td>
+      <td><% if (job.lockedAt) { %><time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).fromNow() %></time><% } %></td>
     </script>
 
     <script type="text/template" id="job-item-details-template">
@@ -107,10 +120,10 @@
           <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
         </div>
         <div class="panel-body">
-          <% if (job.lastRunAt) { %><p>Last run <%- moment(job.lastRunAt).format('ll LTS') %></p><% } %>
-          <% if (job.nextRunAt) { %><p>Next run <%- moment(job.nextRunAt).format('ll LTS') %></p><% } %>
-          <% if (job.lastFinishedAt) { %><p>Last finished <%- moment(job.lastFinishedAt).format('ll LTS') %></p><% } %>
-          <% if (job.lockedAt) { %><p>Locked <%- moment(job.lockedAt).format('ll LTS') %></p><% } %>
+          <% if (job.lastRunAt) { %><p>Last run <time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).fromNow() %></time></p><% } %>
+          <% if (job.nextRunAt) { %><p>Next run <time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).fromNow() %></time></p><% } %>
+          <% if (job.lastFinishedAt) { %><p>Last finished <time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).fromNow() %></time></p><% } %>
+          <% if (job.lockedAt) { %><p>Locked <time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).fromNow() %></time></p><% } %>
 
           <strong>Job data</strong>
           <pre><%- JSON.stringify(job.data, null, 2) %></pre>
