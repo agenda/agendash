@@ -175,7 +175,7 @@ $(function () {
       return this
     },
     requeueJobs: function () {
-      var selectedJobIds = this.getSelectedJobs().map(function (j) { j.get('_id') })
+      var selectedJobIds = this.getSelectedJobs().map(function (j) { return j.get('_id') })
       postJobs('requeue', selectedJobIds)
       .success(function () {
         App.trigger('refreshData')
@@ -185,7 +185,7 @@ $(function () {
       this.$('[data-action=delete-jobs]').addClass('deleteable').text('Confirm delete selection')
     },
     deleteJobs: function () {
-      var selectedJobIds = this.getSelectedJobs().map(function (j) { j.get('_id') })
+      var selectedJobIds = this.getSelectedJobs().map(function (j) { return j.get('_id') })
       postJobs('delete', selectedJobIds)
       .success(function () {
         App.trigger('refreshData')
