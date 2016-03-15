@@ -45,13 +45,21 @@ var app = express();
 // ... your other express middleware like body-parser
 
 var Agenda = require('agenda');
-var agenda = new Agenda()
-  .database('mongodb://127.0.0.1/agendaDb')
-app.use('/agendash', require('agendash/middleware/express')(agenda))
+var Agendash = require('agendash');
+
+var agenda = new Agenda({mongo: 'mongodb://127.0.0.1/agendaDb'});
+app.use('/agendash', Agendash(agenda));
 
 // ... your other routes
 
 // ... start your server
+```
+
+Other middlewares will come soon in the folder `/lib/middlewares/`.
+You'll juste have to update the last line to require the middleware you need: 
+
+```js
+app.use('/agendash', Agendash(agenda, 'koa'));
 ```
 
 ### Help appreciated

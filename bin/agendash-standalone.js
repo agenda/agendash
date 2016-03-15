@@ -21,7 +21,7 @@ var agenda = new Agenda().database(
   program.db,
   program.collection
 )
-app.use('/', require('./middleware/express')(agenda))
+app.use('/', require('../app')(agenda))
 
 app.set('port', program.port)
 
