@@ -1,3 +1,8 @@
+0.1.1 / 2016-03-17
+==================
+
+  * (vziukas) multiple instances of agendash can each have a separate agenda
+
 0.1.0 / 2016-03-15
 ==================
 
