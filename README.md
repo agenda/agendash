@@ -56,11 +56,20 @@ app.use('/agendash', Agendash(agenda));
 ```
 
 Other middlewares will come soon in the folder `/lib/middlewares/`.
-You'll juste have to update the last line to require the middleware you need: 
+You'll just have to update the last line to require the middleware you need: 
 
 ```js
-app.use('/agendash', Agendash(agenda, 'koa'));
+app.use('/agendash', Agendash(agenda, {
+  middleware: 'koa'
+}));
 ```
+
+### Additional options
+
+The second argument to Agendash is an optional object. Valid keys are:
+
+- `middleware`: Currently only `'express'` is supported. I'd like to use `'koa'` soon.
+- `title`: Defaults to `"Agendash"`. Useful if you are running multiple Agenda pools.
 
 ### Help appreciated
 
