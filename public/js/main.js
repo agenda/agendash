@@ -345,8 +345,12 @@ $(function () {
         job: results.currentRequest.job,
         state: results.currentRequest.state
       })
+      this.render(results);
       this.jobItems.set(results.jobs)
       this._fetchTimeout = setTimeout(this.fetchData, this.currentRequest.get('refreshInterval'))
+    },
+    render: function (results) {
+      $('.page-title').text(results.title)
     }
   })
 
