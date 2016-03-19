@@ -1,3 +1,9 @@
+0.2.0 / 2016-03-18
+==================
+
+  * (vziukas) Configurable title
+  * Middleware option moved to "options" object
+
 0.1.1 / 2016-03-17
 ==================
 
