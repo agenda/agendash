@@ -265,8 +265,13 @@ $(function () {
       _.bindAll(this, 'selectAll', 'selectNone')
     },
     events: {
+      'click [data-action=schedule-job]': 'scheduleJob',
       'click [data-action=select-all]': 'selectAll',
       'click [data-action=select-none]': 'selectNone'
+    },
+    scheduleJob: function () {
+      $(App.createJobPaneView.el).find('input').val('')
+      $(App.createJobPaneView.el).show()
     },
     selectAll: function () {
       this.jobItems.forEach(function (jobItem) {
@@ -277,6 +282,40 @@ $(function () {
       this.jobItems.forEach(function (jobItem) {
         jobItem.set({selected: false})
       })
+    }
+  })
+
+  var CreateJobPaneView = Backbone.View.extend({
+    el: '#create-job-pane',
+    initialize: function (options) {
+      _.bindAll(this, 'render', 'hideView', 'saveJob')
+      this.render()
+    },
+    events: {
+      'click [data-action=cancel]': 'hideView',
+      'click [data-action=save]': 'saveJob'
+    },
+    render: function () {
+      this.$el.hide()
+      return this
+    },
+    hideView: function () {
+      this.$el.hide()
+      return this
+    },
+    saveJob: function () {
+      var jobName = this.$el.find('.job-name').val()
+      var jobSchedule = this.$el.find('.job-schedule').val()
+      var jobRepeatEvery = this.$el.find('.job-repeat-every').val()
+      $.ajax({
+        type: 'POST',
+        url: 'api/jobs/create',
+        data: JSON.stringify({jobName: jobName, jobSchedule: jobSchedule, jobRepeatEvery: jobRepeatEvery}),
+        contentType: 'application/json',
+        dataType: 'json'
+      })
+      this.$el.hide()
+      return this
     }
   })
 
@@ -316,6 +355,8 @@ $(function () {
       })
       this.selectJobsView = new SelectJobsView({
         jobItems: this.jobItems
+      })
+      this.createJobPaneView = new CreateJobPaneView({
       })
 
       this.listenTo(this, 'requestChange', this.handleRequestChange)
