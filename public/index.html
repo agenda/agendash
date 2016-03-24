@@ -103,7 +103,7 @@
         <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
         <% if (repeating) { %><span class="label label-info">Repeating</span><% } %>
       </td>
-      <td>
+      <td title="<%- JSON.stringify(job.data, null, 2) %>">
         <%- job.name %>
       </td>
       <td><% if (job.lastRunAt) { %><time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).fromNow() %></time><% } %></td>
