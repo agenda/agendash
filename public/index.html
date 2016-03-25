@@ -50,7 +50,6 @@
                   <th>Next run starts</th>
                   <th>Last finished</th>
                   <th>Locked</th>
-                  <th>Repeat</th>
                 </tr>
               </thead>
               <tbody id="job-list"></tbody>
@@ -79,7 +78,6 @@
               <div class="progress-bar progress-bar-warning" style="flex-grow: <%- Math.log2(1 + running) %>"></div>
               <div class="progress-bar progress-bar-success" style="flex-grow: <%- Math.log2(1 + completed) %>"></div>
               <div class="progress-bar progress-bar-danger" style="flex-grow: <%- Math.log2(1 + failed) %>"></div>
-              <div class="progress-bar progress-bar-info" style="flex-grow: <%- Math.log2(1 + repeating) %>"></div>
             </div>
           </a>
         </li>
@@ -96,22 +94,20 @@
 
     <script type="text/template" id="job-item-template">
       <td>
+        <% if (repeating) { %><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> <%- job.repeatInterval %></span><% } %>
         <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
-        <% if (queued) { %><span class="label label-info">Queued</span><% } %>
+        <% if (queued) { %><span class="label label-primary">Queued</span><% } %>
         <% if (running) { %><span class="label label-warning">Running</span><% } %>
         <% if (completed) { %><span class="label label-success">Completed</span><% } %>
         <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
-        <% if (repeating) { %><span class="label label-info">Repeating</span><% } %>
       </td>
-      <td title="<%- JSON.stringify(job.data, null, 2) %>">
+      <td>
         <%- job.name %>
       </td>
       <td><% if (job.lastRunAt) { %><time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).fromNow() %></time><% } %></td>
       <td><% if (job.nextRunAt) { %><time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).fromNow() %></time><% } %></td>
       <td><% if (job.lastFinishedAt) { %><time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).fromNow() %></time><% } %></td>
       <td><% if (job.lockedAt) { %><time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).fromNow() %></time><% } %></td>
-      <td><% if (job.repeatInterval) { %><%- job.repeatInterval %><% } %></td>
-
     </script>
 
     <script type="text/template" id="job-item-details-template">
@@ -119,8 +115,9 @@
         <div class="panel-heading">
           <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h3 class="panel-title"><%- job.name %></h3>
+          <% if (repeating) { %><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> <%- job.repeatInterval %></span><% } %>
           <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
-          <% if (queued) { %><span class="label label-info">Queued</span><% } %>
+          <% if (queued) { %><span class="label label-primary">Queued</span><% } %>
           <% if (running) { %><span class="label label-warning">Running</span><% } %>
           <% if (completed) { %><span class="label label-success">Completed</span><% } %>
           <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
