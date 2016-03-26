@@ -1,3 +1,9 @@
+0.2.1 / 2016-03-25
+==================
+
+  * (vziukas) Recurring job count and labels
+  * Fixed "queued" label colors
+
 0.2.0 / 2016-03-18
 ==================
 
