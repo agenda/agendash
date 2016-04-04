@@ -1,3 +1,9 @@
+0.3.0 / 2016-04-04
+==================
+
+  * (bh-chaker) Schedule Job Feature - create new jobs from the UI
+  * Limit to 200 jobs on page, no UI for configuration
+
 0.2.1 / 2016-03-25
 ==================
 

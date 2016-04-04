@@ -4,6 +4,16 @@ A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
 
 ---
 
+### Features
+
+- Job status auto-refreshes (2-second polling by default)
+- Schedule a new job from the UI
+- Dive in to see more details about the job, like the json data
+- Requeue a job (clone the data and run immediately)
+- Delete jobs (Useful for cleaning up old completed jobs)
+
+---
+
 ### Screenshots
 
 ![Auto-refresh list of jobs](all-jobs.png)
