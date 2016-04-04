@@ -304,13 +304,17 @@ $(function () {
       return this
     },
     saveJob: function () {
+      /*
+      TODO: Need to validate user input.
+      */
       var jobName = this.$el.find('.job-name').val()
       var jobSchedule = this.$el.find('.job-schedule').val()
       var jobRepeatEvery = this.$el.find('.job-repeat-every').val()
+      var jobData = JSON.parse(this.$el.find('.job-data').val())
       $.ajax({
         type: 'POST',
         url: 'api/jobs/create',
-        data: JSON.stringify({jobName: jobName, jobSchedule: jobSchedule, jobRepeatEvery: jobRepeatEvery}),
+        data: JSON.stringify({jobName: jobName, jobSchedule: jobSchedule, jobRepeatEvery: jobRepeatEvery, jobData: jobData}),
         contentType: 'application/json',
         dataType: 'json'
       })
