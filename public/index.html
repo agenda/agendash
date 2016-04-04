@@ -35,6 +35,7 @@
               <small class="active-state"></small>
             </h2>
             <ul id="select-jobs" class="nav nav-pills">
+              <li role="presentation"><a role="button" data-action="schedule-job">Schedule job</a></li>
               <li role="presentation"><a role="button" data-action="select-all">Select all</a></li>
               <li role="presentation"><a role="button" data-action="select-none">Select none</a></li>
             </ul>
@@ -62,6 +63,30 @@
           <button type="button" class="btn btn-danger btn-xs pull-right" data-action="delete-jobs">Delete selected</button>
           <hr />
           <div id="details-list"></div>
+        </div>
+        <div id="create-job-pane">
+          <h2 class="sub-header">Create Job</h2>
+          <hr />
+          <div class="form-group">
+            <label>Job name</label>
+            <input type="text" class="job-name form-control">
+          </div>
+          <div class="form-group">
+            <label>Schedule</label>
+            <input type="text" class="job-schedule form-control">
+          </div>
+          <div class="form-group">
+            <label>Repeat every</label>
+            <input type="text" class="job-repeat-every form-control">
+          </div>
+          <div class="form-group">
+            <label>Job data (json)</label>
+            <textarea class="job-data form-control">{}</textarea>
+          </div>
+          <div class="form-group">
+            <span class="btn btn-default btn-success" data-action="save">Save</span>
+            <span class="btn btn-default btn-warning" data-action="cancel">Cancel</span>
+          </div>
         </div>
       </div>
     </div>
