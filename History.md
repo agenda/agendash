@@ -1,3 +1,8 @@
+0.3.2 / 2016-06-30
+==================
+
+  * (HugoCornu) Fix #19 "Schedule Job" - Don't repeat job if user didn't want it repeated
+
 0.3.1 / 2016-04-12
 ==================
 
