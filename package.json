@@ -29,6 +29,6 @@
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
     "express": "^4.0.0",
-    "mongodb": "^2.0.0"
+    "mongodb": "2.1.21"
   }
 }
