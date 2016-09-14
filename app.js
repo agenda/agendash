@@ -10,7 +10,7 @@ module.exports = function (agenda, options) {
 
   try {
     var middlewarePath = './lib/middlewares/' + options.middleware;
-    return require(middlewarePath)(agendash)
+    return require(middlewarePath)(agendash, options)
   } catch (error) {
     throw new Error('No middleware available for ' + options.middleware)
   }
