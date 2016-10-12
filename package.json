@@ -24,7 +24,7 @@
   "homepage": "https://github.com/joeframbach/agendash#readme",
   "license": "MIT",
   "dependencies": {
-    "agenda": ">0.7.0",
+    "agenda": "^0.9.0",
     "async": "^1.0.0",
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
