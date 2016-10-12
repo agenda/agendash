@@ -12,6 +12,10 @@ A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
 - Requeue a job (clone the data and run immediately)
 - Delete jobs (Useful for cleaning up old completed jobs)
 
+### Notes
+
+ - Automatically creates additional indexes on several columns (See #24).
+
 ---
 
 ### Screenshots
