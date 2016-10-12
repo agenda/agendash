@@ -34,6 +34,8 @@ A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
 npm install --save agendash
 ```
 
+*Note*: `Agendash` requires mongodb version >2.6.0 to perform the needed aggregate queries. This is your mongo database version, not your node package version! To check your database version, connect to mongo and run `db.version()`.
+
 ### Standalone usage
 
 Agendash comes with a standalone Express app which you can use like this:
