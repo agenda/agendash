@@ -8,7 +8,7 @@ sudo: false
 addons:
   apt:
     sources:
-    - mongodb-2.6-precise
+    - mongodb-upstart
     packages:
     - mongodb-org-server
     - mongodb-org-shell
