@@ -1,3 +1,11 @@
+0.4.0 / 2016-10-27
+==================
+
+  * (simison) Agenda dependency version `<1.0.0` to avoid breaking dependency.
+  * (loris) Fix #24 - Added indexes for faster queries.
+  * Fix #28 - Removed dependency on Mongo Driver.
+  * Added API tests with mocha and supertest. No frontend tests.
+
 0.3.2 / 2016-06-30
 ==================
 
