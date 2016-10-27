@@ -1,4 +1,5 @@
 # Agendash
+[![Build Status](https://travis-ci.org/joeframbach/agendash.svg)](https://travis-ci.org/joeframbach/agendash)
 
 A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
 
