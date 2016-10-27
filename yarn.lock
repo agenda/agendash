@@ -631,8 +631,8 @@ superagent@^2.0.0:
     readable-stream "^2.0.5"
 
 supertest@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/supertest/-/supertest-2.0.0.tgz#060e18edae56e3d62b95c6e9c4e2a5e4e50979ff"
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/supertest/-/supertest-2.0.1.tgz#a058081d788f1515d4700d7502881e6b759e44cd"
   dependencies:
     methods "1.x"
     superagent "^2.0.0"
