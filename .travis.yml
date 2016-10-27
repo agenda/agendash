@@ -1,14 +1,20 @@
 language: node_js
+node_js:
+  - 6
+  - 7
 services:
   - mongodb
-node_js:
-  - node
-before_install:
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-  - echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-  - sudo apt-get update
-  - sudo apt-get install -y mongodb-org=2.6.12 mongodb-org-server=2.6.12 mongodb-org-shell=2.6.12 mongodb-org-mongos=2.6.12 mongodb-org-tools=2.6.12
+sudo: false
+addons:
+  apt:
+    sources:
+    - mongodb-2.6-precise
+    packages:
+    - mongodb-org-server
+    - mongodb-org-shell
 before_script:
+  - mongo --version
+  - mongod --version
   - 'if [ "$AGENDA_VERSION" ]; then npm install agenda@$AGENDA_VERSION; fi'
   - 'until nc -z 127.0.0.1 27017 ; do echo Waiting for MongoDB; sleep 1; done'
 env:
