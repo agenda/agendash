@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - 6
+  - 7
+services:
+  - mongodb
+sudo: false
+addons:
+  apt:
+    sources:
+    - mongodb-upstart
+    packages:
+    - mongodb-org-server
+    - mongodb-org-shell
+before_script:
+  - mongo --version
+  - mongod --version
+  - 'if [ "$AGENDA_VERSION" ]; then npm install agenda@$AGENDA_VERSION; fi'
+  - 'until nc -z 127.0.0.1 27017 ; do echo Waiting for MongoDB; sleep 1; done'
+env:
+  - AGENDA_VERSION=^0.9.0
+  - AGENDA_VERSION=^0.8.0
+  - AGENDA_VERSION=^0.7.0
