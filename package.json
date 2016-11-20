@@ -1,6 +1,6 @@
 {
   "name": "agendash",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Agenda Dashboard",
   "main": "app.js",
   "bin": "bin/agendash-standalone.js",
