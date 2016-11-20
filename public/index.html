@@ -129,10 +129,10 @@
       <td>
         <%- job.name %>
       </td>
-      <td><% if (job.lastRunAt) { %><time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).fromNow() %></time><% } %></td>
-      <td><% if (job.nextRunAt) { %><time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).fromNow() %></time><% } %></td>
-      <td><% if (job.lastFinishedAt) { %><time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).fromNow() %></time><% } %></td>
-      <td><% if (job.lockedAt) { %><time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).fromNow() %></time><% } %></td>
+      <td><% if (job.lastRunAt) { %><time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).format('ddd, MMM Do HH:mm:ss') %></time><% } %></td>
+      <td><% if (job.nextRunAt) { %><time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).format('ddd, MMM Do HH:mm:ss') %></time><% } %></td>
+      <td><% if (job.lastFinishedAt) { %><time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).format('ddd, MMM Do HH:mm:ss') %></time><% } %></td>
+      <td><% if (job.lockedAt) { %><time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).format('ddd, MMM Do HH:mm:ss') %></time><% } %></td>
     </script>
 
     <script type="text/template" id="job-item-details-template">
@@ -148,10 +148,10 @@
           <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
         </div>
         <div class="panel-body">
-          <% if (job.lastRunAt) { %><p>Last run <time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).fromNow() %></time></p><% } %>
-          <% if (job.nextRunAt) { %><p>Next run <time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).fromNow() %></time></p><% } %>
-          <% if (job.lastFinishedAt) { %><p>Last finished <time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).fromNow() %></time></p><% } %>
-          <% if (job.lockedAt) { %><p>Locked <time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).fromNow() %></time></p><% } %>
+          <% if (job.lastRunAt) { %><p>Last run <time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).format('ddd, MMM Do HH:mm:ss') %></time></p><% } %>
+          <% if (job.nextRunAt) { %><p>Next run <time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).format('ddd, MMM Do HH:mm:ss') %></time></p><% } %>
+          <% if (job.lastFinishedAt) { %><p>Last finished <time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).format('ddd, MMM Do HH:mm:ss') %></time></p><% } %>
+          <% if (job.lockedAt) { %><p>Locked <time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).format('ddd, MMM Do HH:mm:ss') %></time></p><% } %>
           <% if (job.repeatInterval) { %><p>Repeat each <%- job.repeatInterval %></p><% } %>
 
           <strong>Job data</strong>
