@@ -2,9 +2,9 @@
 
 var program = require('commander')
 program
-  .option('-d, --db <db>', '[required] Mongo connection string, same as Agenda connection string')
+  .option('-d, --db <db>', '[optional] Mongo connection string, same as Agenda connection string', process.env.MONGODB_URI)
   .option('-c, --collection <collection>', '[optional] Mongo collection, same as Agenda collection name, default agendaJobs', 'agendaJobs')
-  .option('-p, --port <port>', '[optional] Server port, default 3000', (n, d) => +n || d, 3000)
+  .option('-p, --port <port>', '[optional] Server port, default 3000', (n, d) => +n || d, process.env.PORT || 3000)
   .option('-t, --title <title>', '[optional] Page title, default Agendash', 'Agendash')
   .parse(process.argv)
 
