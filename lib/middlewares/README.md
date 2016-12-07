@@ -8,11 +8,13 @@ npm install --save koa@next koa-router koa-bodyparser koa-serve-static agenda
 ```
 Then use it as follows:
 ```javascript
+var Agenda = require('agenda')
+var agendash = require('agendash')
 var Koa = require('koa')
+
 var agenda = new Agenda({
     db: { address: '<mongoUrl>' }
 })
-var agendash = require('agendash')
 
 var app = new Koa()
 app.use(agendash(agenda, {
