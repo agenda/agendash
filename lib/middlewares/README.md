@@ -10,7 +10,7 @@ Then use it as follows:
 ```javascript
 var Koa = require('koa')
 var agenda = new Agenda({
-    db: { address: '<mongoUrl>'
+    db: { address: '<mongoUrl>' }
 })
 var agendash = require('agendash')
 
