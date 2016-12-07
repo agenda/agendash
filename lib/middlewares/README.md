@@ -22,7 +22,7 @@ app.use(agendash(agenda, {
     // can place other options (e.g. title) here
 }))
 
-app.listen(3000, () = {
+app.listen(3000, () => {
     console.log('App listening on port 3000.')
 })
 ```
