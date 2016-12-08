@@ -27,3 +27,5 @@ app.listen(3000, () => {
     console.log('App listening on port 3000.')
 })
 ```
+
+Use [`koa-mount`](https://github.com/koajs/mount/tree/next) if you need to serve the app from a different route
