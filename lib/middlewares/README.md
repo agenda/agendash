@@ -1,6 +1,6 @@
 # Middlewares
-## koa
-Works with [Koajs](https://github.com/koajs/koa) > v2
+## Koa
+Works with [Koajs](https://github.com/koajs/koa) >= v2
 ### usage
 First install the dependencies in your app:
 ```bash
