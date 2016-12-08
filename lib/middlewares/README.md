@@ -13,7 +13,7 @@ var agendash = require('agendash')
 var Koa = require('koa')
 
 var agenda = new Agenda({
-    // set db properties
+    // configure agenda https://github.com/rschmukler/agenda#configuring-an-agenda
     db: { address: 'mongodb://localhost/agenda' }
 })
 
