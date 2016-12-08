@@ -1,7 +1,7 @@
 # Middlewares
 ## Koa
 Works with [Koajs](https://github.com/koajs/koa) >= v2
-### usage
+### Usage
 First install the dependencies in your app:
 ```bash
 npm install --save koa@next agenda agendash
