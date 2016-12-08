@@ -72,7 +72,7 @@ app.use('/agendash', Agendash(agenda));
 // ... start your server
 ```
 
-Other middlewares will come soon in the folder `/lib/middlewares/`.
+Other middlewares will come soon in the folder [`/lib/middlewares/`](https://github.com/joeframbach/agendash/tree/master/lib/middlewares).
 You'll just have to update the last line to require the middleware you need: 
 
 ```js
