@@ -29,13 +29,13 @@
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
     "express": "^4.0.0",
-    "koa-bodyparser": "^3.2.0",
-    "koa-router": "^7.0.1",
-    "koa-static": "^3.0.0",
     "semver": "^5.3.0"
   },
   "devDependencies": {
     "mocha": "^3.1.2",
-    "supertest": "^2.0.0"
+    "supertest": "^2.0.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-router": "^7.0.1",
+    "koa-static": "^3.0.0"
   }
 }

@@ -4,7 +4,7 @@ Works with [Koajs](https://github.com/koajs/koa) >= v2
 ### Usage
 First install the dependencies in your app:
 ```bash
-npm install --save koa@next agenda agendash
+npm install --save koa@next koa-bodyparser@next koa-router@next koa-static@next agenda agendash
 ```
 Then use it as follows:
 ```javascript
