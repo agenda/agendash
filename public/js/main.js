@@ -7,6 +7,27 @@ $(function () {
     }
   })
 
+  // Default value keeps the old behaviour
+  var timeFormatting = {
+    type : 'function', // function or format
+    value: 'fromNow' // fromNow/toISOString if type is function, or moment format value if type is format (see Moment.js doc)
+  }
+  // e.g {type: 'function', value: 'fromNow'}
+  //     {type: 'function', value: 'toISOString'}
+  //     {type: 'format', value: 'LLL'}
+  //     {type: 'format', value: 'DD/MM/YYYY HH:mm:ss'}
+
+  function formatDate(date) {
+    var mDate = moment(date)
+    if ((timeFormatting.type === 'function') && ((typeof mDate[timeFormatting.value]) === 'function')) {
+      return mDate[timeFormatting.value]()
+    } else if (timeFormatting.type === 'format') {
+      return mDate.format(timeFormatting.value)
+    } else {
+      return mDate.fromNow() // Old behaviour in case of invalid data
+    }
+  }
+
   var ActiveTitleModel = Backbone.Model.extend({})
 
   var OverviewItemModel = Backbone.Model.extend({})
@@ -86,7 +107,7 @@ $(function () {
   var JobItemView = Backbone.View.extend({
     model: JobItemModel,
     tagName: 'tr',
-    template: _.template($('#job-item-template').html()),
+    template: _.template($('#job-item-template').html(), { imports: { formatDate: formatDate } }),
     initialize: function () {
       _.bindAll(this, 'render', 'handleClick')
       this.listenTo(this.model, 'change', this.render)
@@ -218,7 +239,7 @@ $(function () {
 
   var JobDetailsView = Backbone.View.extend({
     model: JobItemModel,
-    template: _.template($('#job-item-details-template').html()),
+    template: _.template($('#job-item-details-template').html(), { imports: { formatDate: formatDate } }),
     initialize: function () {
       _.bindAll(this, 'render', 'close', 'requeueJob', 'allowDeleteJob', 'deleteJob')
       this.listenTo(this.model, 'change', this.render)
@@ -385,6 +406,9 @@ $(function () {
       }).success(this.resultsFetched)
     },
     resultsFetched: function (results) {
+      if (results.timeFormatting) {
+        timeFormatting = results.timeFormatting;
+      }
       this.overviewItems.set(results.overview)
       this.activeTitle.set({
         job: results.currentRequest.job,
