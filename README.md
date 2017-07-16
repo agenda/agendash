@@ -1,5 +1,5 @@
 # Agendash
-[![Build Status](https://travis-ci.org/joeframbach/agendash.svg)](https://travis-ci.org/joeframbach/agendash)
+[![Build Status](https://travis-ci.org/agenda/agendash.svg)](https://travis-ci.org/agenda/agendash)
 
 A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
 
@@ -53,7 +53,9 @@ or like this, for default collection `agendaJobs` and default port `3000`:
 
 ### Middleware usage
 
-Agendash provides Express middleware you can use at a specified path, for example this will 
+Agendash provides Express middleware you can use at a specified path, for example this will
+make Agendash available on your site at the `/dash` path. Note: Do not try to mount Agendash
+at the root level like `app.use('/', Agendash(agenda))`.
 
 ```js
 var express = require('express');
@@ -64,12 +66,32 @@ var app = express();
 var Agenda = require('agenda');
 var Agendash = require('agendash');
 
-var agenda = new Agenda({mongo: 'mongodb://127.0.0.1/agendaDb'});
-app.use('/agendash', Agendash(agenda));
+var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/agendaDb'}});
+// or provide your own mongo client:
+// var agenda = new Agenda({mongo: myMongoClient})
+
+app.use('/dash', Agendash(agenda));
 
 // ... your other routes
 
 // ... start your server
+```
+
+By mounting Agendash as middleware on a specific path, you may provide your
+own authentication for that path. For example if you have an authenticated
+session using passport, you can protect the dashboard path like this:
+
+```
+app.use('/dash',
+  function (req, res, next) {
+    if (!req.user || !req.user.is_admin) {
+      res.send(401);
+    } else {
+      next();
+    }
+  },
+  Agendash(agenda)
+);
 ```
 
 Other middlewares will come soon in the folder `/lib/middlewares/`.
