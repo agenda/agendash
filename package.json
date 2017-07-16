@@ -1,6 +1,6 @@
 {
   "name": "agendash",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Agenda Dashboard",
   "main": "app.js",
   "bin": "bin/agendash-standalone.js",
@@ -9,7 +9,7 @@
     "npm": ">=2.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "$(npm bin)/mocha test/test.js"
   },
   "keywords": [
     "agenda"
@@ -24,11 +24,15 @@
   "homepage": "https://github.com/joeframbach/agendash#readme",
   "license": "MIT",
   "dependencies": {
-    "agenda": ">0.7.0",
+    "agenda": ">=0.7.0 <1.0.0",
     "async": "^1.0.0",
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
     "express": "^4.0.0",
-    "mongodb": "^2.0.0"
+    "semver": "^5.3.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.1.2",
+    "supertest": "^2.0.0"
   }
 }
