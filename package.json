@@ -5,23 +5,24 @@
   "main": "app.js",
   "bin": "bin/agendash-standalone.js",
   "engines": {
-    "node": ">=4.0.0",
-    "npm": ">=2.0.0"
+    "node": ">=4.0.0"
   },
   "scripts": {
-    "test": "$(npm bin)/mocha test/test.js"
+    "test": "npm run lint && npm run mocha",
+    "lint": "xo --verbose",
+    "mocha": "mocha --reporter spec --timeout 8000 -b",
   },
   "keywords": [
     "agenda"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joeframbach/agendash.git"
+    "url": "git+https://github.com/agenda/agendash.git"
   },
   "bugs": {
-    "url": "https://github.com/joeframbach/agendash/issues"
+    "url": "https://github.com/agenda/agendash/issues"
   },
-  "homepage": "https://github.com/joeframbach/agendash#readme",
+  "homepage": "https://github.com/agenda/agendash#readme",
   "license": "MIT",
   "dependencies": {
     "agenda": ">=0.7.0 <1.0.0",
@@ -33,6 +34,30 @@
   },
   "devDependencies": {
     "mocha": "^3.1.2",
-    "supertest": "^2.0.0"
+    "supertest": "^2.0.0",
+    "xo": "^0.18.2"
+  },
+  "xo": {
+    "space": 2,
+    "rules": {
+      "space-before-function-paren": [
+          "error",
+          "never"
+      ],
+      "max-params": [
+        "error",
+        5
+      ],
+      "max-nested-callbacks": [
+        "error",
+        5
+      ]
+    },
+    "envs": [
+      "node"
+    ],
+    "ignores": [
+      "public"
+    ]
   }
 }
