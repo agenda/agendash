@@ -10,7 +10,7 @@
   "scripts": {
     "test": "npm run lint && npm run mocha",
     "lint": "xo --verbose",
-    "mocha": "mocha --reporter spec --timeout 8000 -b",
+    "mocha": "mocha --reporter spec --timeout 8000 -b"
   },
   "keywords": [
     "agenda"
@@ -57,7 +57,7 @@
       "node"
     ],
     "ignores": [
-      "public"
+      "public/**/*"
     ]
   }
 }
