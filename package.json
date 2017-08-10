@@ -9,8 +9,8 @@
   },
   "scripts": {
     "test": "npm run lint && npm run mocha",
-    "lint": "xo --verbose",
-    "mocha": "mocha --reporter spec --timeout 8000 -b"
+    "lint": "./node_modules/.bin/xo --verbose",
+    "mocha": "./node_modules/.bin/mocha --reporter spec --timeout 8000 -b"
   },
   "keywords": [
     "agenda"
