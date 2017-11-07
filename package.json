@@ -9,7 +9,7 @@
     "npm": ">=2.0.0"
   },
   "scripts": {
-    "test": "$(npm bin)/mocha test/test.js"
+    "test": "$(npm bin)/mocha test/test.*js"
   },
   "keywords": [
     "agenda"
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "mocha": "^3.1.2",
-    "supertest": "^2.0.0"
+    "supertest": "^2.0.0",
+    "mongoose": "4.9.1"
   }
 }
