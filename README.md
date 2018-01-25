@@ -109,6 +109,8 @@ app.use('/agendash', Agendash(agenda, {
 }));
 ```
 
+Note that if you use a CSRF protection middleware like [`csurf`](https://www.npmjs.com/package/csurf), you might need to [configure it off](https://github.com/agenda/agendash/issues/23#issuecomment-270917949) for Agendash-routes.
+
 ### Additional options
 
 The second argument to Agendash is an optional object. Valid keys are:
