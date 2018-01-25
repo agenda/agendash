@@ -1,5 +1,6 @@
 # Agendash
 [![Build Status](https://travis-ci.org/agenda/agendash.svg)](https://travis-ci.org/agenda/agendash)
+<a href="https://slackin-ekwifvcwbr.now.sh/"><img src="https://slackin-ekwifvcwbr.now.sh/badge.svg" alt="Slack Status"></a>
 
 A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
 
