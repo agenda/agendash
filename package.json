@@ -9,19 +9,19 @@
     "npm": ">=2.0.0"
   },
   "scripts": {
-    "test": "$(npm bin)/mocha test/test.js"
+    "test": "mocha test/test.js"
   },
   "keywords": [
     "agenda"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joeframbach/agendash.git"
+    "url": "git+https://github.com/agenda/agendash.git"
   },
   "bugs": {
-    "url": "https://github.com/joeframbach/agendash/issues"
+    "url": "https://github.com/agenda/agendash/issues"
   },
-  "homepage": "https://github.com/joeframbach/agendash#readme",
+  "homepage": "https://github.com/agenda/agendash#readme",
   "license": "MIT",
   "dependencies": {
     "agenda": "^1.0.3",
