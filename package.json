@@ -41,8 +41,8 @@
     "space": 2,
     "rules": {
       "space-before-function-paren": [
-          "error",
-          "never"
+        "error",
+        "never"
       ],
       "max-params": [
         "error",
