@@ -1,3 +1,8 @@
+Next
+====
+
+  * (koresar) Fix 404 errors when deleting and re-queuing jobs (#61)
+
 0.4.0 / 2016-10-27
 ==================
 
