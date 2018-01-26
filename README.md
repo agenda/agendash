@@ -1,5 +1,6 @@
 # Agendash
 [![Build Status](https://travis-ci.org/agenda/agendash.svg)](https://travis-ci.org/agenda/agendash)
+<a href="https://slackin-ekwifvcwbr.now.sh/"><img src="https://slackin-ekwifvcwbr.now.sh/badge.svg" alt="Slack Status"></a>
 
 A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
 
@@ -49,6 +50,12 @@ or like this, for default collection `agendaJobs` and default port `3000`:
 
 ```bash
 ./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb
+```
+
+If you are using npm >= 5.2, then you can use [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
+
+```bash
+npx agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
 ```
 
 ### Middleware usage
@@ -102,6 +109,8 @@ app.use('/agendash', Agendash(agenda, {
   middleware: 'koa'
 }));
 ```
+
+Note that if you use a CSRF protection middleware like [`csurf`](https://www.npmjs.com/package/csurf), you might need to [configure it off](https://github.com/agenda/agendash/issues/23#issuecomment-270917949) for Agendash-routes.
 
 ### Additional options
 
