@@ -4,27 +4,29 @@ Works with [Koajs](https://github.com/koajs/koa) >= v2
 ### Usage
 First install the dependencies in your app:
 ```bash
-npm install --save koa@next koa-bodyparser@next koa-router@next koa-static@next agenda agendash
+yarn add koa koa-bodyparser koa-router koa-static agenda agendash
 ```
 Then use it as follows:
 ```javascript
-var Agenda = require('agenda')
-var agendash = require('agendash')
-var Koa = require('koa')
+const Agenda = require('agenda');
+const agendash = require('agendash');
+const Koa = require('koa');
 
-var agenda = new Agenda({
-    // configure agenda https://github.com/rschmukler/agenda#configuring-an-agenda
-    db: { address: 'mongodb://localhost/agenda' }
-})
+const agenda = new Agenda({
+    // configure Agenda https://github.com/agenda/agenda#configuring-an-agenda
+    db: {
+        address: 'mongodb://localhost/agenda'
+    }
+});
 
-var app = new Koa()
+const app = new Koa();
 app.use(agendash(agenda, {
     middleware: 'koa'
     // can place other options (e.g. title) here
 }))
 
 app.listen(3000, () => {
-    console.log('App listening on port 3000.')
+    console.log('App listening on port 3000');
 })
 ```
 
