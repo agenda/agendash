@@ -13,4 +13,4 @@ module.exports = (agenda, options = {}) => {
   } catch (error) {
     throw new Error(`No middleware available for ${options.middleware}`);
   }
-}
+};

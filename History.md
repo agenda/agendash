@@ -1,3 +1,14 @@
+Next
+====
+
+  * (koresar) Fix 404 errors when deleting and re-queuing jobs (#61)
+  * Update dependencies and devDependencies (#69):
+
+    agenda     >=0.7.0 <1.0.0  →  ^1.0.3
+    async              ^1.0.0  →  ^2.6.0
+    mocha              ^3.1.2  →  ^5.0.0
+    supertest          ^2.0.0  →  ^3.0.0
+
 0.4.0 / 2016-10-27
 ==================
 
@@ -62,7 +73,7 @@
   * version bump so npm will update docs
   * Added screenshots
 
-0.0.1 / 2016-02-23 
+0.0.1 / 2016-02-23
 ==================
 
   * Initial Release
