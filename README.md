@@ -3,7 +3,7 @@
 <a href="https://slackin-ekwifvcwbr.now.sh/"><img src="https://slackin-ekwifvcwbr.now.sh/badge.svg" alt="Slack Status"></a>
 [![Known Vulnerabilities](https://snyk.io/test/github/agenda/agendash/badge.svg?targetFile=package.json)](https://snyk.io/test/github/agenda/agendash?targetFile=package.json)
 
-A Dashboard for [Agenda](https://github.com/rschmukler/agenda)
+A Dashboard for [Agenda](https://github.com/agenda/agenda)
 
 ---
 
@@ -103,7 +103,7 @@ app.use('/dash',
 ```
 
 Other middlewares will come soon in the folder `/lib/middlewares/`.
-You'll just have to update the last line to require the middleware you need: 
+You'll just have to update the last line to require the middleware you need:
 
 ```js
 app.use('/agendash', Agendash(agenda, {
