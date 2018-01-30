@@ -1,5 +1,21 @@
-/* global $, _, Backbone */
+/* global $, _, Backbone, window, document */
 $(function () {
+
+  var tokenKey = getCookieValue('token-key')
+
+  if (tokenKey) {
+    $.ajaxSetup({
+      headers: {
+        'Authorization': window.localStorage.getItem(tokenKey)
+      },
+      error: function (x) {
+        if (x.status == 403 || x.status == 401) {
+          window.location.replace('/')
+        }
+      }
+    })
+  }
+
   var CurrentRequestModel = Backbone.Model.extend({
     defaults: {
       refreshInterval: 2000,
@@ -411,4 +427,10 @@ $(function () {
       dataType: 'json'
     })
   }
+
+  function getCookieValue(a) {
+    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)')
+    return b ? b.pop() : ''
+  }
+
 })
