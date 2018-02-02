@@ -27,4 +27,6 @@ app.use('/', require('../app')(agenda, {
 app.set('port', program.port);
 
 const server = http.createServer(app);
-server.listen(program.port);
+server.listen(program.port, () => {
+  console.log(`Agendash started http://localhost:${program.port}`);
+});
