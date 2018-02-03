@@ -13,12 +13,17 @@
     </div>
     <job-overview-list
       v-on:changeState="changeState"
-      :scheduled="scheduled"
-      :running="running"
-      :completed="completed"
-      :repeating="repeating"
+      :jobs="jobs"
     >
-  </job-overview-list>
+    </job-overview-list>
+    <job-overview-list
+      v-for="job in jobs"
+      :key="job.name"
+      v-on:changeState="changeState"
+      :title="job.name"
+      :jobs="jobs"
+    >
+    </job-overview-list>
   </div>
 </template>
 
@@ -37,21 +42,9 @@ export default Vue.component('sidebar', {
       default: []
     }
   },
-  mounted() {
-    this.overview = this.jobs.filter(x => x.overview === true).length;
-    this.scheduled = this.jobs.filter(x => x.scheduled === true).length;
-    this.running = this.jobs.filter(x => x.running === true).length;
-    this.completed = this.jobs.filter(x => x.completed === true).length;
-    this.repeating = this.jobs.filter(x => x.repeating === true).length;
-  },
   data() {
     return {
       refreshInterval: 2,
-      overview: 0,
-      scheduled: 0,
-      running: 0,
-      completed: 0,
-      repeating: 0,
       filterName: ''
     };
   },
@@ -59,11 +52,11 @@ export default Vue.component('sidebar', {
     setTimer() {
       this.$emit('setTimer', this.refreshInterval);
     },
-    changeState(state) {
-      this.$emit('changeState', state);
+    changeState(name, state) {
+      this.$emit('changeState', name, state);
     },
     setFilterName() {
-      this.$emit('setFilterName', this.filterName);
+      this.$emit('changeState', 'name', this.filterName);
     }
   },
   components: {}

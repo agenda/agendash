@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <sidebar :jobs="jobs" v-on:setTimer="setTimer" v-on:changeState="changeState" v-on:setFilterName="setFilterName"></sidebar>
+    <sidebar :jobs="jobs" v-on:setTimer="setTimer" v-on:changeState="changeState"></sidebar>
     <div class="main-pane">
       <div class="list-pane">
         <div class="page-header">
           <h2 id="active-title">
-            <span class="active-job">{{currentJob}}</span>
+            <!-- @TODO: This needs to update when we choose to filter by job name in sidebar using links -->
+            <!--        Check the :3000 version for an example -->
+            <span class="active-job">All Jobs</span>
             <small class="active-state">{{currentJobState}}</small>
           </h2>
           <ul id="select-jobs" class="nav nav-pills">
@@ -16,7 +18,17 @@
           <div class="clearfix"></div>
         </div>
         <div class="table-responsive">
-          <b-table striped hover :items="jobs" :fields="fields" :filter="filter" :no-provider-paging="true" :no-provider-sorting="true" :no-provider-filtering="true">
+          <b-table
+            striped
+            hover
+            :items="jobs"
+            :fields="fields"
+            :filter="filter"
+            :no-provider-paging="true"
+            :no-provider-sorting="true"
+            :no-provider-filtering="true"
+            v-on:row-clicked="rowClicked"
+          >
             <template slot="status" slot-scope="row">
               <td>
                 <template v-if="row.item.repeating"><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> {{row.item.repeatInterval}}</span></template>
@@ -42,18 +54,21 @@
           </b-table>
         </div>
       </div>
-      <job-details :job="selectedJob"></job-details>
+      <job-details :active="currentJobActive" v-on:hide="currentJobActive = false" :job="currentJob"></job-details>
       <job-create :active="createJobActive" v-on:hide="createJobActive = false"></job-create>
     </div>
   </div>
 </template>
 
 <script>
+import Debug from 'debug';
 import api from '../api.js';
 import Sidebar from '../components/sidebar.vue';
 import JobCreate from '../components/job-create.vue';
 import JobDetails from '../components/job-details.vue';
 import JobOverviewList from '../components/job-overview-list.vue';
+
+const debug = new Debug('agendash');
 
 export default {
   data() {
@@ -83,9 +98,13 @@ export default {
         label: 'Locked',
         sortable: true
       }],
-      currentJob: '',
+      // Current job pane
+      currentJobActive: false,
+      currentJob: {
+      },
       currentJobState: '',
       jobs: [],
+      // Schedule job pane
       createJobActive: false,
       // @TODO This should be shown in the UI
       error: null,
@@ -94,7 +113,7 @@ export default {
       refreshInterval: 2,
       now: new Date(),
       // Filtering table of jobs
-      filterBy: '*',
+      filterBy: 'all jobs',
       filterName: ''
     };
   },
@@ -132,34 +151,68 @@ export default {
       }
     },
     filter(job) {
-      if (this.filterBy === '*') {
-        return true;
-      };
-
-      if (this.filterBy === 'name') {
-        return job.name.toLowerCase().trim().includes(this.filterName.toLowerCase().trim());
-      }
-
-      if (this.filterBy in ['scheduled', 'queued', 'running', 'completed', 'failed', 'repeating'] && job[this.filterBy] === true) {
+      // If all jobs and NO sub-filter
+      if (
+        this.filterBy.toLowerCase() === 'all jobs' &&
+        this.filterName.trim() === ''
+      ) {
+        debug('all jobs and NO sub-filter');
         return true;
       }
+
+      // If all jobs and sub-filter
+      if (
+        this.filterBy.toLowerCase() === 'all jobs' &&
+        this.filterName.trim() !== ''
+      ) {
+        debug('all jobs and sub-filter');
+        return ['scheduled', 'queued', 'running', 'completed', 'failed', 'repeating'].includes(this.filterName) && job[this.filterName] === true;
+      }
+
+      // If filtering by name
+      if (
+        this.filterBy.toLowerCase() === 'name' &&
+        job.name.toLowerCase().includes(this.filterName.toLowerCase().trim())
+      ) {
+        debug('filtering by name');
+        return true;
+      }
+
+      // If name and a NO sub-filter
+      if (
+        this.filterBy.toLowerCase() !== 'all jobs' &&
+        this.filterBy.toLowerCase().trim() === job.name.toLowerCase() &&
+        this.filterName.trim() === ''
+      ) {
+        debug('name and a NO sub-filter');
+        return true;
+      }
+
+      // If name and a sub-filter
+      if (
+        this.filterBy.toLowerCase() !== 'all jobs' &&
+        this.filterBy.toLowerCase().trim() === job.name.toLowerCase() &&
+        this.filterName.trim() !== '' &&
+        ['scheduled', 'queued', 'running', 'completed', 'failed', 'repeating'].includes(this.filterName) &&
+        job[this.filterName] === true
+      ) {
+        debug('name and a sub-filter');
+        return true;
+      }
+
+      // Otherwise just remove it
       return false;
     },
-    changeState(state) {
-      if (state === 'all') {
-        this.filterBy = '*';
-      } else {
-        this.filterBy = state;
-      }
+    changeState(filterBy, name) {
+      this.filterBy = filterBy || 'all jobs';
+      this.filterName = name || '';
     },
-    setFilterName(name) {
-      if (name.trim() === '') {
-        this.filterBy = '*';
-        this.filterName = '';
-      } else {
-        this.filterBy = 'name';
-        this.filterName = name;
-      }
+    rowClicked(job) {
+      this.currentJob = job;
+      this.openJobDetails();
+    },
+    openJobDetails() {
+
     }
   },
   async mounted() {

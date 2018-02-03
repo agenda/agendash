@@ -1,8 +1,8 @@
 <template>
   <ul class="nav nav-sidebar">
     <li>
-      <a class="text-muted" href="#">
-        <strong @click="setCurrentState('all')">{{title}}</strong>
+      <a @click="changeState(title, '')" class="text-muted">
+        <strong>{{title}}</strong>
         <span class="label label-default pull-right">{{total}}</span>
         <div class="progress">
           <div class="progress-bar progress-bar-info" :style="'flex-grow: ' + Math.log2(1 + scheduled)"></div>
@@ -14,12 +14,12 @@
       </a>
     </li>
     <ul class="nav nav-sidebar">
-      <li><a class="text-info" @click="setCurrentState('scheduled')">Scheduled<span class="label label-info pull-right">{{scheduled}}</span></a></li>
-      <li><a class="text-primary" @click="setCurrentState('queued')">Queued<span class="label label-primary pull-right">{{queued}}</span></a></li>
-      <li><a class="text-warning" @click="setCurrentState('running')">Running<span class="label label-warning pull-right">{{running}}</span></a></li>
-      <li><a class="text-success" @click="setCurrentState('completed')">Completed<span class="label label-success pull-right">{{completed}}</span></a></li>
-      <li><a class="text-danger" @click="setCurrentState('failed')">Failed<span class="label label-danger pull-right">{{failed}}</span></a></li>
-      <li><a class="text-info" @click="setCurrentState('repeating')">Repeating<span class="label label-info pull-right">{{repeating}}</span></a></li>
+      <li><a class="text-info" @click="changeState(title, 'scheduled')">Scheduled<span class="label label-info pull-right">{{scheduled}}</span></a></li>
+      <li><a class="text-primary" @click="changeState(title, 'queued')">Queued<span class="label label-primary pull-right">{{queued}}</span></a></li>
+      <li><a class="text-warning" @click="changeState(title, 'running')">Running<span class="label label-warning pull-right">{{running}}</span></a></li>
+      <li><a class="text-success" @click="changeState(title, 'completed')">Completed<span class="label label-success pull-right">{{completed}}</span></a></li>
+      <li><a class="text-danger" @click="changeState(title, 'failed')">Failed<span class="label label-danger pull-right">{{failed}}</span></a></li>
+      <li><a class="text-info" @click="changeState(title, 'repeating')">Repeating<span class="label label-info pull-right">{{repeating}}</span></a></li>
     </ul>
   </ul>
 </template>
@@ -34,39 +34,41 @@ export default Vue.component('job-overview-list', {
       type: String,
       default: 'All Jobs'
     },
-    scheduled: {
-      type: Number,
-      default: 0
-    },
-    queued: {
-      type: Number,
-      default: 0
-    },
-    running: {
-      type: Number,
-      default: 0
-    },
-    completed: {
-      type: Number,
-      default: 0
-    },
-    failed: {
-      type: Number,
-      default: 0
-    },
-    repeating: {
-      type: Number,
-      default: 0
+    jobs: {
+      type: Array,
+      default: []
     }
+  },
+  data() {
+    return {
+    };
   },
   computed: {
+    scheduled() {
+      return this.jobs.filter(x => x.scheduled === true).length;
+    },
+    queued() {
+      return this.jobs.filter(x => x.queued === true).length;
+    },
+    running() {
+      return this.jobs.filter(x => x.running === true).length;
+    },
+    completed() {
+      return this.jobs.filter(x => x.completed === true).length;
+    },
+    failed() {
+      return this.jobs.filter(x => x.failed === true).length;
+    },
+    repeating() {
+      return this.jobs.filter(x => x.repeating === true).length;
+    },
     total() {
       return this.scheduled + this.queued + this.running + this.completed + this.failed + this.repeating;
-    }
+    },
   },
   methods: {
-    setCurrentState(state) {
-      this.$emit('changeState', state);
+    changeState(name, state) {
+      this.$emit('changeState', name, state);
     }
   },
   components: {}
