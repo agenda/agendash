@@ -1,0 +1,27 @@
+{
+    "main": "./index.js",
+    "scripts": {
+        "test": "npx xo && npx ava",
+        "build": "npx poi build",
+        "start": "npx poi"
+    },
+    "dependencies": {
+        "bootstrap-vue": "^2.0.0-rc.1",
+        "frisbee": "^1.6.4",
+        "loose-json": "^1.1.2",
+        "vue-router": "^3.0.1"
+    },
+    "xo": {
+        "settings": {
+            "import/core-modules": [
+                "vue"
+            ]
+        },
+        "semicolon": true,
+        "space": "2"
+    },
+    "devDependencies": {
+        "node-sass": "^4.7.2",
+        "sass-loader": "^6.0.6"
+    }
+}

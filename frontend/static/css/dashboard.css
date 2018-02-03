@@ -1,0 +1,94 @@
+/* Page layout */
+
+#app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#sidebar {
+  padding-top: 20px;
+  flex: 0 0 250px;
+  order: 1;
+  box-shadow: 4px 0px 3px -2px #eee;
+  overflow: scroll;
+}
+
+#main-pane {
+  padding: 0;
+  order: 2;
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+#list-pane {
+  flex: 1 1 750px;
+  order: 1;
+  padding: 10px;
+  overflow: scroll;
+}
+
+#details-pane {
+  padding: 10px;
+  flex: 1 0 370px;
+  order: 2;
+  box-shadow: 0px -2px 3px 0px #eee;
+  margin-top: 10px;
+  overflow: scroll;
+}
+
+#create-job-pane {
+  padding: 10px;
+  flex: 1 0 370px;
+  order: 2;
+  box-shadow: 0px -2px 3px 0px #eee;
+  margin-top: 10px;
+  overflow: scroll;
+}
+
+
+@media (min-width: 1200px) {
+  #main-pane {
+    flex-direction: row;
+  }
+  #details-pane {
+    margin-top: 0;
+    box-shadow: -2px 0px 3px 0px #eee;
+  }
+  #create-job-pane {
+    margin-top: 0;
+    box-shadow: -2px 0px 3px 0px #eee;
+  }
+}
+
+/* Details, styling */
+
+.page-title {
+  margin: 0 auto 10px; /* override h1 defaults */
+}
+.nav-sidebar {
+  margin-bottom: 10px;
+}
+.progress {
+  display: flex;
+  height: 5px;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+.sidebar-header {
+  padding: 0 10px 20px;
+}
+
+#job-list tr {
+  cursor: pointer;
+}
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
