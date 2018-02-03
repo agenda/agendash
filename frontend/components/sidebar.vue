@@ -11,7 +11,14 @@
         <input type="number" @change="setTimer" v-model="refreshInterval" class="refresh-interval form-control">
       </div>
     </div>
-    <job-overview-list :overview="overview"></job-overview-list>
+    <job-overview-list
+      v-on:changeState="changeState"
+      :scheduled="scheduled"
+      :running="running"
+      :completed="completed"
+      :repeating="repeating"
+    >
+  </job-overview-list>
   </div>
 </template>
 
@@ -21,22 +28,38 @@ import Vue from 'vue';
 export default Vue.component('sidebar', {
   name: 'sidebar',
   props: {
-    overview: {
-      type: Array
-    },
     title: {
       type: String,
       default: 'Agendash'
+    },
+    jobs: {
+      type: Array,
+      default: []
     }
+  },
+  mounted() {
+    this.overview = this.jobs.filter(x => x.overview === true).length;
+    this.scheduled = this.jobs.filter(x => x.scheduled === true).length;
+    this.running = this.jobs.filter(x => x.running === true).length;
+    this.completed = this.jobs.filter(x => x.completed === true).length;
+    this.repeating = this.jobs.filter(x => x.repeating === true).length;
   },
   data() {
     return {
-      refreshInterval: 2
+      refreshInterval: 2,
+      overview: 0,
+      scheduled: 0,
+      running: 0,
+      completed: 0,
+      repeating: 0
     };
   },
   methods: {
     setTimer(interval) {
       this.$emit('setTimer', this.refreshInterval);
+    },
+    changeState(state) {
+      this.$emit('changeState', state);
     }
   },
   components: {}

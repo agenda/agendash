@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <sidebar :overview="overview" v-on:setTimer="setTimer"></sidebar>
+    <sidebar :jobs="jobs" v-on:setTimer="setTimer" v-on:changeState="changeState"></sidebar>
     <div class="main-pane">
       <div class="list-pane">
         <div class="page-header">
@@ -16,7 +16,7 @@
           <div class="clearfix"></div>
         </div>
         <div class="table-responsive">
-          <b-table striped hover :items="jobs" :fields="fields" :no-provider-paging="true" :no-provider-sorting="true" :no-provider-filtering="true">
+          <b-table striped hover :items="jobs" :fields="fields" :filter="filter" :no-provider-paging="true" :no-provider-sorting="true" :no-provider-filtering="true">
             <template slot="status" slot-scope="row">
               <td>
                 <template v-if="row.item.repeating"><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> {{row.item.repeatInterval}}</span></template>
@@ -87,14 +87,14 @@ export default {
       currentJobState: '',
       jobs: [],
       createJobActive: false,
-      filter: null,
-      overview: [],
       // @TODO This should be shown in the UI
       error: null,
-      // Used for the auto refreshing of data
+      // Auto refreshing of data
       timer: null,
       refreshInterval: 2,
-      now: new Date()
+      now: new Date(),
+      // Filtering table of jobs
+      filterBy: '*'
     };
   },
   computed: {
@@ -109,7 +109,7 @@ export default {
     async fetchData() {
       try {
         const res = await api.get('/api/');
-        const {jobs, overview} = res.body;
+        const {jobs} = res.body;
 
         this.jobs = jobs.map(job => {
           const data = Object.assign({}, job.job);
@@ -120,7 +120,6 @@ export default {
             ...job
           }
         });
-        this.overview = overview;
       } catch (err) {
         this.error = err;
       }
@@ -129,6 +128,25 @@ export default {
       clearInterval(this.timer);
       if (Number(refreshInterval) >= 1) {
         this.timer = setInterval(this.fetchData, refreshInterval * 1000);
+      }
+    },
+    filter(job) {
+      if (this.filterBy === '*') {
+        console.log('*')
+        return true;
+      };
+
+      if (this.filterBy in ['scheduled', 'queued', 'running', 'completed', 'failed', 'repeating'] && job[this.filterBy] === true) {
+        console.log(`${this.filterBy}: ${job[this.filterBy]}`);
+        return true;
+      }
+      return false;
+    },
+    changeState(state) {
+      if (state === 'all') {
+        this.filterBy = '*';
+      } else {
+        this.filterBy = state;
       }
     }
   },
