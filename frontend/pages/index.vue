@@ -16,7 +16,7 @@
           <div class="clearfix"></div>
         </div>
         <div class="table-responsive">
-          <b-table striped hover :items="jobs" :fields="fields">
+          <b-table striped hover :items="jobs" :fields="fields" :no-provider-paging="true" :no-provider-sorting="true" :no-provider-filtering="true">
             <template slot="status" slot-scope="row">
               <td>
                 <template v-if="row.item.repeating"><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> {{row.item.repeatInterval}}</span></template>
@@ -28,16 +28,16 @@
               </td>
             </template>
             <template slot="lastRunAt" slot-scope="row">
-              <td><template v-if="row.item.lastRunAt"><time>{{row.item.lastRunAt | moment('from', 'now')}}</time></template></td>
+              <td><template v-if="row.item.lastRunAt"><time>{{row.item.lastRunAt | moment('from', now)}}</time></template></td>
             </template>
             <template slot="nextRunAt" slot-scope="row">
-              <td><template v-if="row.item.nextRunAt"><time>{{row.item.nextRunAt | moment('from', 'now')}}</time></template></td>
+              <td><template v-if="row.item.nextRunAt"><time>{{row.item.nextRunAt | moment('from', now)}}</time></template></td>
             </template>
             <template slot="lastFinishedAt" slot-scope="row">
-              <td><template v-if="row.item.lastFinishedAt"><time>{{row.item.lastFinishedAt | moment('from', 'now')}}</time></template></td>
+              <td><template v-if="row.item.lastFinishedAt"><time>{{row.item.lastFinishedAt | moment('from', now)}}</time></template></td>
             </template>
             <template slot="lockedAt" slot-scope="row">
-              <td><template v-if="row.item.lockedAt"><time>{{row.item.lockedAt | moment('from', 'now')}}</time></template></td>
+              <td><template v-if="row.item.lockedAt"><time>{{row.item.lockedAt | moment('from', now)}}</time></template></td>
             </template>
           </b-table>
         </div>
@@ -93,7 +93,8 @@ export default {
       error: null,
       // Used for the auto refreshing of data
       timer: null,
-      refreshInterval: 2
+      refreshInterval: 2,
+      now: new Date()
     };
   },
   computed: {
@@ -133,6 +134,9 @@ export default {
   },
   async mounted() {
     this.setTimer(this.refreshInterval);
+    setInterval(() => {
+       this.$data.now = Date.now();
+    }, 1000);
   },
   components: {
     Sidebar,
