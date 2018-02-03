@@ -4,7 +4,7 @@
       <h1 class="page-title">{{title}}</h1>
       <div class="form-group">
         <label for="overviewFilter">Filter by name</label>
-        <input type="text" class="overview-filter form-control">
+        <input type="text" class="overview-filter form-control" @change="setFilterName" v-model="filterName">
       </div>
       <div class="form-group">
         <label for="overviewFilter">Refresh interval (seconds)</label>
@@ -51,15 +51,19 @@ export default Vue.component('sidebar', {
       scheduled: 0,
       running: 0,
       completed: 0,
-      repeating: 0
+      repeating: 0,
+      filterName: ''
     };
   },
   methods: {
-    setTimer(interval) {
+    setTimer() {
       this.$emit('setTimer', this.refreshInterval);
     },
     changeState(state) {
       this.$emit('changeState', state);
+    },
+    setFilterName() {
+      this.$emit('setFilterName', this.filterName);
     }
   },
   components: {}

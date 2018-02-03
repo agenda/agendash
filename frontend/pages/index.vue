@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <sidebar :jobs="jobs" v-on:setTimer="setTimer" v-on:changeState="changeState"></sidebar>
+    <sidebar :jobs="jobs" v-on:setTimer="setTimer" v-on:changeState="changeState" v-on:setFilterName="setFilterName"></sidebar>
     <div class="main-pane">
       <div class="list-pane">
         <div class="page-header">
@@ -94,7 +94,8 @@ export default {
       refreshInterval: 2,
       now: new Date(),
       // Filtering table of jobs
-      filterBy: '*'
+      filterBy: '*',
+      filterName: ''
     };
   },
   computed: {
@@ -132,12 +133,14 @@ export default {
     },
     filter(job) {
       if (this.filterBy === '*') {
-        console.log('*')
         return true;
       };
 
+      if (this.filterBy === 'name') {
+        return job.name.toLowerCase().trim().includes(this.filterName.toLowerCase().trim());
+      }
+
       if (this.filterBy in ['scheduled', 'queued', 'running', 'completed', 'failed', 'repeating'] && job[this.filterBy] === true) {
-        console.log(`${this.filterBy}: ${job[this.filterBy]}`);
         return true;
       }
       return false;
@@ -147,6 +150,15 @@ export default {
         this.filterBy = '*';
       } else {
         this.filterBy = state;
+      }
+    },
+    setFilterName(name) {
+      if (name.trim() === '') {
+        this.filterBy = '*';
+        this.filterName = '';
+      } else {
+        this.filterBy = 'name';
+        this.filterName = name;
       }
     }
   },
