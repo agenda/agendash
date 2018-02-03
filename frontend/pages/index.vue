@@ -5,8 +5,8 @@
       <div class="list-pane">
         <div class="page-header">
           <h2 id="active-title">
-            <span class="active-job"></span>
-            <small class="active-state"></small>
+            <span class="active-job">{{currentJob}}</span>
+            <small class="active-state">{{currentJobState}}</small>
           </h2>
           <ul id="select-jobs" class="nav nav-pills">
             <li role="presentation"><a role="button" @click="openCreateJob()">Schedule job</a></li>
@@ -16,7 +16,30 @@
           <div class="clearfix"></div>
         </div>
         <div class="table-responsive">
-          <b-table striped hover :items="jobs" :fields="fields"></b-table>
+          <b-table striped hover :items="jobs" :fields="fields">
+            <template slot="status" slot-scope="row">
+              <td>
+                <template v-if="row.item.repeating"><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> {{row.item.repeatInterval}}</span></template>
+                <template v-if="row.item.scheduled"><span class="label label-info">Scheduled</span></template>
+                <template v-if="row.item.queued"><span class="label label-primary">Queued</span></template>
+                <template v-if="row.item.running"><span class="label label-warning">Running</span></template>
+                <template v-if="row.item.completed"><span class="label label-success">Completed</span></template>
+                <template v-if="row.item.failed"><span class="label label-danger">Failed</span></template>
+              </td>
+            </template>
+            <template slot="lastRunAt" slot-scope="row">
+              <td><template v-if="row.item.lastRunAt"><time>{{row.item.lastRunAt | moment('from', 'now')}}</time></template></td>
+            </template>
+            <template slot="nextRunAt" slot-scope="row">
+              <td><template v-if="row.item.nextRunAt"><time>{{row.item.nextRunAt | moment('from', 'now')}}</time></template></td>
+            </template>
+            <template slot="lastFinishedAt" slot-scope="row">
+              <td><template v-if="row.item.lastFinishedAt"><time>{{row.item.lastFinishedAt | moment('from', 'now')}}</time></template></td>
+            </template>
+            <template slot="lockedAt" slot-scope="row">
+              <td><template v-if="row.item.lockedAt"><time>{{row.item.lockedAt | moment('from', 'now')}}</time></template></td>
+            </template>
+          </b-table>
         </div>
       </div>
       <job-details :job="selectedJob"></job-details>
@@ -32,61 +55,36 @@ import JobCreate from '../components/job-create.vue';
 import JobDetails from '../components/job-details.vue';
 import JobOverviewList from '../components/job-overview-list.vue';
 
-// var SelectJobsView = Backbone.View.extend({
-//   el: '#select-jobs',
-//   initialize: function (options) {
-//     this.jobItems = options.jobItems
-//     _.bindAll(this, 'selectAll', 'selectNone')
-//   },
-//   events: {
-//     'click [data-action=schedule-job]': 'scheduleJob',
-//     'click [data-action=select-all]': 'selectAll',
-//     'click [data-action=select-none]': 'selectNone'
-//   },
-//   scheduleJob: function () {
-//     $(App.createJobPaneView.el).find('input').val('')
-//     $(App.createJobPaneView.el).show()
-//   },
-//   selectAll: function () {
-//     this.jobItems.forEach(function (jobItem) {
-//       jobItem.set({selected: true})
-//     })
-//   },
-//   selectNone: function () {
-//     this.jobItems.forEach(function (jobItem) {
-//       jobItem.set({selected: false})
-//     })
-//   }
-// })
-
 export default {
   data() {
     return {
       fields: [{
-        key: 'job.status',
+        key: 'status',
         label: 'Status',
         sortable: true
       }, {
-        key: 'job.name',
+        key: 'name',
         label: 'Name',
         sortable: true
       }, {
-        key: 'job.lastRunAt',
+        key: 'lastRunAt',
         label: 'Last run started',
         sortable: true
       }, {
-        key: 'job.nextRunAt',
+        key: 'nextRunAt',
         label: 'Next run starts',
         sortable: true
       }, {
-        key: 'job.lastFinishedAt',
+        key: 'lastFinishedAt',
         label: 'Last finished',
         sortable: true
       }, {
-        key: 'job.lockedAt',
+        key: 'lockedAt',
         label: 'Locked',
         sortable: true
       }],
+      currentJob: '',
+      currentJobState: '',
       jobs: [],
       createJobActive: false,
       filter: null,
@@ -112,7 +110,15 @@ export default {
         const res = await api.get('/api/');
         const {jobs, overview} = res.body;
 
-        this.jobs = jobs;
+        this.jobs = jobs.map(job => {
+          const data = Object.assign({}, job.job);
+          delete job.job;
+
+          return {
+            ...data,
+            ...job
+          }
+        });
         this.overview = overview;
       } catch (err) {
         this.error = err;

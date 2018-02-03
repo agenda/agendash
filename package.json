@@ -30,7 +30,8 @@
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
     "express": "^4.0.0",
-    "semver": "^5.3.0"
+    "semver": "^5.3.0",
+    "vue-moment": "^3.1.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",
