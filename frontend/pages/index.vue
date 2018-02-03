@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <sidebar :overview="overview" :refreshInterval="refreshInterval"></sidebar>
+    <sidebar :overview="overview" v-on:setTimer="setTimer"></sidebar>
     <div class="main-pane">
       <div class="list-pane">
         <div class="page-header">
@@ -16,7 +16,7 @@
           <div class="clearfix"></div>
         </div>
         <div class="table-responsive">
-          <b-table striped hover :items="jobs" :fields="fields" :filter="filter"></b-table>
+          <b-table striped hover :items="jobs" :fields="fields"></b-table>
         </div>
       </div>
       <job-details :job="selectedJob"></job-details>
@@ -63,27 +63,27 @@ export default {
   data() {
     return {
       fields: [{
-        key: 'status',
+        key: 'job.status',
         label: 'Status',
         sortable: true
       }, {
-        key: 'name',
+        key: 'job.name',
         label: 'Name',
         sortable: true
       }, {
-        key: 'lastRunAt',
+        key: 'job.lastRunAt',
         label: 'Last run started',
         sortable: true
       }, {
-        key: 'nextRunAt',
+        key: 'job.nextRunAt',
         label: 'Next run starts',
         sortable: true
       }, {
-        key: 'lastFinishedAt',
+        key: 'job.lastFinishedAt',
         label: 'Last finished',
         sortable: true
       }, {
-        key: 'lockedAt',
+        key: 'job.lockedAt',
         label: 'Locked',
         sortable: true
       }],
@@ -95,7 +95,7 @@ export default {
       error: null,
       // Used for the auto refreshing of data
       timer: null,
-      refreshInterval: 20,
+      refreshInterval: 2
     };
   },
   computed: {
@@ -117,10 +117,16 @@ export default {
       } catch (err) {
         this.error = err;
       }
+    },
+    setTimer(refreshInterval) {
+      clearInterval(this.timer);
+      if (Number(refreshInterval) >= 1) {
+        this.timer = setInterval(this.fetchData, refreshInterval * 1000);
+      }
     }
   },
   async mounted() {
-    this.timer = setInterval(this.fetchData, this.refreshInterval * 1000);
+    this.setTimer(this.refreshInterval);
   },
   components: {
     Sidebar,
@@ -132,6 +138,8 @@ export default {
 </script>
 
 <style lang="scss">
+// @TODO: Move over to bootstrap 4
+@import '~bootstrap-vue/dist/bootstrap-vue.min.css';
 @import '~/css/bootstrap.min.css';
 @import '~/css/dashboard.css';
 

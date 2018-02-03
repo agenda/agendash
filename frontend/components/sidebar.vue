@@ -8,7 +8,7 @@
       </div>
       <div class="form-group">
         <label for="overviewFilter">Refresh interval (seconds)</label>
-        <input type="number" v-model="refreshInterval" class="refresh-interval form-control">
+        <input type="number" @change="setTimer" v-model="refreshInterval" class="refresh-interval form-control">
       </div>
     </div>
     <job-overview-list :overview="overview"></job-overview-list>
@@ -24,12 +24,19 @@ export default Vue.component('sidebar', {
     overview: {
       type: Array
     },
-    refreshInterval: {
-      type: Number
-    },
     title: {
       type: String,
       default: 'Agendash'
+    }
+  },
+  data() {
+    return {
+      refreshInterval: 2
+    };
+  },
+  methods: {
+    setTimer(interval) {
+      this.$emit('setTimer', this.refreshInterval);
     }
   },
   components: {}
