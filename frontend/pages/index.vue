@@ -55,7 +55,7 @@
         </div>
       </div>
       <job-details :active="currentJobActive" v-on:hide="currentJobActive = false" :job="currentJob"></job-details>
-      <job-create :active="createJobActive" v-on:hide="createJobActive = false"></job-create>
+      <job-create :active="createJobActive" v-on:hide="createJobActive = false" v-on:newJob="newJob"></job-create>
     </div>
   </div>
 </template>
@@ -218,6 +218,10 @@ export default {
     },
     openJobDetails() {
 
+    },
+    async newJob(job) {
+      this.jobs.push(job);
+      await this.fetchData();
     }
   },
   async mounted() {

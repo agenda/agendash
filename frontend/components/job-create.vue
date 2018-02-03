@@ -49,14 +49,19 @@ export default Vue.component('job-create', {
         jobRepeatEvery,
         jobData
       } = this;
+      const job = {
+        jobName,
+        jobSchedule,
+        jobRepeatEvery,
+        jobData: cleanJSON(this.jobData)
+      };
+
       await api.post('api/jobs/create', {
         body: {
-          jobName,
-          jobSchedule,
-          jobRepeatEvery,
-          jobData: cleanJSON(this.jobData)
+          ...job
         }
       });
+      this.$emit('newJob', job);
 
       this.clearData();
       this.hide();
