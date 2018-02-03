@@ -44,31 +44,40 @@ export default Vue.component('job-overview-list', {
     };
   },
   computed: {
+    isAllJobs() {
+      return this.title.toLowerCase() === 'all jobs';
+    },
     scheduled() {
-      return this.jobs.filter(x => x.scheduled === true).length;
+      return this.isAllJobs ? this.getTotal('scheduled') : this.getTotalWithName('scheduled');
     },
     queued() {
-      return this.jobs.filter(x => x.queued === true).length;
+      return this.isAllJobs ? this.getTotal('queued') : this.getTotalWithName('queued');
     },
     running() {
-      return this.jobs.filter(x => x.running === true).length;
+      return this.isAllJobs ? this.getTotal('running') : this.getTotalWithName('running');
     },
     completed() {
-      return this.jobs.filter(x => x.completed === true).length;
+      return this.isAllJobs ? this.getTotal('completed') : this.getTotalWithName('completed');
     },
     failed() {
-      return this.jobs.filter(x => x.failed === true).length;
+      return this.isAllJobs ? this.getTotal('failed') : this.getTotalWithName('failed');
     },
     repeating() {
-      return this.jobs.filter(x => x.repeating === true).length;
+      return this.isAllJobs ? this.getTotal('repeating') : this.getTotalWithName('repeating');
     },
     total() {
-      return this.scheduled + this.queued + this.running + this.completed + this.failed + this.repeating;
+      return this.scheduled + this.queued + this.running + this.completed + this.failed;
     },
   },
   methods: {
     changeState(name, state) {
       this.$emit('changeState', name, state);
+    },
+    getTotal(prop) {
+      return this.jobs.filter(x => x[prop] === true).length;
+    },
+    getTotalWithName(prop) {
+      return this.jobs.filter(x => x[prop] === true && x.name.toLowerCase() === this.title.toLowerCase()).length;
     }
   },
   components: {}

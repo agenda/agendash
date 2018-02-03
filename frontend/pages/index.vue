@@ -7,7 +7,7 @@
           <h2 id="active-title">
             <!-- @TODO: This needs to update when we choose to filter by job name in sidebar using links -->
             <!--        Check the :3000 version for an example -->
-            <span class="active-job">All Jobs</span>
+            <span class="active-job">{{filterBy.toLowerCase() === 'name' ? 'Searching...' : filterBy | capitalizeFirstLetter()}}</span>
             <small class="active-state">{{currentJobState}}</small>
           </h2>
           <ul id="select-jobs" class="nav nav-pills">
@@ -204,8 +204,13 @@ export default {
       return false;
     },
     changeState(filterBy, name) {
-      this.filterBy = filterBy || 'all jobs';
-      this.filterName = name || '';
+      if (filterBy.toLowerCase() === 'name' && name.trim() === '') {
+        this.filterBy = 'all jobs';
+        this.filterName = '';
+      } else {
+        this.filterBy = filterBy || 'all jobs';
+        this.filterName = name || '';
+      }
     },
     rowClicked(job) {
       this.currentJob = job;
@@ -220,6 +225,11 @@ export default {
     setInterval(() => {
        this.$data.now = Date.now();
     }, 1000);
+  },
+  filters: {
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
   },
   components: {
     Sidebar,

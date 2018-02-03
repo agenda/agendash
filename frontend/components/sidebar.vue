@@ -4,7 +4,7 @@
       <h1 class="page-title">{{title}}</h1>
       <div class="form-group">
         <label for="overviewFilter">Filter by name</label>
-        <input type="text" class="overview-filter form-control" @change="setFilterName" v-model="filterName">
+        <input type="text" class="overview-filter form-control" @keyup="setFilterName" v-model="filterName">
       </div>
       <div class="form-group">
         <label for="overviewFilter">Refresh interval (seconds)</label>
@@ -13,11 +13,12 @@
     </div>
     <job-overview-list
       v-on:changeState="changeState"
+      :title="'all jobs'"
       :jobs="jobs"
     >
     </job-overview-list>
     <job-overview-list
-      v-for="job in jobs"
+      v-for="job in deDupedjobs"
       :key="job.name"
       v-on:changeState="changeState"
       :title="job.name"
@@ -47,6 +48,13 @@ export default Vue.component('sidebar', {
       refreshInterval: 2,
       filterName: ''
     };
+  },
+  computed: {
+    deDupedjobs() {
+      return this.jobs.filter((obj, pos, arr) => {
+          return this.jobs.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
+      });
+    }
   },
   methods: {
     setTimer() {
