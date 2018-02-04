@@ -54,7 +54,7 @@
           </b-table>
         </div>
       </div>
-      <job-details :active="currentJobActive" v-on:hide="currentJobActive = false" :jobs="currentJobs"></job-details>
+      <job-details :active="currentJobActive" v-on:hide="currentJobActive = false" :jobs="currentJobs" v-on:removeJob="removeJob"></job-details>
       <job-create :active="createJobActive" v-on:hide="createJobActive = false" v-on:newJob="newJob"></job-create>
     </div>
   </div>
@@ -219,10 +219,10 @@ export default {
       }
     },
     rowClicked(job) {
-      if (!this.currentJobs.includes(job)) {
-        this.currentJobs.push(job);
-      } else {
+      if (this.currentJobs.filter(currentJob => currentJob._id === job._id).length >= 1) {
         this.currentJobs.splice(this.currentJobs.indexOf(job), 1);
+      } else {
+        this.currentJobs.push(job);
       }
       this.openJobDetails();
     },
@@ -232,6 +232,9 @@ export default {
     async newJob(job) {
       this.jobs.push(job);
       await this.fetchData();
+    },
+    removeJob(job) {
+      this.currentJobs.splice(this.currentJobs.indexOf(job), 1)
     }
   },
   async mounted() {

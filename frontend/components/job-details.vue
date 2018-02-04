@@ -6,14 +6,14 @@
     <hr />
     <div v-for="job in jobs" class="panel panel-default">
       <div class="panel-heading">
-        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button @click="removeJob(job)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="panel-title">{{job.name}}</h3>
-        <template v-if="repeating"><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> {{ job.repeatInterval }}</span></template>
-        <template v-if="scheduled"><span class="label label-info">Scheduled</span></template>
-        <template v-if="queued"><span class="label label-primary">Queued</span></template>
-        <template v-if="running"><span class="label label-warning">Running</span></template>
-        <template v-if="completed"><span class="label label-success">Completed</span></template>
-        <template v-if="failed"><span class="label label-danger">Failed</span></template>
+        <template v-if="job.repeating"><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> {{ job.repeatInterval }}</span></template>
+        <template v-if="job.scheduled"><span class="label label-info">Scheduled</span></template>
+        <template v-if="job.queued"><span class="label label-primary">Queued</span></template>
+        <template v-if="job.running"><span class="label label-warning">Running</span></template>
+        <template v-if="job.completed"><span class="label label-success">Completed</span></template>
+        <template v-if="job.failed"><span class="label label-danger">Failed</span></template>
       </div>
       <div class="panel-body">
         <template v-if="job.lastRunAt"><p>Last run <time>{{job.lastRunAt | moment('from', now)}}</time></p></template>
@@ -24,7 +24,7 @@
 
         <strong>Job data</strong>
         <pre>{{JSON.stringify(job.data, null, 2)}}</pre>
-        <template v-if="failed">
+        <template v-if="job.failed">
           <strong>Failure reason</strong>
           <pre>{{JSON.stringify(job.failReason || '', null, 2)}}</pre>
         </template>
@@ -44,13 +44,19 @@ export default Vue.component('job-details', {
   name: 'job-details',
   props: {
     jobs: {
-      type: Array
+      type: Array,
+      default: []
     }
   },
   data() {
     return {
       now: new Date()
     };
+  },
+  methods: {
+    removeJob(jobId) {
+      this.$emit('removeJob', jobId);
+    }
   },
   mounted() {
     setInterval(() => {
