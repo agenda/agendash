@@ -1,8 +1,8 @@
 <template>
   <div v-if="jobs.length" id="details-pane">
     <h2 class="sub-header"><span class="number-selected">{{jobs.length}}</span> <small>selected</small></h2>
-    <button type="button" class="btn btn-danger btn-xs" data-action="requeue-jobs">Requeue selected</button>
-    <button type="button" class="btn btn-danger btn-xs pull-right" data-action="delete-jobs">Delete selected</button>
+    <button type="button" class="btn btn-danger btn-xs" @click="requeueJobs">Requeue selected</button>
+    <button type="button" class="btn btn-danger btn-xs pull-right" @click="deleteJobs">Delete selected</button>
     <hr />
     <div v-for="job in jobs" class="panel panel-default">
       <div class="panel-heading">
@@ -30,8 +30,8 @@
         </template>
       </div>
       <div class="panel-footer clearfix">
-        <button type="button" class="btn btn-danger btn-sm" data-action="requeue">Requeue</button>
-        <button type="button" class="btn btn-danger btn-sm pull-right" data-action="delete">Delete permanently</button>
+        <button type="button" class="btn btn-danger btn-sm" @click="requeueJob(job)">Requeue</button>
+        <button type="button" class="btn btn-danger btn-sm pull-right" @click="deleteJob(job)">Delete permanently</button>
       </div>
     </div>
   </div>
@@ -39,6 +39,7 @@
 
 <script>
 import Vue from 'vue';
+import api from '../api.js';
 
 export default Vue.component('job-details', {
   name: 'job-details',
@@ -50,12 +51,59 @@ export default Vue.component('job-details', {
   },
   data() {
     return {
+      // @TODO: We need to display this in the UI
+      error: null,
       now: new Date()
     };
   },
   methods: {
-    removeJob(jobId) {
-      this.$emit('removeJob', jobId);
+    removeJob(job) {
+      this.$emit('removeJob', job);
+    },
+    removeJobs() {
+      this.jobs.forEach(job => this.$emit('removeJob', job));
+    },
+    async requeueJob(job) {
+      const res = await api.post('api/jobs/requeue', {
+        body: {
+          jobIds: [job._id]
+        }
+      }).catch(err => {
+        this.error = err;
+      });
+    },
+    async requeueJobs() {
+      const jobIds = this.jobs.map(job => job._id);
+      const res = await api.post('api/jobs/requeue', {
+        body: {
+          jobIds
+        }
+      }).catch(err => {
+        this.error = err;
+      });
+    },
+    async deleteJob(job) {
+      const res = await api.post('api/jobs/delete', {
+        body: {
+          jobIds: [job._id]
+        }
+      }).catch(err => {
+        this.error = err;
+      });
+
+      this.removeJob(job);
+    },
+    async deleteJobs() {
+      const jobIds = this.jobs.map(job => job._id);
+      const res = await api.post('api/jobs/delete', {
+        body: {
+          jobIds
+        }
+      }).catch(err => {
+        this.error = err;
+      });
+
+      this.removeJobs();
     }
   },
   mounted() {
