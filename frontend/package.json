@@ -2,7 +2,7 @@
     "main": "./index.js",
     "scripts": {
         "test": "npx xo && npx ava",
-        "build": "npx poi build",
+        "build": "npx poi build --webpackmonitor",
         "start": "npx poi"
     },
     "dependencies": {
@@ -12,6 +12,13 @@
         "loose-json": "^1.1.2",
         "vue-router": "^3.0.1"
     },
+    "devDependencies": {
+        "node-sass": "^4.7.2",
+        "poi-preset-babel-minify": "^1.0.3",
+        "poi-preset-webpackmonitor": "^1.0.0",
+        "sass-loader": "^6.0.6",
+        "webpack": "^3.10.0"
+    },
     "xo": {
         "settings": {
             "import/core-modules": [
@@ -20,9 +27,5 @@
         },
         "semicolon": true,
         "space": "2"
-    },
-    "devDependencies": {
-        "node-sass": "^4.7.2",
-        "sass-loader": "^6.0.6"
     }
 }

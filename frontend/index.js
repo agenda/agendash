@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueMoment from 'vue-moment';
-import BootstrapVue from 'bootstrap-vue';
+import bTable from 'bootstrap-vue/es/components/table/table';
 import IndexComponent from './pages/index';
 
 Vue.use(VueRouter);
 Vue.use(VueMoment);
-Vue.use(BootstrapVue);
+Vue.component('b-table', bTable);
 
 const router = new VueRouter({
   routes: [
