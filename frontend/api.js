@@ -4,7 +4,7 @@ es6promise.polyfill();
 import Frisbee from 'frisbee';
 
 const api = new Frisbee({
-  baseURI: `${window.location.origin}/api/`,
+  baseURI: `${window.location.origin}/`,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
