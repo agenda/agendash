@@ -54,7 +54,7 @@
           </b-table>
         </div>
       </div>
-      <job-details :active="currentJobActive" v-on:hide="currentJobActive = false" :job="currentJob"></job-details>
+      <job-details :active="currentJobActive" v-on:hide="currentJobActive = false" :jobs="currentJobs"></job-details>
       <job-create :active="createJobActive" v-on:hide="createJobActive = false" v-on:newJob="newJob"></job-create>
     </div>
   </div>
@@ -100,8 +100,7 @@ export default {
       }],
       // Current job pane
       currentJobActive: false,
-      currentJob: {
-      },
+      currentJobs: [],
       currentJobState: '',
       jobs: [],
       // Schedule job pane
@@ -122,7 +121,14 @@ export default {
   },
   methods: {
     scheduleJob() {},
-    selectJobs() {},
+    selectJobs(filter) {
+      if (filter === 'all') {
+        this.currentJobs = this.jobs;
+      }
+      if (filter === 'none') {
+        this.currentJobs = [];
+      }
+    },
     openCreateJob() {
       this.createJobActive = true;
     },
@@ -213,11 +219,15 @@ export default {
       }
     },
     rowClicked(job) {
-      this.currentJob = job;
+      if (!this.currentJobs.includes(job)) {
+        this.currentJobs.push(job);
+      } else {
+        this.currentJobs.splice(this.currentJobs.indexOf(job), 1);
+      }
       this.openJobDetails();
     },
     openJobDetails() {
-
+      this.jobDetailsActive = true;
     },
     async newJob(job) {
       this.jobs.push(job);

@@ -51,8 +51,10 @@ export default Vue.component('sidebar', {
   },
   computed: {
     deDupedjobs() {
-      return this.jobs.filter((obj, pos, arr) => {
-          return this.jobs.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
+      return this.jobs.filter((job, pos, jobs) => {
+          if (this.filterName !== '' && job.name.includes(this.filterName) || this.filterName === '') {
+            return this.jobs.map(job => job.name).indexOf(job.name) === pos;
+          }
       });
     }
   },
