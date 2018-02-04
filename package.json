@@ -7,10 +7,16 @@
   "engines": {
     "node": ">=6.0.0"
   },
+  "files": [
+    "app.js",
+    "lib",
+    "frontend/dist/**/*"
+  ],
   "scripts": {
     "test": "run-p lint ava",
     "lint": "xo",
-    "ava": "ava"
+    "ava": "ava",
+    "prepublish": "cd frontend && npx poi build"
   },
   "keywords": [
     "agenda"
