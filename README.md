@@ -89,7 +89,7 @@ By mounting Agendash as middleware on a specific path, you may provide your
 own authentication for that path. For example if you have an authenticated
 session using passport, you can protect the dashboard path like this:
 
-```
+```js
 app.use('/dash',
   function (req, res, next) {
     if (!req.user || !req.user.is_admin) {
@@ -100,6 +100,21 @@ app.use('/dash',
   },
   Agendash(agenda)
 );
+```
+
+If you use token based authentication for your express app, you could do something like this:
+
+```js
+function auth(req, res, next) {
+   const token = req.headers.authorization;
+   // ... validate token
+}
+
+app.use('/dash', Agendash(agenda, {
+  middleware: 'express'
+  tokenKey: 'access_token',
+  apiMiddleware: auth 	// you can also pass an array
+}));
 ```
 
 Other middlewares will come soon in the folder `/lib/middlewares/`.
@@ -119,6 +134,8 @@ The second argument to Agendash is an optional object. Valid keys are:
 
 - `middleware`: Currently only `'express'` is supported. I'd like to use `'koa'` soon.
 - `title`: Defaults to `"Agendash"`. Useful if you are running multiple Agenda pools.
+- `apiMiddleware`: Middleware for `api/` routes (useful for token authentication).
+- `tokenKey`: Key for auth token stored in local storage.
 
 ### Help appreciated
 
