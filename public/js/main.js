@@ -1,6 +1,11 @@
 /* global $, _, Backbone, window, document */
 $(function () {
 
+  var getCookieValue = function(a) {
+    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)')
+    return b ? b.pop() : ''
+  }
+
   var tokenKey = getCookieValue('token-key')
 
   if (tokenKey) {
@@ -8,8 +13,8 @@ $(function () {
       headers: {
         'Authorization': window.localStorage.getItem(tokenKey)
       },
-      error: function (x) {
-        if (x.status == 403 || x.status == 401) {
+      error: function (err) {
+        if (err.status == 403 || err.status == 401) {
           window.location.replace('/')
         }
       }
@@ -426,11 +431,6 @@ $(function () {
       contentType: 'application/json',
       dataType: 'json'
     })
-  }
-
-  function getCookieValue(a) {
-    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)')
-    return b ? b.pop() : ''
   }
 
 })
