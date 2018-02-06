@@ -19,6 +19,7 @@ addons:
     - mongodb-org-server
     - mongodb-org-shell
 before_script:
+  - 'npm install -g npx'
   - mongo --version
   - mongod --version
   - 'if [ "$AGENDA_VERSION" ]; then yarn add agenda@$AGENDA_VERSION; fi'
