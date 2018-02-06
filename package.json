@@ -16,7 +16,7 @@
     "test": "run-p lint ava",
     "lint": "xo",
     "ava": "ava",
-    "prepublish": "cd frontend && npx poi build"
+    "prepublish": "npm install -g npx && cd frontend && npx poi build"
   },
   "keywords": [
     "agenda"
