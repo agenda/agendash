@@ -4,6 +4,10 @@ FROM node:8.2.0-alpine
 # RUN apk update && apk upgrade && \
 #    apk add --no-cache bash gawk sed grep bc coreutils git openssh
 
+ENV NODE_ENV=production \
+  MONGODB_URI=mongodb://mongodb \
+  COLLECTION=agendaJobs
+
 RUN mkdir -p /agendash
 WORKDIR /agendash
 
@@ -11,6 +15,8 @@ COPY package.json /agendash/
 RUN npm install && npm cache clean --force
 
 COPY . /agendash
+RUN chmod +x /agendash/entrypoint.sh
 
-ENTRYPOINT ["node", "./bin/agendash-standalone.js"]
-CMD ["--db=mongodb://mongodb"]
+EXPOSE 3000
+
+ENTRYPOINT ["/agendash/entrypoint.sh"]
