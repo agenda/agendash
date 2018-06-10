@@ -8,12 +8,13 @@
     "dependencies": {
         "bootstrap-vue": "^2.0.0-rc.1",
         "debug": "^3.1.0",
-        "frisbee": "^1.6.4",
+        "frisbee": "^2.0.5",
         "loose-json": "^1.1.2",
         "vue-router": "^3.0.1"
     },
     "devDependencies": {
         "node-sass": "^4.7.2",
+        "poi": "^10.2.7",
         "poi-preset-babel-minify": "^1.0.3",
         "poi-preset-webpackmonitor": "^1.0.0",
         "sass-loader": "^6.0.6",

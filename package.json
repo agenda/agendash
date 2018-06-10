@@ -15,8 +15,7 @@
   "scripts": {
     "test": "run-p lint ava",
     "lint": "xo",
-    "ava": "ava",
-    "prepublish": "cd frontend && npx poi build"
+    "ava": "ava"
   },
   "keywords": [
     "agenda"
@@ -42,6 +41,7 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "npm-run-all": "^4.1.2",
+    "poi": "^10.2.7",
     "supertest": "^3.0.0",
     "xo": "^0.18.2"
   },
