@@ -4,15 +4,15 @@ Works with [Hapijs](https://hapijs.com/) >= v17
 ### usage
 First install the dependencies in your app:
 ```bash
-yarn add hapi inert agenda
+npm install hapi inert agenda agendash
 ```
 Then use it as follows:
 ```javascript
 'use strict';
 
 const Hapi = require('hapi');
-var Agenda = require('agenda');
-var Agendash = require('agendash');
+const Agenda = require('agenda');
+const Agendash = require('agendash');
 
 var agenda = new Agenda({
     db: { address: '<mongoUrl>'
