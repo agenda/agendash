@@ -10,7 +10,7 @@
   "scripts": {
     "test": "run-p lint ava",
     "lint": "xo",
-    "ava": "ava"
+    "ava": "ava -v -c 1"
   },
   "keywords": [
     "agenda"
@@ -30,6 +30,8 @@
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
     "express": "^4.0.0",
+    "hapi": "^17.5.1",
+    "inert": "^5.1.0",
     "semver": "^5.3.0"
   },
   "devDependencies": {
