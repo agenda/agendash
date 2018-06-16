@@ -226,6 +226,7 @@ $(function () {
     events: {
       'click .close': 'close',
       'click [data-action=requeue]': 'requeueJob',
+      'click [data-action=run]': 'runJob',
       'click [data-action=delete]': 'allowDeleteJob',
       'click [data-action=delete].deleteable': 'deleteJob'
     },
@@ -240,6 +241,13 @@ $(function () {
         App.trigger('refreshData')
       })
     },
+    runJob: function (e) {
+      postJobs('run', [this.model.get('job')._id])
+      .success(function () {
+        $(e.currentTarget).remove()
+        App.trigger('refreshData')
+      })
+    },    
     allowDeleteJob: function (e) {
       $(e.currentTarget).addClass('deleteable').text('Confirm deletion')
     },
