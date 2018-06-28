@@ -65,6 +65,8 @@ Agendash provides Express middleware you can use at a specified path, for exampl
 make Agendash available on your site at the `/dash` path. Note: Do not try to mount Agendash
 at the root level like `app.use('/', Agendash(agenda))`.
 
+#### Use with express
+
 ```js
 var express = require('express');
 var app = express();
@@ -102,12 +104,36 @@ app.use('/dash',
 );
 ```
 
+#### Use with koa
+
+```js
+import Koa from 'koa';
+import Agenda from 'agenda';
+import Agendash from 'agendash';
+
+// ... your other express middleware like body-parser
+const agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/agendaDb'}});
+// or provide your own mongo client:
+// var agenda = new Agenda({mongo: myMongoClient})
+
+app.use(Agendash(agenda, {
+  middleware: 'koa',
+  prefix: '/dash'
+}));
+
+// ... your other routes
+
+// ... start your server
+```
+
+#### Others
+
 Other middlewares will come soon in the folder `/lib/middlewares/`.
 You'll just have to update the last line to require the middleware you need:
 
 ```js
 app.use('/agendash', Agendash(agenda, {
-  middleware: 'koa'
+  middleware: 'other services'
 }));
 ```
 
@@ -119,6 +145,10 @@ The second argument to Agendash is an optional object. Valid keys are:
 
 - `middleware`: Currently only `'express'` is supported. I'd like to use `'koa'` soon.
 - `title`: Defaults to `"Agendash"`. Useful if you are running multiple Agenda pools.
+
+### Examples
+
+- [Koa example](./examples/koa.js)
 
 ### Help appreciated
 

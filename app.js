@@ -9,10 +9,10 @@ module.exports = (agenda, options) => {
 
   const agendash = require('./lib/agendash')(agenda, options);
 
+  const middlewarePath = path.join(__dirname, 'lib/middlewares', options.middleware);
   try {
-    const middlewarePath = path.join(__dirname, 'lib/middlewares', options.middleware);
-    return require(middlewarePath)(agendash);
+    return require(middlewarePath)(agendash, options);
   } catch (err) {
-    throw new Error('No middleware available for ' + options.middleware);
+    throw new Error(`Middleware load failed with ${JSON.stringify(options)}`);
   }
 };

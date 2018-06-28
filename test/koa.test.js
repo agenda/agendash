@@ -1,14 +1,16 @@
 const test = require('ava');
 const supertest = require('supertest');
-const express = require('express');
+const Koa = require('koa');
 const Agenda = require('agenda');
 
-const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection');
+const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-koa-test-collection');
 
-const app = express();
-app.use('/', require('./app')(agenda));
+const app = new Koa();
+app.use(require('../app')(agenda, {
+  middleware: 'koa'
+}));
 
-const request = supertest(app);
+const request = supertest.agent(app.listen());
 
 test.before.cb(t => {
   agenda.on('ready', () => {
