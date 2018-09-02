@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueMoment from 'vue-moment';
 import bTable from 'bootstrap-vue/es/components/table/table';
-import IndexComponent from './pages/index';
+import IndexComponent from './pages/index.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueMoment);
