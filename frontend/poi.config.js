@@ -2,13 +2,15 @@ const webpack = require('webpack');
 
 module.exports = {
   devServer: {
-    proxy: 'http://localhost:3000/api/'
+    proxy: {
+      '/api': 'http://localhost:3000/'
+    }
   },
   presets: [
-    require('poi-preset-babel-minify')(),
-    require('poi-preset-webpackmonitor')()
+    require('@poi/plugin-babel-minify')(),
+    require('@poi/plugin-webpackmonitor')()
   ],
-  babel: { jsx: 'vue' },
+  babel: {jsx: 'vue'},
   webpack(config) {
     if (process.env.NODE_ENV === 'development') {
       config.devtool = 'cheap-source-map';
