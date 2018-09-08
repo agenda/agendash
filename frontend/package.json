@@ -1,34 +1,87 @@
 {
-    "main": "./index.js",
-    "scripts": {
-        "test": "npx xo",
-        "build": "npx poi build --webpackmonitor",
-        "start": "npx poi"
+  "main": "./index.js",
+  "scripts": {
+    "test": "xo && ava",
+    "build": "poi build --webpackmonitor",
+    "start": "poi"
+  },
+  "dependencies": {
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "debug": "^3.1.0",
+    "es6-promise": "^4.2.4",
+    "frisbee": "^2.0.5",
+    "loose-json": "^1.1.2",
+    "vue-moment": "^4.0.0-0",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "@poi/plugin-babel-minify": "^10.0.1",
+    "@poi/plugin-webpackmonitor": "^10.0.1",
+    "@vue/test-utils": "^1.0.0-beta.24",
+    "ava": "^0.25.0",
+    "eslint-plugin-vue": "^4.7.1",
+    "esm": "^3.0.82",
+    "node-sass": "^4.9.3",
+    "poi": "^10.2.10",
+    "sass-loader": "^7.1.0",
+    "vue": "2.5.16",
+    "webpack": "^4.17.1",
+    "xo": "^0.23.0"
+  },
+  "xo": {
+    "space": 2,
+    "extends": [
+      "plugin:vue/essential"
+    ],
+    "extensions": [
+      "vue"
+    ],
+    "rules": {
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "space-before-function-paren": [
+        "error",
+        {
+          "anonymous": "never",
+          "named": "never",
+          "asyncArrow": "always"
+        }
+      ]
     },
-    "dependencies": {
-        "bootstrap-vue": "^2.0.0-rc.11",
-        "debug": "^3.1.0",
-        "es6-promise": "^4.2.4",
-        "frisbee": "^2.0.5",
-        "loose-json": "^1.1.2",
-        "vue-moment": "^4.0.0-0",
-        "vue-router": "^3.0.1"
-    },
-    "devDependencies": {
-        "@poi/plugin-babel-minify": "^10.0.1",
-        "@poi/plugin-webpackmonitor": "^10.0.1",
-        "node-sass": "^4.9.3",
-        "poi": "^10.2.10",
-        "sass-loader": "^7.1.0",
-        "webpack": "^4.17.1"
-    },
-    "xo": {
-        "settings": {
-            "import/core-modules": [
-                "vue"
-            ]
-        },
-        "semicolon": true,
-        "space": "2"
-    }
+    "envs": [
+      "browser"
+    ],
+    "ignores": [
+      "static/**"
+    ],
+    "esnext": true
+  },
+  "ava": {
+    "require": [
+      "esm"
+    ],
+    "files": [
+      "test/specs/**/*.spec.js"
+    ],
+    "sources": [
+      "components/**/*.vue",
+      "pages/**/*.vue"
+    ],
+    "concurrency": 5,
+    "failWithoutAssertions": true,
+    "powerAssert": true
+  },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false,
+    "extension": [
+      ".vue"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  }
 }

@@ -62,11 +62,13 @@
 
 <script>
 import Debug from 'debug';
-import api from '../api.js';
-import Sidebar from '../components/sidebar.vue';
-import JobCreate from '../components/job-create.vue';
-import JobDetails from '../components/job-details.vue';
-import JobOverviewList from '../components/job-overview-list.vue';
+import api from '../api';
+import {
+  Sidebar,
+  JobCreate,
+  JobDetails,
+  JobOverviewList
+} from '../components';
 
 const debug = new Debug('agendash');
 
@@ -116,9 +118,6 @@ export default {
       filterName: ''
     };
   },
-  computed: {
-    selectedJob() {}
-  },
   methods: {
     scheduleJob() {},
     selectJobs(filter) {
@@ -132,23 +131,20 @@ export default {
     openCreateJob() {
       this.createJobActive = true;
     },
-    async fetchData() {
-      try {
-        const res = await api.get('/api/');
-        const {jobs} = res.body;
-
-        this.jobs = jobs.map(job => {
+    fetchData() {
+      api.get('/api/').then(res => {
+        this.jobs = res.body.map(job => {
           const data = Object.assign({}, job.job);
           delete job.job;
 
           return {
             ...data,
             ...job
-          }
+          };
         });
-      } catch (err) {
-        this.error = err;
-      }
+      }).catch(error => {
+        this.error = error;
+      });
     },
     setTimer(refreshInterval) {
       clearInterval(this.timer);
@@ -229,18 +225,18 @@ export default {
     openJobDetails() {
       this.jobDetailsActive = true;
     },
-    async newJob(job) {
+    newJob(job) {
       this.jobs.push(job);
-      await this.fetchData();
+      this.fetchData();
     },
     removeJob(job) {
-      this.currentJobs.splice(this.currentJobs.indexOf(job), 1)
+      this.currentJobs.splice(this.currentJobs.indexOf(job), 1);
     }
   },
-  async mounted() {
+  mounted() {
     this.setTimer(this.refreshInterval);
     setInterval(() => {
-       this.$data.now = Date.now();
+      this.$data.now = Date.now();
     }, 1000);
   },
   filters: {
@@ -289,7 +285,6 @@ export default {
   overflow: scroll;
 }
 
-
 @media (min-width: 1200px) {
   .main-pane {
     flex-direction: row;
@@ -303,7 +298,6 @@ export default {
     box-shadow: -2px 0px 3px 0px #eee;
   }
 }
-
 
 .nav-sidebar {
   margin-bottom: 10px;

@@ -40,7 +40,7 @@ export default Vue.component('sidebar', {
     },
     jobs: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
   data() {
@@ -51,10 +51,11 @@ export default Vue.component('sidebar', {
   },
   computed: {
     deDupedjobs() {
-      return this.jobs.filter((job, pos, jobs) => {
-          if (this.filterName !== '' && job.name.includes(this.filterName) || this.filterName === '') {
-            return this.jobs.map(job => job.name).indexOf(job.name) === pos;
-          }
+      return this.jobs.filter((job, pos) => {
+        if (this.filterName !== '' && job.name.includes(this.filterName) || this.filterName === '') {
+          return this.jobs.map(job => job.name).indexOf(job.name) === pos;
+        }
+        return false;
       });
     }
   },
@@ -68,8 +69,7 @@ export default Vue.component('sidebar', {
     setFilterName() {
       this.$emit('changeState', 'name', this.filterName);
     }
-  },
-  components: {}
+  }
 });
 </script>
 

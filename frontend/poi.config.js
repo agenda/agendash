@@ -10,7 +10,9 @@ module.exports = {
     require('@poi/plugin-babel-minify')(),
     require('@poi/plugin-webpackmonitor')()
   ],
-  babel: {jsx: 'vue'},
+  babel: {
+    jsx: 'vue'
+  },
   webpack(config) {
     if (process.env.NODE_ENV === 'development') {
       config.devtool = 'cheap-source-map';

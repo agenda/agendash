@@ -13,7 +13,7 @@
     "frontend/dist/**/*"
   ],
   "scripts": {
-    "test": "run-p lint ava",
+    "test": "run-p xo ava",
     "lint": "xo",
     "ava": "ava -v -c 1"
   },

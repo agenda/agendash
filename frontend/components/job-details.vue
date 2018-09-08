@@ -63,52 +63,52 @@ export default Vue.component('job-details', {
     removeJobs() {
       this.jobs.forEach(job => this.$emit('removeJob', job));
     },
-    async requeueJob(job) {
-      const res = await api.post('api/jobs/requeue', {
+    requeueJob(job) {
+      api.post('api/jobs/requeue', {
         body: {
           jobIds: [job._id]
         }
-      }).catch(err => {
-        this.error = err;
+      }).catch(error => {
+        this.error = error;
       });
     },
-    async requeueJobs() {
+    requeueJobs() {
       const jobIds = this.jobs.map(job => job._id);
-      const res = await api.post('api/jobs/requeue', {
+      api.post('api/jobs/requeue', {
         body: {
           jobIds
         }
-      }).catch(err => {
-        this.error = err;
+      }).catch(errorrr => {
+        this.error = error;
       });
     },
-    async deleteJob(job) {
-      const res = await api.post('api/jobs/delete', {
+    deleteJob(job) {
+      api.post('api/jobs/delete', {
         body: {
           jobIds: [job._id]
         }
-      }).catch(err => {
-        this.error = err;
+      }).then(() => {
+        this.removeJob(job);
+      }).catch(error => {
+        this.error = error;
       });
-
-      this.removeJob(job);
     },
-    async deleteJobs() {
+    deleteJobs() {
       const jobIds = this.jobs.map(job => job._id);
-      const res = await api.post('api/jobs/delete', {
+      api.post('api/jobs/delete', {
         body: {
           jobIds
         }
-      }).catch(err => {
-        this.error = err;
+      }).then(() => {
+        this.removeJobs();
+      }).catch(error => {
+        this.error = error;
       });
-
-      this.removeJobs();
     }
   },
   mounted() {
     setInterval(() => {
-       this.$data.now = Date.now();
+      this.$data.now = Date.now();
     }, 1000);
   },
   components: {}

@@ -36,7 +36,7 @@ export default Vue.component('job-overview-list', {
     },
     jobs: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
   data() {
@@ -67,7 +67,7 @@ export default Vue.component('job-overview-list', {
     },
     total() {
       return this.scheduled + this.queued + this.running + this.completed + this.failed;
-    },
+    }
   },
   methods: {
     changeState(name, state) {

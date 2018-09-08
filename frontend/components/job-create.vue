@@ -42,7 +42,7 @@ export default Vue.component('job-create', {
     };
   },
   methods: {
-    async saveJob() {
+    saveJob() {
       const {
         jobName,
         jobSchedule,
@@ -56,15 +56,16 @@ export default Vue.component('job-create', {
         jobData: cleanJSON(this.jobData)
       };
 
-      await api.post('api/jobs/create', {
+      api.post('api/jobs/create', {
         body: {
           ...job
         }
-      });
-      this.$emit('newJob', job);
+      }).then(() => {
+        this.$emit('newJob', job);
 
-      this.clearData();
-      this.hide();
+        this.clearData();
+        this.hide();
+      });
     },
     cancelJob() {
       this.clearData();
@@ -80,7 +81,7 @@ export default Vue.component('job-create', {
       this.$emit('hide');
     }
   },
-  components: {},
+  components: {}
 });
 </script>
 
