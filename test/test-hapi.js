@@ -1,14 +1,20 @@
 const test = require('ava');
 const supertest = require('supertest');
-const express = require('express');
+const Hapi = require('hapi');
 const Agenda = require('agenda');
 
 const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection');
 
-const app = express();
-app.use('/', require('./app')(agenda));
+const server = Hapi.server({
+  port: 3000,
+  host: 'localhost'
+});
+server.register(require('inert'));
+server.register(require('../app')(agenda, {
+  middleware: 'hapi'
+}));
 
-const request = supertest(app);
+const request = supertest(server.listener);
 
 test.before.cb(t => {
   agenda.on('ready', () => {
