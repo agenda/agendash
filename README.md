@@ -47,11 +47,15 @@ Agendash comes with a standalone Express app which you can use like this:
 ./node_modules/.bin/agendash --db="mongodb://localhost/agendaDb" --collection=agendaCollection --port=3001
 ```
 
+Then browse to `http://localhost:3001/`
+
 or like this, for default collection `agendaJobs` and default port `3000`:
 
 ```bash
 ./node_modules/.bin/agendash --db="mongodb://localhost/agendaDb"
 ```
+
+Then browse to `http://localhost:3000/`
 
 If you are using npm >= 5.2, then you can use [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
 
@@ -59,7 +63,7 @@ If you are using npm >= 5.2, then you can use [npx](https://medium.com/@maybekat
 npx agendash --db="mongodb://localhost/agendaDb" --collection=agendaCollection --port=3001
 ```
 
-Then browse to `http://localhost:3000/`
+Then browse to `http://localhost:3001/`
 
 ### Middleware usage
 
