@@ -2,4 +2,4 @@
 
 set +e
 
-exec node ./bin/agendash-standalone.js --db=$MONGODB_URI --collection=$COLLECTION
+exec node ./bin/agendash-standalone.js --db=$MONGODB_URI --collection=$COLLECTION --path=$BASE_PATH
