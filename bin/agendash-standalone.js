@@ -18,7 +18,7 @@ if (!program.db) {
   process.exit(1);
 }
 
-if (program.basePath && program.basePath[0] !== '/') {
+if (program.basePath && !program.basePath.startsWith('/')) {
   console.error('--path must begin with /');
   process.exit(1);
 }
@@ -26,7 +26,7 @@ if (program.basePath && program.basePath[0] !== '/') {
 const app = express();
 
 const agenda = new Agenda().database(program.db, program.collection);
-app.use(program.path, require('../app')(agenda, {
+app.use(program.basePath, require('../app')(agenda, {
   title: program.title
 }));
 
