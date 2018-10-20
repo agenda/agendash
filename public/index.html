@@ -153,6 +153,7 @@
           <% if (job.lastFinishedAt) { %><p>Last finished <time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).fromNow() %></time></p><% } %>
           <% if (job.lockedAt) { %><p>Locked <time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).fromNow() %></time></p><% } %>
           <% if (job.repeatInterval) { %><p>Repeat each <%- job.repeatInterval %></p><% } %>
+          <% if (job.lastModifiedBy) { %><p>Last modified by <%- job.lastModifiedBy %></p><% } %>
 
           <strong>Job data</strong>
           <pre><%- JSON.stringify(job.data, null, 2) %></pre>
