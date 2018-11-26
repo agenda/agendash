@@ -382,7 +382,7 @@ $(function () {
       this._fetchRequest = $.get('api', {
         job: this.currentRequest.get('job'),
         state: this.currentRequest.get('state')
-      }).success(this.resultsFetched)
+      }).success(this.resultsFetched).complete(this.fetchDataRequeue.bind(this))
     },
     resultsFetched: function (results) {
       this.overviewItems.set(results.overview)
@@ -392,6 +392,8 @@ $(function () {
       })
       this.render(results)
       this.jobItems.set(results.jobs)
+    },
+    fetchDataRequeue: function () {
       this._fetchTimeout = setTimeout(this.fetchData, this.currentRequest.get('refreshInterval'))
     },
     render: function (results) {
