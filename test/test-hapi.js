@@ -54,12 +54,15 @@ test.serial('POST /api/jobs/create should confirm the job exists', async t => {
 });
 
 test.serial('POST /api/jobs/delete should delete the job', async t => {
-  const job = await new Promise(resolve => {
+  const job = await new Promise((resolve, reject) => {
     agenda.create('Test Job', {})
     .schedule('in 4 minutes')
-    .save(async (err, job) => {
-      t.ifError(err);
-      return resolve(job);
+    .save()
+    .then(job => {
+      resolve(job);
+    })
+    .catch(err => {
+      reject(err);
     });
   });
 
@@ -76,12 +79,15 @@ test.serial('POST /api/jobs/delete should delete the job', async t => {
 });
 
 test.serial('POST /api/jobs/requeue should requeue the job', async t => {
-  const job = await new Promise(resolve => {
+  const job = await new Promise((resolve, reject) => {
     agenda.create('Test Job', {})
     .schedule('in 4 minutes')
-    .save(async (err, job) => {
-      t.ifError(err);
-      return resolve(job);
+    .save()
+    .then(job => {
+      resolve(job);
+    })
+    .catch(err => {
+      reject(err);
     });
   });
 

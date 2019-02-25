@@ -21,4 +21,4 @@ before_script:
   - 'if [ "$AGENDA_VERSION" ]; then yarn add agenda@$AGENDA_VERSION; fi'
   - 'until nc -z 127.0.0.1 27017 ; do echo Waiting for MongoDB; sleep 1; done'
 env:
-  - AGENDA_VERSION=^1.0.0
+  - AGENDA_VERSION=^2.0.0
