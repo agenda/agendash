@@ -1,4 +1,4 @@
-Next
+0.5.0 / 2019-02-25
 ====
 
 * Update dependencies (#69, #70) (**BREAKING**)
