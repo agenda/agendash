@@ -1,4 +1,9 @@
-Next
+1.0.0 / 2019-02-25
+====
+* Add Hapi v17 middleware, drop support for Node.js v6 & v7 (#81) by umens (**BREAKING**)
+* Support Agenda version 2 by alexkwolfe (**BREAKING**)
+
+0.5.0 / 2019-02-25
 ====
 
 * Update dependencies (#69, #70) (**BREAKING**)
