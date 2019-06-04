@@ -26,7 +26,7 @@ const server = Hapi.server({
 const init = async () => {
 
   await server.register(
-    require('inert'),
+    require('@hapi/inert'),
     {
       plugin: Agendash(agenda, {
         middleware: 'hapi'

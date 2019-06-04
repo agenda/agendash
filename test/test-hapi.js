@@ -9,7 +9,7 @@ const server = Hapi.server({
   port: 3000,
   host: 'localhost'
 });
-server.register(require('inert'));
+server.register(require('@hapi/inert'));
 server.register(require('../app')(agenda, {
   middleware: 'hapi'
 }));
