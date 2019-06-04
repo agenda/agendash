@@ -10,7 +10,7 @@ Then use it as follows:
 ```javascript
 'use strict';
 
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 const Agenda = require('agenda');
 const Agendash = require('agendash');
 
