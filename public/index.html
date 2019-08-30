@@ -160,6 +160,10 @@
             <strong>Failure reason</strong>
             <pre><%- JSON.stringify(job.failReason || '', null, 2) %></pre>
           <% } %>
+          <% if (completed) { %>
+            <strong>Execution result</strong>
+            <pre><%- JSON.stringify(job.result || '', null, 2) %></pre>
+          <% } %>
         </div>
         <div class="panel-footer clearfix">
           <button type="button" class="btn btn-danger btn-sm" data-action="requeue">Requeue</button>
