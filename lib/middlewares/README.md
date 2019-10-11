@@ -1,6 +1,6 @@
 # Middlewares
 ## Hapi
-Works with [Hapijs](https://hapijs.com/) >= v17
+Works with [Hapijs](https://hapi.dev/) >= v18
 ### usage
 First install the dependencies in your app:
 ```bash
@@ -10,7 +10,7 @@ Then use it as follows:
 ```javascript
 'use strict';
 
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 const Agenda = require('agenda');
 const Agendash = require('agendash');
 

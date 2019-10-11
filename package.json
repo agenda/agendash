@@ -25,12 +25,12 @@
   "homepage": "https://github.com/agenda/agendash#readme",
   "license": "MIT",
   "dependencies": {
+    "@hapi/hapi": "^18.4.0",
     "agenda": "^2.0.0",
     "async": "^2.6.0",
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
     "express": "^4.0.0",
-    "hapi": "^17.5.1",
     "inert": "^5.1.0",
     "semver": "^5.3.0"
   },
