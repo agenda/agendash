@@ -40,11 +40,8 @@ test.serial('POST /api/jobs/create should confirm the job exists', async t => {
 
   t.true('created' in res.body);
 
-  agenda._collection.countDocuments({}, null, (err, res) => {
+  agenda._collection.countDocuments({}, null, err => {
     t.ifError(err);
-    if (res !== 1) {
-      throw new Error('Expected one document in database');
-    }
   });
 });
 
