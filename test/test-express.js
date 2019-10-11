@@ -3,8 +3,7 @@ const supertest = require('supertest');
 const express = require('express');
 const Agenda = require('agenda');
 
-const randomInstance = Date.now().toString() + Math.floor((Math.random() * 10) + 1).toString();
-const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection' + randomInstance);
+const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection');
 
 const app = express();
 app.use('/', require('../app')(agenda));
@@ -40,8 +39,15 @@ test.serial('POST /api/jobs/create should confirm the job exists', async t => {
 
   t.true('created' in res.body);
 
-  agenda._collection.countDocuments({}, null, err => {
-    t.ifError(err);
+  await new Promise(resolve => {
+    agenda._collection.countDocuments({}, null, (err, res) => {
+      t.ifError(err);
+      if (res !== 1) {
+        throw new Error('Expected one document in database');
+      }
+
+      resolve(res);
+    });
   });
 });
 
