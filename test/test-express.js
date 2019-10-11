@@ -3,7 +3,8 @@ const supertest = require('supertest');
 const express = require('express');
 const Agenda = require('agenda');
 
-const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection');
+const randomInstance = Date.now().toString() + Math.floor((Math.random() * 10) + 1).toString();
+const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection' + randomInstance);
 
 const app = express();
 app.use('/', require('../app')(agenda));

@@ -3,10 +3,12 @@ const supertest = require('supertest');
 const Hapi = require('@hapi/hapi');
 const Agenda = require('agenda');
 
-const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection');
-
+const randomInstance = Date.now().toString() + Math.floor((Math.random() * 10) + 1).toString();
+const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection' + randomInstance);
+const portRun = Math.floor((Math.random() * 5000) + 3000);
+console.log(portRun);
 const server = Hapi.server({
-  port: 3000,
+  port: portRun,
   host: 'localhost'
 });
 server.register(require('inert'));
