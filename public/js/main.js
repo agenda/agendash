@@ -3,6 +3,8 @@ $(function () {
   var CurrentRequestModel = Backbone.Model.extend({
     defaults: {
       refreshInterval: 2000,
+      limit: 200,
+      skip: 0,
       overviewFilterRegex: /.*/
     }
   })
@@ -127,11 +129,13 @@ $(function () {
     el: '#sidebar',
     events: {
       'keyup .overview-filter': 'updateOverviewFilter',
-      'change .refresh-interval': 'updateRefreshInterval'
+      'change .refresh-interval': 'updateRefreshInterval',
+      'change .limit-filter': 'updateLimit',
+      'change .skip-filter': 'updateSkip'
     },
     initialize: function (options) {
       this.currentRequest = options.currentRequest
-      _.bindAll(this, 'updateOverviewFilter', 'updateRefreshInterval')
+      _.bindAll(this, 'updateOverviewFilter', 'updateRefreshInterval', 'updateLimit', 'updateSkip')
     },
     updateOverviewFilter: function (e) {
       // http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
@@ -146,6 +150,16 @@ $(function () {
     updateRefreshInterval: function (e) {
       this.currentRequest.set({
         refreshInterval: +$(e.currentTarget).val() * 1000
+      })
+    },
+    updateLimit: function (e) {
+      this.currentRequest.set({
+        limit: +$(e.currentTarget).val()
+      })
+    },
+    updateSkip: function (e) {
+      this.currentRequest.set({
+        skip: +$(e.currentTarget).val()
       })
     }
   })
@@ -381,7 +395,9 @@ $(function () {
       this._fetchTimeout && clearTimeout(this._fetchTimeout)
       this._fetchRequest = $.get('api', {
         job: this.currentRequest.get('job'),
-        state: this.currentRequest.get('state')
+        state: this.currentRequest.get('state'),
+        limit: this.currentRequest.get('limit'),
+        skip: this.currentRequest.get('skip')
       }).success(this.resultsFetched)
     },
     resultsFetched: function (results) {

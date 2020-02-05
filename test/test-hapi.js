@@ -27,7 +27,7 @@ test.beforeEach(async () => {
 });
 
 test.serial('GET /api with no jobs should return the correct overview', async t => {
-  const res = await request.get('/api');
+  const res = await request.get('/api?limit=200&skip=0');
 
   t.is(res.body.overview[0].displayName, 'All Jobs');
   t.is(res.body.jobs.length, 0);
