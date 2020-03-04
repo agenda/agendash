@@ -8,7 +8,7 @@ $(function () {
   })
 
   var ActiveTitleModel = Backbone.Model.extend({})
-
+  var StatusModel = Backbone.Model.extend({})
   var OverviewItemModel = Backbone.Model.extend({})
   var OverviewItemCollection = Backbone.Collection.extend({
     model: OverviewItemModel
@@ -37,7 +37,28 @@ $(function () {
       return this
     }
   })
-
+  
+	var StatusView = Backbone.View.extend({
+    el: '#status',
+    model: StatusModel,
+    template: _.template($('#status-template').html()),
+    initialize: function (options) {
+      this.status = options.status
+      _.bindAll(this, 'render', 'handleClick')
+      this.listenTo(this.status, 'change', this.render)
+    },
+    events: {
+      'click [data-action]': 'handleClick'
+    },
+    handleClick: function (e) {
+      App.trigger('agendaAction', $(e.currentTarget).data('action'))
+    },
+    render: function () {
+      this.$el.html(this.template(this.status.toJSON()))
+      return this
+    }
+  })
+  
   var OverviewItemView = Backbone.View.extend({
     model: OverviewItemModel,
     template: _.template($('#overview-item-template').html()),
@@ -333,11 +354,15 @@ $(function () {
         'resultsFetched'
       )
 
+      this.status = new StatusModel()
       this.activeTitle = new ActiveTitleModel()
       this.currentRequest = new CurrentRequestModel()
       this.overviewItems = new OverviewItemCollection()
       this.jobItems = new JobItemCollection()
 
+      this.statusView = new StatusView({
+        status: this.status
+      })
       this.activeTitleView = new ActiveTitleView({
         activeTitle: this.activeTitle
       })
@@ -363,12 +388,22 @@ $(function () {
       this.createJobPaneView = new CreateJobPaneView({
       })
 
+      this.listenTo(this, 'agendaAction', this.agendaAction)
       this.listenTo(this, 'requestChange', this.handleRequestChange)
       this.listenTo(this, 'showJobDetails', this.handleShowJobDetails)
       this.listenTo(this, 'refreshData', this.fetchData)
       this.listenTo(this.currentRequest, 'change', this.fetchData)
 
       this.fetchData()
+    },
+    agendaAction: function(action) {
+		  this.getAgendaStatus(action)
+    },
+    getAgendaStatus: function(action) {
+      var self = this
+      $.get('agendaStatus', { action }).success(function(results) {
+        self.status.set(results)
+      })
     },
     handleRequestChange: function (newRequest) {
       this.currentRequest.set(newRequest)
@@ -383,6 +418,7 @@ $(function () {
         job: this.currentRequest.get('job'),
         state: this.currentRequest.get('state')
       }).success(this.resultsFetched)
+      this.getAgendaStatus()
     },
     resultsFetched: function (results) {
       this.overviewItems.set(results.overview)
