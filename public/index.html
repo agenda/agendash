@@ -143,6 +143,7 @@
         <div class="panel-heading">
           <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h3 class="panel-title"><%- job.name %></h3>
+		  <p><span class="label label-info"><%- `db.getCollection('agendaJobs').find({_id: ObjectId("${job._id}")})`  %></span></p>
           <% if (repeating) { %><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> <%- job.repeatInterval %></span><% } %>
           <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
           <% if (queued) { %><span class="label label-primary">Queued</span><% } %>
@@ -159,7 +160,7 @@
 
           <strong>Job data</strong>
           <pre><%- JSON.stringify(job.data, null, 2) %></pre>
-          <pre><%- JSON.stringify(job.result, null, 2) : "" %></pre>
+          <pre><%- JSON.stringify(job.result, null, 2) %></pre>
           <% if (failed) { %>
             <strong>Failure reason</strong>
             <pre><%- JSON.stringify(job.failReason || '', null, 2) %></pre>
