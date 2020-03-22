@@ -158,8 +158,8 @@
           <% if (job.repeatInterval) { %><p>Repeat each <%- job.repeatInterval %></p><% } %>
 
           <strong>Job data</strong>
-          <pre><%- JSON.stringify(job.data, null, 2).substring(0,500) %></pre>
-          <pre><%- JSON.stringify(job.result, null, 2).substring(0,500) %></pre>
+          <pre><%- job.data ? JSON.stringify(job.data, null, 2).substring(0,500) : "" %></pre>
+          <pre><%- job.result ? JSON.stringify(job.result, null, 2).substring(0,500) : "" %></pre>
           <% if (failed) { %>
             <strong>Failure reason</strong>
             <pre><%- JSON.stringify(job.failReason || '', null, 2) %></pre>
