@@ -1,0 +1,35 @@
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar {
+  height: 70vh;
+  max-height: 70vh;
+  overflow-y: scroll;
+}
+.topbar {
+  height: 20vh;
+}
+.joblist {
+  height: 70vh;
+  max-height: 70vh;
+  overflow-y: scroll;
+}
+
+.table-headers, .table-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-row {
+  height: 30px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+.table-headers {
+  height: 30px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
