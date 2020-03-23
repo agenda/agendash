@@ -26,16 +26,19 @@
   "license": "MIT",
   "dependencies": {
     "agenda": "^2.0.0",
+    "ammo": "^3.0.3",
     "async": "^2.6.0",
     "body-parser": "^1.15.0",
+    "braces": "^3.0.2",
     "commander": "^2.9.0",
     "express": "^4.0.0",
-    "hapi": "^17.5.1",
+    "hapi": "^18.1.0",
     "inert": "^5.1.0",
-    "semver": "^5.3.0"
+    "semver": "^5.3.0",
+    "subtext": "^6.0.12"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "^3.5.1",
     "npm-run-all": "^4.1.2",
     "supertest": "^3.0.0",
     "xo": "^0.18.2"
