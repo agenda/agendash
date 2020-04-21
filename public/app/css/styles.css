@@ -1,3 +1,12 @@
+:root{
+  --secondary: #ffffff;
+  --primary: #2b2b2b;
+  --warning: rgb(255, 94, 0);
+  --pill-own-time: #00b7ff;
+}
+* {
+   font-family: 'Roboto', sans-serif;
+}
 .section {
   display: flex;
   justify-content: center;
@@ -5,16 +14,12 @@
 }
 
 .sidebar {
-  height: 70vh;
-  max-height: 70vh;
   overflow-y: scroll;
 }
 .topbar {
-  height: 20vh;
+  height: 250px;
 }
 .joblist {
-  height: 70vh;
-  max-height: 70vh;
   overflow-y: scroll;
 }
 
@@ -23,13 +28,32 @@
   justify-content: space-between;
 }
 
-.table-row {
-  height: 30px;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
+.popupmessage{
+  width: 60vw;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
-.table-headers {
-  height: 30px;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
+
+.action-btn{
+  margin: 0px;
+  padding: 1px 2px;
 }
+.action-btn:hover{
+  color: var(--warning-secondary);
+}
+.oi{
+  top:0px !important;
+}
+.pill-own {
+  padding: 3px 3px;
+  font-size: 11px;
+  color: var(--secondary);
+  border-radius: 2px;
+}
+.pill-own span {
+  line-height: 15px;
+  font-size: 11px;
+  font-style: normal;
+}
+
