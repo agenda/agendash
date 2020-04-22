@@ -72,7 +72,7 @@ const app = Vue.component('app', {
           <div class="col-3">
             <a class="navbar-brand col-sm-3 col-md-2 mr-0 tittle"> Agendash 2</a>
           </div>
-          <div class="col-push-7 col-xs-hidden col-2 text-right text-light"><small>Version 2.0.0 / 04-2020</small></div>
+          <div class="col-push-7 d-none d-sm-block col-2 text-right text-light"><small>Version 2.0.0 / 04-2020</small></div>
         </div>
       </div>
       <div class="row pt-5">

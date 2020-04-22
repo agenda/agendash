@@ -59,6 +59,11 @@
   color: var(--secondary);
   border-radius: 3px;
 }
+.md-custom {
+  font-size: 21px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .pill-own span {
   line-height: 12px;
   font-size: 10px;
