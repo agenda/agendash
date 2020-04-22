@@ -7,6 +7,13 @@
 * {
    font-family: 'Roboto', sans-serif;
 }
+.tittle {
+  font-family: 'Days One', sans-serif;
+  font-size: 22px;
+}
+.logo{
+  margin-bottom: 12px;
+}
 .section {
   display: flex;
   justify-content: center;
@@ -31,8 +38,9 @@
 .popupmessage{
   width: 60vw;
   position: absolute;
-  top: 10px;
+  top: 30px;
   right: 10px;
+  z-index: 999999;
 }
 
 .action-btn{
@@ -47,13 +55,16 @@
 }
 .pill-own {
   padding: 3px 3px;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--secondary);
-  border-radius: 2px;
+  border-radius: 3px;
 }
 .pill-own span {
-  line-height: 15px;
-  font-size: 11px;
+  line-height: 12px;
+  font-size: 10px;
   font-style: normal;
 }
-
+.IcoInButton{
+  font-size: 13px;
+  margin: 0 2px;
+}

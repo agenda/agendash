@@ -12,9 +12,8 @@ const topbar = Vue.component('topbar', {
     }
   },
   template: `
-  <div class="topbar section">
-    <div class="container">
-      <div class="form col-md-8">
+  <div class="topbar section row">
+      <div class=" col-md-8">
           <div class="input-group mt-2 mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text"> Search </span>
@@ -43,7 +42,7 @@ const topbar = Vue.component('topbar', {
           </div>
           <button @click="$emit('refresh-data', search, property, limit, skip, refresh)" class="btn btn-success"> Apply </button>
       </div>
-    </div>
+      <div class="col-md-4"></div>
   </div>
   `
 })

@@ -1,25 +1,25 @@
-const confirmDelete = Vue.component('confirm-delete', {
+const confirmRequeue = Vue.component('confirm-requeue', {
   props: ['job'],
   methods: {
-    deleteOne(id){
-      const url = `/api/jobs/delete`;
+    RequeueOne(id){
+      const url = `/api/jobs/requeue`;
       let body = {jobIds: [id]};
       return axios.post(url, body)
         .then(result => result.data)
         .then(data => {
-          this.$emit('popup-message', 'delete');
+          this.$emit('popup-message');
           this.$emit('refresh-data');
         })
         .catch(console.log)
     }
   },
   template: `
-  <div class="modal fade" id="modalDeleteShure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalRequeueShure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <!-- Modal -->
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Confirm Delete Permanently</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Confirm requeue job</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -29,7 +29,7 @@ const confirmDelete = Vue.component('confirm-delete', {
           <p>Name: {{job.job.name}}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal" @click="deleteOne(job.job._id)">Delete</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal" @click="RequeueOne(job.job._id)">Requeue Job</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
       </div>
