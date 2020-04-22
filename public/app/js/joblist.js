@@ -35,9 +35,9 @@ const jobList = Vue.component('job-list', {
                   <td class="job-finishedAt"> {{ formatDate(job.job.lastFinishedAt) }} </td>
                   <td class="job-lockedAt"> {{ job.job.lockedAt ? formatDate(job.job.lockedAt) : "" }} </td>
                   <td class="job-actions">
-                    <i class="btn oi oi-timer action-btn viewData text-primary" data-toggle="modal" data-target="#modalRequeueShure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue"></i>
-                    <i class="btn oi oi-eye action-btn viewData text-success" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data"></i>
-                    <i class="btn oi oi-trash action-btn viewData text-danger" data-toggle="modal" data-target="#modalDeleteShure" @click="$emit('confirm-delete', job)" data-placement="top" title="Delete permanently"></i>
+                    <i class="material-icons md-dark action-btn viewData text-primary" data-toggle="modal" data-target="#modalRequeueShure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
+                    <i class="material-icons md-dark action-btn viewData text-success" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data">visibility</i>
+                    <i class="material-icons md-dark action-btn viewData text-danger" data-toggle="modal" data-target="#modalDeleteShure" @click="$emit('confirm-delete', job)" data-placement="top" title="Delete permanently">delete_forever</i>
                 </td>
             </tr>
           </tbody>
