@@ -2,7 +2,7 @@ const topbar = Vue.component('topbar', {
   data: () => ({
     search: '',
     property: 'data.id',
-    limit: 5,
+    limit: 15,
     skip: 0,
     refresh: 60,
     object: false,
