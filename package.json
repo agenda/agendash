@@ -35,7 +35,8 @@
     "hapi": "^18.1.0",
     "inert": "^5.1.0",
     "semver": "^5.3.0",
-    "subtext": "^6.0.12"
+    "subtext": "^6.0.12",
+    "vue-tables-2": "^2.0.20"
   },
   "devDependencies": {
     "ava": "^3.5.1",
