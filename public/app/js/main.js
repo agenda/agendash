@@ -4,13 +4,20 @@ const app = Vue.component('app', {
     overview: [],
     refresh: 60,
     showDetail: false,
+    pagenumber: 1,
     showConfirm: false,
     showConfirmRequeue: false,
     showNewJob: false,
     jobData: {},
     deletec: false,
     requeuec: false,
+    pagesize: 0,
     createc: false,
+    property: '',
+    search: '',
+    object: '',
+    newLimit: null,
+    skip: 0,
   }),
   methods: {
     showJobDetail(data){
@@ -29,13 +36,39 @@ const app = Vue.component('app', {
       this.jobData = data;
       this.showNewJob = true;
     },
-    fetchData(search = '', property = '', limit = 200, skip = 0, refresh = 60){
+    searchForm(search, property, limit, skip, refresh, object){
+        this.search = search,
+        this.property = property,
+        this.pagesize = parseInt(limit),
+        this.skip = skip,
+        this.refresh = refresh,
+        this.object = object,
+
+        this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.object)
+    },
+    pagechange(action){
+
+      if(action === 'next'){
+        this.pagenumber++
+      }
+      if(action === 'prev'){
+        this.pagenumber--
+      }
+      this.skip = (this.pagenumber-1) * this.pagesize
+      this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.object)
+    },
+    fetchData(search = '', property = '', limit = 5, skip = 0, refresh = 60, object){
+      this.pagesize = this.pagesize === 0 ? parseInt(limit) : this.pagesize;
       this.refresh = parseFloat(refresh);
-      const url = `/api?limit=${limit}&skip=${skip}&property=${property}&q=${search}`;
+      const url = `/api?limit=${limit}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}&q=${search}`;
       return axios.get(url)
         .then(result => result.data)
         .then((data) => {
+          console.log("data que viene",data.jobs, data.overview)
           this.jobs = data.jobs;
+          this.search = search;
+          this.property = property;
+          this.object = object;
           this.overview = data.overview;
         })
         .catch(console.log)
@@ -81,13 +114,18 @@ const app = Vue.component('app', {
           </div>
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="col-md-12">
-              <topbar v-on:refresh-data="fetchData"></topbar>
+              <topbar v-on:search-form="searchForm"></topbar>
             </div>
             <div class="col-md-12">
+              {{search}}
               <job-list
                   v-on:confirm-delete="confirmDelete"
                   v-on:confirm-requeue="confirmRequeue"
                   v-on:show-job-detail="showJobDetail"
+                  v-on:pagechange="pagechange"
+                  :pagesize="pagesize"
+                  :pagenumber='pagenumber'
+                  :skip="skip"
                   :jobs="jobs">
               </job-list>
             </div>

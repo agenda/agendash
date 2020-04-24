@@ -1,12 +1,13 @@
 const jobList = Vue.component('job-list', {
-  props: ['jobs'],
+  props: ['jobs','pagesize','pagenumber'],
   methods: {
     formatDate(date) {
       return moment(date).fromNow();
-      return new Date(date).toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: '2-digit', hour: "numeric", minute: "numeric", second: "numeric" })
-    }
+      // return new Date(date).toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: '2-digit', hour: "numeric", minute: "numeric", second: "numeric" })
+    },
   },
   template: `
+<div>
         <table class="table table-striped">
           <thead class="thead-dark">
             <tr>
@@ -20,7 +21,7 @@ const jobList = Vue.component('job-list', {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="job in jobs"  >
+            <tr v-for="job in jobs">
                   <td th scope="row" class="job-name">
                     <i v-if="job.repeating" class="oi oi-timer pill-own bg-info"><span>{{job.job.repeatInterval}}</span></i>
                     <i v-if="job.scheduled" class="pill-own bg-info pill-withoutIcon"><span>Scheduled</span></i>
@@ -42,5 +43,19 @@ const jobList = Vue.component('job-list', {
             </tr>
           </tbody>
         </table>
+        <div class="row ">
+            <div class="col d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">Previous</a></li>
+                  <!-- <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">{{pagenumber -1}}</a></li>
+                  <li class="page-item active"><a class="page-link">{{pagenumber}}</a></li>
+                  <li class="page-item"><a class="page-link" @click="$emit('pagechange', 'next')">{{pagenumber +1}}</a></li> -->
+                  <li class="page-item"><a class="page-link" @click="$emit('pagechange', 'next')">Next</a></li>
+                </ul>
+              </nav>
+            </div>
+        </div>
+</div>
   `
 })
