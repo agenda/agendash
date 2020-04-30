@@ -68,6 +68,7 @@
 .action-btn{
   margin: 0px;
   padding: 1px 2px;
+  cursor: pointer;
 }
 .action-btn:hover{
   color: var(--warning-secondary);
@@ -87,9 +88,6 @@
   color: var(--secondary);
   border-radius: 3px;
 }
-.rows-own {
-  
-}
 .progress{
   height: 5px;
 }
@@ -104,6 +102,7 @@
 .mybtn:hover{
   background-color: rgb(218, 218, 218);
 }
+
 .pill-own span {
   line-height: 12px;
   font-size: 10px;

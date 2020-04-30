@@ -1,16 +1,38 @@
 const jobList = Vue.component('job-list', {
-  props: ['jobs','pagesize','pagenumber'],
+  data: () => ({
+    multijobs: [],
+  }),
+  props: ['jobs','pagesize','pagenumber','sendClean'],
+
   methods: {
+    sendQueued(){
+      this.$emit('confirm-multi-requeue', this.multijobs)
+      this.multijobs = []
+    },
+    sendDelete(){
+      this.$emit('confirm-multi-delete', this.multijobs)
+      this.multijobs = []
+    },
+    cleanMulti() {
+      return console.log("receibed Clean Multi")
+    },
     formatDate(date) {
       return moment(date).fromNow();
       // return new Date(date).toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: '2-digit', hour: "numeric", minute: "numeric", second: "numeric" })
     },
   },
   template: `
-<div>
+<div v-on:sendClean="cleanMulti">
+        <div v-if="multijobs.length > 0" class="row" >
+          <div class="col-3 ml-auto">
+            <button data-toggle="modal" data-target="#modalRequeueShureMulti" @click="sendQueued" class="btn btn-primary" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>
+            <button data-toggle="modal" data-target="#modalDeleteShureMulti" @click="sendDelete" class="btn btn-danger" data-placement="top" title="Delete list of selecteds Jobs"> Multiple Delete </button>
+          </div>
+        </div>
         <table class="table table-striped">
           <thead class="thead-dark">
             <tr>
+              <th  scope="col"> Multi </th>
               <th  scope="col"> Status </th>
               <th  scope="col"> Name </th>
               <th  scope="col"> Last run started </th>
@@ -22,6 +44,7 @@ const jobList = Vue.component('job-list', {
           </thead>
           <tbody>
             <tr v-for="job in jobs">
+                  <td width="10" class="mult-select"><input v-model="multijobs" :id='job.job._id' type="checkbox" :value="job.job._id"></input></td>
                   <td th scope="row" class="job-name">
                     <i v-if="job.repeating" class="oi oi-timer pill-own bg-info"><span>{{job.job.repeatInterval}}</span></i>
                     <i v-if="job.scheduled" class="pill-own bg-info pill-withoutIcon"><span>Scheduled</span></i>

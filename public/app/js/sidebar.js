@@ -1,5 +1,22 @@
 const sidebar = Vue.component('sidebar', {
   props: ['overview','pagesize'],
+  computed: {
+    sortedArray() {
+      function compare(a, b){
+        let displayNameA = a.displayName.toLowerCase();
+        let displayNameB = b.displayName.toLowerCase();
+        if (displayNameA === 'all jobs' || displayNameB === 'all jobs')
+          return
+        if (displayNameA < displayNameB)
+          return -1;
+        if (displayNameA > displayNameB)
+          return 1;
+        return 0;
+      }
+  
+      return this.overview.sort(compare);
+    }
+  },
   methods: {
     flexgrow(number){
       return Math.log2(1 + number)
@@ -25,7 +42,7 @@ const sidebar = Vue.component('sidebar', {
       </div> <!-- row -->
       <div class="row p-0">
         <div class="col">
-          <div class="row rows-ow" v-for="type in overview">
+          <div class="row rows-ow" v-for="type in sortedArray">
             <div class="col-12 d-flex mt-4 mybtn" @click="searchSpecificJob(type.displayName,'')">
               <div class="mr-auto">{{type.displayName}}</div><div class="text-rigth pill-big-own bg-secondary right">{{type.total}}</div>
             </div>
