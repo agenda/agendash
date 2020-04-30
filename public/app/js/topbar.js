@@ -5,6 +5,7 @@ const topbar = Vue.component('topbar', {
     limit: 15,
     skip: 0,
     refresh: 60,
+    state: '',
     object: false,
   }),
   methods: {
@@ -43,7 +44,7 @@ const topbar = Vue.component('topbar', {
             </div>
             <input type="number" class="form-control" v-model="limit" />
           </div>
-          <button @click="$emit('search-form', search, property, limit, skip, refresh, object)" class="btn btn-success"> Apply </button>
+          <button @click="$emit('search-form', search, property, limit, skip, refresh, state, object)" class="btn btn-success"> Apply </button>
       </div>
       <div class="col-md-4"></div>
   </div>

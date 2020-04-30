@@ -11,13 +11,14 @@ const app = Vue.component('app', {
     jobData: {},
     deletec: false,
     requeuec: false,
-    pagesize: 0,
+    pagesize: 15,
     createc: false,
     property: '',
     search: '',
     object: '',
     newLimit: null,
     skip: 0,
+    state: '',
   }),
   methods: {
     showJobDetail(data){
@@ -36,15 +37,17 @@ const app = Vue.component('app', {
       this.jobData = data;
       this.showNewJob = true;
     },
-    searchForm(search, property, limit, skip, refresh, object){
+    searchForm(search, property, limit, skip, refresh, state, object){
+
         this.search = search,
         this.property = property,
-        this.pagesize = parseInt(limit),
+        this.pagesize =  parseInt(limit),
         this.skip = skip,
         this.refresh = refresh,
-        this.object = object,
+        this.state = state,
+        this.object = object ? object : this.object,
 
-        this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.object)
+        this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.state, this.object)
     },
     pagechange(action){
 
@@ -55,12 +58,12 @@ const app = Vue.component('app', {
         this.pagenumber--
       }
       this.skip = (this.pagenumber-1) * this.pagesize
-      this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.object)
+      this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh,this.state, this.object)
     },
-    fetchData(search = '', property = '', limit = 15, skip = 0, refresh = 60, object){
+    fetchData(search = '', property = '', limit = 15, skip = 0, refresh = 60, state = '', object){
       this.pagesize = this.pagesize === 0 ? parseInt(limit) : this.pagesize;
       this.refresh = parseFloat(refresh);
-      const url = `/api?limit=${limit}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}&q=${search}`;
+      const url = `/api?limit=${limit}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}${state ? `&state=${state}`: ''}&q=${search}`;
       return axios.get(url)
         .then(result => result.data)
         .then((data) => {
@@ -108,15 +111,14 @@ const app = Vue.component('app', {
         </div>
       </div>
       <div class="row pt-5">
-          <div class="col-md-2 d-none d-md-block bg-light sidebar">
-            <sidebar  v-on:new-job="newJob" v-bind:overview="overview"></sidebar>
+          <div class="col-md-2 d-none d-md-block bg-light overflow-auto">
+            <sidebar  v-on:search-sidebar="searchForm" new-job="newJob" v-bind:overview="overview" v-bind:pagesize="pagesize"></sidebar>
           </div>
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
             <div class="col-md-12">
               <topbar v-on:search-form="searchForm"></topbar>
             </div>
             <div class="col-md-12">
-              {{search}}
               <job-list
                   v-on:confirm-delete="confirmDelete"
                   v-on:confirm-requeue="confirmRequeue"
@@ -129,6 +131,11 @@ const app = Vue.component('app', {
               </job-list>
             </div>
           </main>
+      </div>
+      <div class="row bg-dark py-3">
+        <div class="col-3 m-auto text-light text-center">
+          <small>Made with ❤ by <a class="text-light" href="https://www.softwareontheroad.com/about" target="_BLANK">Software On The Road</a></small>
+        </div>
       </div>
       <job-detail v-if="showDetail" v-bind:job="jobData"></job-detail>
       <confirm-delete v-if="showConfirm" v-on:popup-message="popupmessage('delete')" v-on:refresh-data="fetchData" v-bind:job="jobData"></confirm-delete>
