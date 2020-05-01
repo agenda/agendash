@@ -77,7 +77,7 @@ const app = Vue.component('app', {
     fetchData(search = '', property = '', limit = 15, skip = 0, refresh = 60, state = '', object){
       this.pagesize = this.pagesize === 0 ? parseInt(limit) : this.pagesize;
       this.refresh = parseFloat(refresh);
-      const url = `/api?limit=${limit}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}${state ? `&state=${state}`: ''}&q=${search}`;
+      const url = `api?limit=${limit}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}${state ? `&state=${state}`: ''}&q=${search}`;
       return axios.get(url)
         .then(result => result.data)
         .then((data) => {

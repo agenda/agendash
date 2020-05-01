@@ -2,7 +2,7 @@ const confirmRequeue = Vue.component('confirm-requeue', {
   props: ['job'],
   methods: {
     RequeueOne(id){
-      const url = `/api/jobs/requeue`;
+      const url = `api/jobs/requeue`;
       let body = {jobIds: [id]};
       return axios.post(url, body)
         .then(result => result.data)

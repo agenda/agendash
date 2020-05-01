@@ -2,7 +2,7 @@ const confirmDelete = Vue.component('confirm-delete', {
   props: ['job'],
   methods: {
     deleteOne(id){
-      const url = `/api/jobs/delete`;
+      const url = `api/jobs/delete`;
       let body = {jobIds: [id]};
       return axios.post(url, body)
         .then(result => result.data)

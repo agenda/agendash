@@ -14,7 +14,7 @@ const newJob = Vue.component('new-job', {
       this.jobData = ''
     },
     CreateOne(){
-      const url = `/api/jobs/create`;
+      const url = `api/jobs/create`;
       let body = {
         jobName: this.jobName,
         jobSchedule: this.jobSchedule,

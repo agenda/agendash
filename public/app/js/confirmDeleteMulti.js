@@ -2,7 +2,7 @@ const confirmDeleteMulti = Vue.component('confirm-multi-delete', {
   props: ['jobs'],
   methods: {
     deleteMulti(ids){
-      const url = `/api/jobs/delete`;
+      const url = `api/jobs/delete`;
       let body = {jobIds: ids};
       return axios.post(url, body)
         .then(result => result.data)
@@ -30,7 +30,7 @@ const confirmDeleteMulti = Vue.component('confirm-multi-delete', {
             <div class="col">
               <p>Job Id: {{job}}</p>
             </div>
-            
+
           </div>
         </div>
         <div class="modal-footer">
