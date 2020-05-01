@@ -39,12 +39,13 @@ At first, we tried to just patch the existing code but it was written in backbon
 
 
 # Roadmap
-- [] Improve default security
-- [] Compatibility with agenda v3
-- [] Polish backend so it is more efficient
-- [] Get more test coverage
-- [] Add middlewares for KOA and other express-like libraries
-- [] You decide!
+
+- [x] Improve default security
+- [ ] Compatibility with agenda v3
+- [ ] Polish backend so it is more efficient
+- [ ] Get more test coverage
+- [ ] Add middlewares for KOA and other express-like libraries
+- [ ] You decide!
 
 ### Install
 
