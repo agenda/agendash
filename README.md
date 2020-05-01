@@ -6,6 +6,7 @@ A modern, secure, and reliable dashboard for [Agenda](https://github.com/agenda/
 
 ### Features
 
+- Dropin replacement for old agendash just change your `require(agendash)` to `require(agendash2)`
 - Job status auto-refreshes (60-second polling by default)
 - Schedule a new job from the UI
 - Dive in to see more details about the job, like the json data
@@ -69,7 +70,7 @@ var app = express();
 // ... your other express middleware like body-parser
 
 var Agenda = require('agenda');
-var Agendash = require('agendash');
+var Agendash = require('agendash2');
 
 var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/agendaDb'}});
 // or provide your own mongo client:
@@ -116,17 +117,17 @@ Note that if you use a CSRF protection middleware like [`csurf`](https://www.npm
 Agendash comes with a standalone Express app which you can use like this:
 
 ```bash
-./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+./node_modules/.bin/agendash2 --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
 ```
 
 or like this, for default collection `agendaJobs` and default port `3000`:
 
 ```bash
-./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb
+./node_modules/.bin/agendash2 --db=mongodb://localhost/agendaDb
 ```
 
 If you are using npm >= 5.2, then you can use [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
 
 ```bash
-npx agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+npx agendash2 --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
 ```
