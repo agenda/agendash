@@ -51,7 +51,13 @@
 .joblist {
   overflow-y: scroll;
 }
-
+.sortable{
+  float: right
+}
+.sortableinactive{
+  float: right;
+  opacity: 0.2;
+}
 .table-headers, .table-row {
   display: flex;
   justify-content: space-between;
