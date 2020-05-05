@@ -23,10 +23,14 @@ const sidebar = Vue.component('sidebar', {
     },
     searchSpecificJob(job, type){
       if(job === 'All Jobs'){
-        this.$emit('search-sidebar','','',this.pagesize,'','','','',);
+        if(type){
+          this.$emit('search-sidebar','','',this.pagesize,'','',type,'',);
+        } else {
+          this.$emit('search-sidebar','','',this.pagesize,'','','','',);
+        }
       } 
       else if(type){
-        this.$emit('search-sidebar','','',this.pagesize,'','',type,'',);
+          this.$emit('search-sidebar',job,'name',this.pagesize,'','',type,'',)
       }
       else {
         this.$emit('search-sidebar', job, 'name',this.pagesize,'','','',);
@@ -56,22 +60,22 @@ const sidebar = Vue.component('sidebar', {
               </div>
             </div>
              <!-- internal list of states  -->
-            <div class="col-12 d-flex px-3 mb-2 mybtn" @click="searchSpecificJob('','scheduled')">
+            <div class="col-12 d-flex px-3 mb-2 mybtn" @click="searchSpecificJob(type.displayName,'scheduled')">
               <div class="mr-auto">Scheduled: </div><div class="text-rigth">{{type.scheduled}}</div>
             </div>
-            <div class="col-12 d-flex px-3 mb-2 text-primary mybtn" @click="searchSpecificJob('','queued')">
+            <div class="col-12 d-flex px-3 mb-2 text-primary mybtn" @click="searchSpecificJob(type.displayName,'queued')">
               <div class="mr-auto">Queued: </div><div class="text-rigth">{{type.queued}}</div>
             </div>
-            <div class="col-12 d-flex px-3 mb-2 text-warning mybtn"  @click="searchSpecificJob('','running')">
+            <div class="col-12 d-flex px-3 mb-2 text-warning mybtn"  @click="searchSpecificJob(type.displayName,'running')">
               <div class="mr-auto">Running: </div><div class="text-rigth">{{type.running}}</div>
             </div>
-            <div class="col-12 d-flex px-3 mb-2 text-success mybtn"  @click="searchSpecificJob('','completed')">
+            <div class="col-12 d-flex px-3 mb-2 text-success mybtn"  @click="searchSpecificJob(type.displayName,'completed')">
               <div class="mr-auto">Completed: </div><div class="text-rigth">{{type.completed}}</div>
             </div>
-            <div class="col-12 d-flex px-3 mb-2 text-danger mybtn"  @click="searchSpecificJob('','failed')">
+            <div class="col-12 d-flex px-3 mb-2 text-danger mybtn"  @click="searchSpecificJob(type.displayName,'failed')">
               <div class="mr-auto">Failed: </div><div class="text-rigth">{{type.failed}}</div>
             </div>
-            <div class="col-12 d-flex px-3 mb-2 text-info mybtn"  @click="searchSpecificJob('','repeating')">
+            <div class="col-12 d-flex px-3 mb-2 text-info mybtn"  @click="searchSpecificJob(type.displayName,'repeating')">
               <div class="mr-auto">Repeating: </div><div class="text-rigth">{{type.repeating}}</div>
             </div>
 

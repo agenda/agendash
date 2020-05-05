@@ -1,10 +1,38 @@
 const jobList = Vue.component('job-list', {
   data: () => ({
     multijobs: [],
+    currentSort:'name',
+    currentSortDir:'asc',
   }),
   props: ['jobs','pagesize','pagenumber','sendClean'],
-
+  computed:{
+    sortedJobs:function() {
+      return this.jobs.sort((a,b) => {
+        let displayA, displayB
+        if(this.currentSort === "name") {
+          displayA = a.job[this.currentSort] ? a.job[this.currentSort].toLowerCase() : ''
+          displayB = a.job[this.currentSort] ? b.job[this.currentSort].toLowerCase() : ''
+        }
+        else {
+          displayA = moment(a.job[this.currentSort])
+          displayB = moment(b.job[this.currentSort])
+        }
+        let modifier = 1;
+        if(this.currentSortDir === 'desc') modifier = -1;
+        if(displayA < displayB) return -1 * modifier;
+        if(displayA > displayB) return 1 * modifier;
+        return 0;
+      });
+    }
+  },
   methods: {
+    sort(s) {
+      //if s == current sort, reverse
+      if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+      }
+      this.currentSort = s;
+    },
     sendQueued(){
       this.$emit('confirm-multi-requeue', this.multijobs)
       this.multijobs = []
@@ -33,17 +61,32 @@ const jobList = Vue.component('job-list', {
           <thead class="thead-dark">
             <tr>
               <th  scope="col"> Multi </th>
-              <th  scope="col"> Status </th>
-              <th  scope="col"> Name </th>
-              <th  scope="col"> Last run started </th>
-              <th  scope="col"> Next run starts	</th>
-              <th  scope="col"> Last finished	</th>
+              <th   @click="sort('status')" scope="col"> Status </th>
+              <th   @click="sort('name')" scope="col"> Name <i v-if="currentSort === 'name' && currentSortDir === 'asc'" class="material-icons sortable" title="Sort Z to A">arrow_drop_down</i>
+                                                            <i v-else-if="currentSort === 'name' && currentSortDir === 'desc'" class="material-icons sortable" title="Sort A to Z">arrow_drop_up</i>
+                                                            <i v-else class="material-icons sortableinactive" title="Sort A to Z">arrow_drop_down</i>
+              </th>
+              <th   @click="sort('lastRunAt')" scope="col"> Last run started <i v-if="currentSort === 'lastRunAt' && currentSortDir === 'asc'" class="material-icons sortable" title="Sort Z to A">arrow_drop_up</i>
+                                                            <i v-else-if="currentSort === 'lastRunAt' && currentSortDir === 'desc'" class="material-icons sortable" title="Sort A to Z">arrow_drop_down</i>
+                                                            <i v-else class="material-icons sortableinactive" title="Sort A to Z">arrow_drop_down</i>
+              </th>
+              <th   @click="sort('nextRunAt')" scope="col"> Next run starts	
+                  <i v-if="currentSort === 'nextRunAt' && currentSortDir === 'asc'" class="material-icons sortable" title="Sort Z to A">arrow_drop_up</i>
+                  <i v-else-if="currentSort === 'nextRunAt' && currentSortDir === 'desc'" class="material-icons sortable" title="Sort A to Z">arrow_drop_down</i>
+                  <i v-else class="material-icons sortableinactive" title="Sort A to Z">arrow_drop_down</i>
+
+              </th>
+              <th   @click="sort('lastFinishedAt')" scope="col"> Last finished	
+                  <i v-if="currentSort === 'lastFinishedAt' && currentSortDir === 'asc'" class="material-icons sortable" title="Sort Z to A">arrow_drop_up</i>
+                  <i v-else-if="currentSort === 'lastFinishedAt' && currentSortDir === 'desc'" class="material-icons sortable" title="Sort A to Z">arrow_drop_down</i>
+                  <i v-else class="material-icons sortableinactive" title="Sort A to Z">arrow_drop_down</i>
+              </th>
               <th  scope="col"> Locked </th>
               <th  scope="col"> Actions </th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="job in jobs">
+            <tr v-for="job in sortedJobs">
                   <td width="10" class="mult-select"><input v-model="multijobs" :id='job.job._id' type="checkbox" :value="job.job._id"></input></td>
                   <td th scope="row" class="job-name">
                     <i v-if="job.repeating" class="oi oi-timer pill-own bg-info"><span>{{job.job.repeatInterval}}</span></i>
