@@ -11,12 +11,18 @@ const jobDetail = Vue.component('job-detail', {
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Job Data</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Job Data - {{job.job.name}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
+        <div class="row my-3">
+          <div class="col">
+            <p><strong>Next run starts: </strong>{{ formatDate(job.job.lastRunAt) }}</p>
+            <p><strong>Last run started: </strong>{{ formatDate(job.job.lastRunAt) }}</p>
+          </div>
+        </div>
         <code> {{job.job.data}}</code>
           <div v-if='job.failed' class="row mt-3">
             <div class="col pt-3 bg-danger text-light">
