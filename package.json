@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "ava": "^3.5.1",
+    "nodemon": "^2.0.3",
     "npm-run-all": "^4.1.2",
     "supertest": "^3.0.0",
     "xo": "^0.18.2"
