@@ -1,6 +1,6 @@
 {
   "name": "agendash2",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A modern dashboard for Agenda.js with Pagination and Search capabilities",
   "main": "app.js",
   "bin": "bin/agendash-standalone.js",
