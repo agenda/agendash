@@ -1,5 +1,5 @@
 const sidebar = Vue.component('sidebar', {
-  props: ['overview','pagesize'],
+  props: ['overview','pagesize','loading'],
   computed: {
     sortedArray() {
       function compare(a, b){
@@ -45,6 +45,13 @@ const sidebar = Vue.component('sidebar', {
         </div>
       </div> <!-- row -->
       <div class="row p-0">
+        <div v-if="loading" class="col-12 my-5 ml-auto text-center">
+            <div class="text-center my-5 py-5">
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+            </div>
+        </div>
         <div class="col">
           <div class="row rows-ow" v-for="type in sortedArray">
             <div class="col-12 d-flex mt-4 mybtn" @click="searchSpecificJob(type.displayName,'')">
