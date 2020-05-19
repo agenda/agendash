@@ -57,6 +57,7 @@ const jobList = Vue.component('job-list', {
             <button data-toggle="modal" data-target="#modalDeleteShureMulti" @click="sendDelete" class="btn btn-danger" data-placement="top" title="Delete list of selecteds Jobs"> Multiple Delete </button>
           </div>
         </div>
+
         <table class="table table-striped">
           <thead class="thead-dark">
             <tr>
@@ -70,13 +71,13 @@ const jobList = Vue.component('job-list', {
                                                             <i v-else-if="currentSort === 'lastRunAt' && currentSortDir === 'desc'" class="material-icons sortable" title="Sort A to Z">arrow_drop_down</i>
                                                             <i v-else class="material-icons sortableinactive" title="Sort A to Z">arrow_drop_down</i>
               </th>
-              <th   @click="sort('nextRunAt')" scope="col"> Next run starts	
+              <th   @click="sort('nextRunAt')" scope="col"> Next run starts
                   <i v-if="currentSort === 'nextRunAt' && currentSortDir === 'asc'" class="material-icons sortable" title="Sort Z to A">arrow_drop_up</i>
                   <i v-else-if="currentSort === 'nextRunAt' && currentSortDir === 'desc'" class="material-icons sortable" title="Sort A to Z">arrow_drop_down</i>
                   <i v-else class="material-icons sortableinactive" title="Sort A to Z">arrow_drop_down</i>
 
               </th>
-              <th   @click="sort('lastFinishedAt')" scope="col"> Last finished	
+              <th   @click="sort('lastFinishedAt')" scope="col"> Last finished
                   <i v-if="currentSort === 'lastFinishedAt' && currentSortDir === 'asc'" class="material-icons sortable" title="Sort Z to A">arrow_drop_up</i>
                   <i v-else-if="currentSort === 'lastFinishedAt' && currentSortDir === 'desc'" class="material-icons sortable" title="Sort A to Z">arrow_drop_down</i>
                   <i v-else class="material-icons sortableinactive" title="Sort A to Z">arrow_drop_down</i>
@@ -85,7 +86,23 @@ const jobList = Vue.component('job-list', {
               <th  scope="col"> Actions </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="loading">
+            <tr>
+              <td colspan='10' scope="row">
+                  <div  class="col-12 my-5 ml-auto text-center">
+                    <div class="text-center my-5 py-5">
+                          <div class="spinner-border" role="status">
+                          </div>
+                          <div>
+                          <span class="">Loading Jobs...</span>
+                          </div>
+                    </div>
+                 </div>
+              </td>
+            </tr>
+          </tbody>
+
+          <tbody v-else>
             <tr v-for="job in sortedJobs">
                   <td width="10" class="mult-select"><input v-model="multijobs" :id='job.job._id' type="checkbox" :value="job.job._id"></input></td>
                   <td th scope="row" class="job-name">
@@ -109,13 +126,7 @@ const jobList = Vue.component('job-list', {
             </tr>
           </tbody>
         </table>
-        <div v-if="loading" class="col-12 my-5 ml-auto text-center">
-            <div class="text-center my-5 py-5">
-                  <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-            </div>
-        </div>
+
         <div class="row ">
             <div class="col d-flex justify-content-center">
             <nav aria-label="Page navigation example">

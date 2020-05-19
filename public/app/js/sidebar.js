@@ -13,7 +13,7 @@ const sidebar = Vue.component('sidebar', {
           return 1;
         return 0;
       }
-  
+
       return this.overview.sort(compare);
     }
   },
@@ -28,7 +28,7 @@ const sidebar = Vue.component('sidebar', {
         } else {
           this.$emit('search-sidebar','','',this.pagesize,'','','','',);
         }
-      } 
+      }
       else if(type){
           this.$emit('search-sidebar',job,'name',this.pagesize,'','',type,'',)
       }
@@ -44,15 +44,17 @@ const sidebar = Vue.component('sidebar', {
            <button data-toggle="modal" data-target="#modalNewJob" @click="$emit('new-job')" data-placement="top" title="Add a new job" class="btn btn-block btn-outline-success"><i class="oi oi-plus IcoInButton"></i> New Job</button>
         </div>
       </div> <!-- row -->
-      <div class="row p-0">
-        <div v-if="loading" class="col-12 my-5 ml-auto text-center">
+      <div  class="row p-0">
+        <div  v-if="loading" class="col-12 my-5 ml-auto text-center">
             <div class="text-center my-5 py-5">
-                  <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-            </div>
+              <div class="spinner-border" role="status">
+                            </div>
+                            <div>
+                              <span class="">Loading Jobs...</span>
+                            </div>
+              </div>
         </div>
-        <div class="col">
+        <div v-else class="col">
           <div class="row rows-ow" v-for="type in sortedArray">
             <div class="col-12 d-flex mt-4 mybtn" @click="searchSpecificJob(type.displayName,'')">
               <div class="mr-auto">{{type.displayName}}</div><div class="text-rigth pill-big-own bg-secondary right">{{type.total}}</div>
@@ -86,7 +88,7 @@ const sidebar = Vue.component('sidebar', {
               <div class="mr-auto">Repeating: </div><div class="text-rigth">{{type.repeating}}</div>
             </div>
 
-          </div> 
+          </div>
         </div>
       </div> <!-- row -->
     </div> <!-- div -->
