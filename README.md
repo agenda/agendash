@@ -15,7 +15,6 @@ A modern, secure, and reliable dashboard for [Agenda](https://github.com/agenda/
 - Search jobs by name and metadata (supports for quering mongo Object Id)
 - Pagination (Original version had limitiation to 200 results only)
 
-
 ---
 
 ### Screenshots
@@ -43,7 +42,7 @@ At first, we tried to just patch the existing code but it was written in backbon
 
 - [x] Improve default security
 - [ ] Compatibility with agenda v3
-- [ ] Polish backend so it is more efficient
+- [x] Polish backend so it is more efficient
 - [ ] Get more test coverage
 - [ ] Add middlewares for KOA and other express-like libraries
 - [ ] You decide!
@@ -87,7 +86,7 @@ By mounting Agendash as middleware on a specific path, you may provide your
 own authentication for that path. For example if you have an authenticated
 session using passport, you can protect the dashboard path like this:
 
-```
+```js
 app.use('/dash',
   function (req, res, next) {
     if (!req.user || !req.user.is_admin) {
