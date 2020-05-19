@@ -17,8 +17,6 @@ if (!program.db) {
   process.exit(1);
 }
 
-
-
 const init = async () => {
 
   const server = Hapi.server({
@@ -28,7 +26,7 @@ const init = async () => {
 
   const agenda = new Agenda().database(program.db, program.collection);
 
-  await server.register(require('inert'));
+  await server.register(require('@hapi/inert'));
   await server.register(require('../app')(agenda, {
     middleware: 'hapi'
   }));
