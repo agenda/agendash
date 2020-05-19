@@ -24,6 +24,7 @@ const app = Vue.component('app', {
     name: '',
     state: '',
     nameprop: '',
+    loading: false,
   }),
   methods: {
     showJobDetail(data){
@@ -78,6 +79,7 @@ const app = Vue.component('app', {
       this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh,this.state, this.object)
     },
     fetchData(search = '', property = '', limit = 15, skip = 0, refresh = 60, state = '', object){
+      this.loading = true;
       this.pagesize = this.pagesize === 0 ? parseInt(limit) : this.pagesize;
       this.refresh = parseFloat(refresh);
       const url = `api?limit=${limit}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}${state ? `&state=${state}`: ''}&q=${search}`;
@@ -89,6 +91,7 @@ const app = Vue.component('app', {
           this.property = property;
           this.object = object;
           this.overview = data.overview;
+          this.loading = false;
         })
         .catch(console.log)
     },
@@ -140,7 +143,14 @@ const app = Vue.component('app', {
       </div>
       <div class="row pt-5">
           <div class="col-md-2 d-none d-md-block bg-light overflow-auto">
-            <sidebar  v-on:search-sidebar="searchForm" v-on:new-job="newJob" v-bind:overview="overview" v-bind:pagesize="pagesize"></sidebar>
+            <sidebar  
+              v-on:search-sidebar="searchForm" 
+              v-on:new-job="newJob" 
+              :overview="overview" 
+              :pagesize="pagesize"
+              :loading="loading"
+              >
+            </sidebar>
           </div>
           <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
             <div class="col-12">
@@ -164,7 +174,9 @@ const app = Vue.component('app', {
                   :pagenumber='pagenumber'
                   :skip="skip"
                   :jobs="jobs"
-                  :sendClean='sendClean'>
+                  :sendClean='sendClean'
+                  :loading='loading'
+                  >
               </job-list>
             </div>
           </main>

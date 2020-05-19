@@ -4,7 +4,7 @@ const jobList = Vue.component('job-list', {
     currentSort:'name',
     currentSortDir:'asc',
   }),
-  props: ['jobs','pagesize','pagenumber','sendClean'],
+  props: ['jobs','pagesize','pagenumber','sendClean','loading'],
   computed:{
     sortedJobs:function() {
       return this.jobs.sort((a,b) => {
@@ -52,7 +52,7 @@ const jobList = Vue.component('job-list', {
   template: `
   <div v-on:sendClean="cleanMulti">
         <div v-if="multijobs.length > 0" class="row" >
-          <div class="col-3 ml-auto">
+          <div class="col-3 ml-auto my-2">
             <button data-toggle="modal" data-target="#modalRequeueShureMulti" @click="sendQueued" class="btn btn-primary" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>
             <button data-toggle="modal" data-target="#modalDeleteShureMulti" @click="sendDelete" class="btn btn-danger" data-placement="top" title="Delete list of selecteds Jobs"> Multiple Delete </button>
           </div>
@@ -109,6 +109,13 @@ const jobList = Vue.component('job-list', {
             </tr>
           </tbody>
         </table>
+        <div v-if="loading" class="col-12 my-5 ml-auto text-center">
+            <div class="text-center my-5 py-5">
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+            </div>
+        </div>
         <div class="row ">
             <div class="col d-flex justify-content-center">
             <nav aria-label="Page navigation example">
