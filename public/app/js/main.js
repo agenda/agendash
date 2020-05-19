@@ -21,7 +21,9 @@ const app = Vue.component('app', {
     object: '',
     newLimit: null,
     skip: 0,
+    name: '',
     state: '',
+    nameprop: '',
     loading: false,
   }),
   methods: {
@@ -53,12 +55,13 @@ const app = Vue.component('app', {
       this.showNewJob = true;
     },
     searchForm(search, property, limit, skip, refresh, state, object){
-
+        this.pagesize = limit ? parseInt(limit): this.pagesize,
+        this.name = 'name',
         this.search = search,
         this.property = property,
-        this.pagesize =  parseInt(limit),
+        
         this.skip = skip,
-        this.refresh = refresh,
+        this.refresh = parseFloat(refresh),
         this.state = state,
         this.object = object ? object : this.object,
 
@@ -150,10 +153,16 @@ const app = Vue.component('app', {
             </sidebar>
           </div>
           <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
-            <div class="col-md-12">
-              <topbar v-on:search-form="searchForm"></topbar>
+            <div class="col-12">
+              <topbar v-on:search-form="searchForm" 
+              :name='name'
+              :state='state'
+              :search='search'
+              :property='property'
+              >
+              </topbar>
             </div>
-            <div class="col-md-12">
+            <div class="col-12 ">
               <job-list
                   v-on:confirm-delete="confirmDelete"
                   v-on:confirm-multi-delete="confirmDeleteMulti"

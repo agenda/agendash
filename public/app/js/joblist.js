@@ -50,7 +50,7 @@ const jobList = Vue.component('job-list', {
     },
   },
   template: `
-<div v-on:sendClean="cleanMulti">
+  <div v-on:sendClean="cleanMulti">
         <div v-if="multijobs.length > 0" class="row" >
           <div class="col-3 ml-auto my-2">
             <button data-toggle="modal" data-target="#modalRequeueShureMulti" @click="sendQueued" class="btn btn-primary" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>

@@ -14,11 +14,7 @@
 .logo{
   margin-bottom: 12px;
 }
-.section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -45,9 +41,7 @@
   max-height: 100vh;
   overflow-y: scroll;
 }
-.topbar {
-  height: 250px;
-}
+
 .joblist {
   overflow-y: scroll;
 }
