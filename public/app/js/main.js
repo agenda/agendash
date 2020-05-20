@@ -55,7 +55,6 @@ const app = Vue.component('app', {
       this.showNewJob = true;
     },
     searchForm(search, property, limit, skip, refresh, state, object){
-     console.log("TYPEOFLIMIT",typeof(limit) )
         this.pagesize = limit ? limit : this.pagesize,
         this.name = 'name',
         this.search = search,
