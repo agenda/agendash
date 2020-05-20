@@ -55,17 +55,21 @@ const app = Vue.component('app', {
       this.showNewJob = true;
     },
     searchForm(search, property, limit, skip, refresh, state, object){
-        this.pagesize = limit ? parseInt(limit): this.pagesize,
+     console.log("TYPEOFLIMIT",typeof(limit) )
+        this.pagesize = limit ? limit : this.pagesize,
         this.name = 'name',
         this.search = search,
         this.property = property,
-        
+
         this.skip = skip,
-        this.refresh = parseFloat(refresh),
+        this.refresh = refresh,
         this.state = state,
         this.object = object ? object : this.object,
 
         this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.state, this.object)
+    },
+    refreshData() {
+      this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.state, this.object)
     },
     pagechange(action){
 
@@ -85,14 +89,19 @@ const app = Vue.component('app', {
       const url = `api?limit=${limit}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}${state ? `&state=${state}`: ''}&q=${search}`;
       return axios.get(url)
         .then(result => result.data)
-        .then((data) => {
+        .then(
+          data => {
           this.jobs = data.jobs;
           this.search = search;
           this.property = property;
           this.object = object;
           this.overview = data.overview;
           this.loading = false;
-        })
+        },() => {
+          this.loading = false;
+          this.jobs = [];
+        }
+        )
         .catch(console.log)
     },
 
@@ -143,10 +152,10 @@ const app = Vue.component('app', {
       </div>
       <div class="row pt-5">
           <div class="col-md-2 d-none d-md-block bg-light overflow-auto">
-            <sidebar  
-              v-on:search-sidebar="searchForm" 
-              v-on:new-job="newJob" 
-              :overview="overview" 
+            <sidebar
+              v-on:search-sidebar="searchForm"
+              v-on:new-job="newJob"
+              :overview="overview"
               :pagesize="pagesize"
               :loading="loading"
               >
@@ -154,7 +163,7 @@ const app = Vue.component('app', {
           </div>
           <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
             <div class="col-12">
-              <topbar v-on:search-form="searchForm" 
+              <topbar v-on:search-form="searchForm"
               :name='name'
               :state='state'
               :search='search'
@@ -187,10 +196,10 @@ const app = Vue.component('app', {
         </div>
       </div>
       <job-detail v-if="showDetail" v-bind:job="jobData"></job-detail>
-      <confirm-delete v-if="showConfirm" v-on:popup-message="popupmessage('delete')" v-on:refresh-data="fetchData" v-bind:job="jobData"></confirm-delete>
-      <confirm-multi-delete v-if="showConfirmMulti" v-on:ready-clean="readyClean" v-on:popup-message="popupmessage('multidelete')" v-on:refresh-data="fetchData" v-bind:jobs="jobData"></confirm-multi-delete>
-      <confirm-requeue v-if="showConfirmRequeue"  v-on:popup-message="popupmessage('requeue')" v-on:refresh-data="fetchData" v-bind:job="jobData"></confirm-requeue>
-      <confirm-multi-requeue v-if="showConfirmRequeueMulti" v-on:ready-clean="readyClean" v-on:popup-message="popupmessage('multirequeue')" v-on:refresh-data="fetchData" v-bind:jobs="jobData"></confirm-multi-requeue>
+      <confirm-delete v-if="showConfirm" v-on:popup-message="popupmessage('delete')" v-on:refresh-data="refreshData" v-bind:job="jobData"></confirm-delete>
+      <confirm-multi-delete v-if="showConfirmMulti" v-on:ready-clean="readyClean" v-on:popup-message="popupmessage('multidelete')" v-on:refresh-data="refreshData" v-bind:jobs="jobData"></confirm-multi-delete>
+      <confirm-requeue v-if="showConfirmRequeue"  v-on:popup-message="popupmessage('requeue')" v-on:refresh-data="refreshData" v-bind:job="jobData"></confirm-requeue>
+      <confirm-multi-requeue v-if="showConfirmRequeueMulti" v-on:ready-clean="readyClean" v-on:popup-message="popupmessage('multirequeue')" v-on:refresh-data="refreshData" v-bind:jobs="jobData"></confirm-multi-requeue>
       <popup-message :deletec="deletec" :requeuec="requeuec" :createc="createc"></popup-message>
       <new-job v-if="showNewJob" v-on:popup-message="popupmessage('create')" v-on:refresh-data="fetchData"></new-job>
   </div>
