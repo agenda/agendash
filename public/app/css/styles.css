@@ -116,3 +116,7 @@ code {
   font-size: 13px;
   margin: 0 2px;
 }
+
+.json-editor {
+  height: 150px;
+}
