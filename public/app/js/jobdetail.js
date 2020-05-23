@@ -1,5 +1,10 @@
 const jobDetail = Vue.component('job-detail', {
   props: ['job'],
+  filters: {
+    formatJSON(jsonstr){
+      return JSON.stringify(jsonstr, null, 2);
+    },
+  },
   methods: {
     formatDate(date){
       return moment(date).format('DD-MM-YYYY HH:mm:ss')
@@ -23,14 +28,15 @@ const jobDetail = Vue.component('job-detail', {
             <p><strong>Last run started: </strong>{{ formatDate(job.job.lastRunAt) }}</p>
           </div>
         </div>
-        <code> {{job.job.data}}</code>
-          <div v-if='job.failed' class="row mt-3">
-            <div class="col pt-3 bg-danger text-light">
-                <p><strong>Fail Count:</strong> {{job.job.failCount}}</p>
-                <p><strong>Failed At:</strong> {{formatDate(job.job.failedAt)}}</p>
-                <p><strong>Reason:</strong> {{job.job.failReason}}</p>
-            </div>
+        <p><strong>Metadata: </strong></p>
+        <prism-editor class="json-editor" :lineNumbers="true" :readonly="true" :code="job.job.data | formatJSON" language="json"></prism-editor>
+        <div v-if='job.failed' class="row mt-3">
+          <div class="col pt-3 bg-danger text-light">
+              <p><strong>Fail Count:</strong> {{job.job.failCount}}</p>
+              <p><strong>Failed At:</strong> {{formatDate(job.job.failedAt)}}</p>
+              <p><strong>Reason:</strong> {{job.job.failReason}}</p>
           </div>
+        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

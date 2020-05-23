@@ -127,7 +127,7 @@ const jobList = Vue.component('job-list', {
           </tbody>
         </table>
 
-        <div class="row ">
+        <div class="row">
             <div class="col d-flex justify-content-center">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
