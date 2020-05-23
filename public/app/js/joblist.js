@@ -42,7 +42,7 @@ const jobList = Vue.component('job-list', {
       this.multijobs = []
     },
     cleanMulti() {
-      return console.log("receibed Clean Multi")
+      return console.log("received Clean Multi")
     },
     formatDate(date) {
       return moment(date).fromNow();

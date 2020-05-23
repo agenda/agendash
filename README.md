@@ -19,13 +19,19 @@ A modern, secure, and reliable dashboard for [Agenda](https://github.com/agenda/
 
 ### Screenshots
 
+#### Dashboard
+
 ![Auto-refresh list of jobs](all-jobs.png)
 
 ---
 
-![See job details, requeue or delete jobs](job-details.png)
+#### Create jobs
+
+![See job details, requeue or delete jobs](create-job.png)
 
 ---
+
+#### Search by name, metadata, job status
 
 ![Search for a job by name or metadata ](search.png)
 
@@ -41,11 +47,11 @@ At first, we tried to just patch the existing code but it was written in backbon
 # Roadmap
 
 - [x] Improve default security
-- [ ] Compatibility with agenda v3
-- [x] Polish backend so it is more efficient
+- [x] Compatibility with agenda v3
+- [x] Polish backend so it is more efficient (MongoDB Aggregation queries were rewritten and optimized)
 - [ ] Get more test coverage
-- [ ] Add middlewares for KOA and other express-like libraries
-- [ ] You decide!
+- [ ] Add middlewares for KOA, fastify, and other express-like libraries
+- [ ] You decide! Submit a feature request
 
 ### Install
 
@@ -58,8 +64,8 @@ npm install --save agendash2
 
 ### Middleware usage
 
-Agendash provides Express middleware you can use at a specified path, for example this will
-make Agendash available on your site at the `/dash` path. Note: Do not try to mount Agendash
+Agendash2 provides Express middleware you can use at a specified path, for example this will
+make Agendash2 available on your site at the `/dash` path. Note: Do not try to mount Agendash2
 at the root level like `app.use('/', Agendash(agenda))`.
 
 ```js
@@ -82,7 +88,7 @@ app.use('/dash', Agendash(agenda));
 // ... start your server
 ```
 
-By mounting Agendash as middleware on a specific path, you may provide your
+By mounting Agendash2 as middleware on a specific path, you may provide your
 own authentication for that path. For example if you have an authenticated
 session using passport, you can protect the dashboard path like this:
 

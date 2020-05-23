@@ -47,17 +47,16 @@ const newJob = Vue.component('new-job', {
               <div class="form-group">
                 <label for="jobname">Job Name</label>
                 <input v-model="jobName"  type="text" class="form-control" id="jobname" aria-describedby="jobname">
-                <small id="jobname" class="form-text text-muted">Description of the schedule job.</small>
               </div>
               <div class="form-group">
                 <label for="jobSchedule">Job Schedule</label>
                 <input v-model="jobSchedule" type="text" class="form-control" id="jobSchedule" aria-describedby="jobSchedule">
-                <small id="jobSchedule" class="form-text text-muted">Receibe Number/Every Unit  E.g. 1 seconds or 3 days</small>
+                <small id="jobSchedule" class="form-text text-muted">Number/Every Unit i.e: "1 seconds" or "3 days" (check npmjs.com/human-interval)</small>
               </div>
               <div class="form-group">
                 <label for="jobRepeatEvery">Job Repeat Every</label>
                 <input v-model="jobRepeatEvery"  type="text" class="form-control" id="jobRepeatEvery" aria-describedby="jobRepeatEvery">
-                <small id="jobRepeatEvery" class="form-text text-muted">Receibe Number/Every Unit  E.g. 1 months or 3 hours</small>
+                <small id="jobRepeatEvery" class="form-text text-muted">Number/Every Unit i.e: "1 month" or "3 hours"</small>
               </div>
               <div class="form-group">
                 <label for="jobData">Job Metadata</label>
