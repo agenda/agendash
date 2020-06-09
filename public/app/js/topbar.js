@@ -76,7 +76,7 @@ const topbar = Vue.component('topbar', {
     </div>
     <div class="row mb-3">
       <div class="col-xs-12 col-md-3 ml-auto text-right">
-        <button @click="$emit('search-form', search, property, limit, skip, refresh, state, object)" class="btn btn-success"> Apply </button>
+        <button @click="$emit('search-form', search, property, limit, skip, refresh, state, object)" class="btn btn-lg btn-success"> Apply </button>
       </div>
     </div>
   </div>
