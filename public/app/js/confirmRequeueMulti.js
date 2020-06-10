@@ -15,7 +15,7 @@ const confirmRequeueMulti = Vue.component('confirm-multi-requeue', {
     }
   },
   template: `
-  <div class="modal fade" id="modalRequeueShureMulti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalRequeueSureMulti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <!-- Modal -->
       <h1>MULTI</h1>
     <div class="modal-dialog" role="document">

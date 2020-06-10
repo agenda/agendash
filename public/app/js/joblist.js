@@ -53,8 +53,8 @@ const jobList = Vue.component('job-list', {
   <div v-on:sendClean="cleanMulti">
         <div v-if="multijobs.length > 0" >
           <div class="d-flex justify-content-end mb-2">
-            <button data-toggle="modal" data-target="#modalRequeueShureMulti" @click="sendQueued" class="btn btn-primary mr-2" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>
-            <button data-toggle="modal" data-target="#modalDeleteShureMulti" @click="sendDelete" class="btn btn-danger" data-placement="top" title="Delete list of selecteds Jobs"> Multiple Delete </button>
+            <button data-toggle="modal" data-target="#modalRequeueSureMulti" @click="sendQueued" class="btn btn-primary mr-2" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>
+            <button data-toggle="modal" data-target="#modalDeleteSureMulti" @click="sendDelete" class="btn btn-danger" data-placement="top" title="Delete list of selecteds Jobs"> Multiple Delete </button>
           </div>
         </div>
 
@@ -119,9 +119,9 @@ const jobList = Vue.component('job-list', {
                   <td class="job-finishedAt"> {{ formatDate(job.job.lastFinishedAt) }} </td>
                   <td class="job-lockedAt"> {{ job.job.lockedAt ? formatDate(job.job.lockedAt) : "" }} </td>
                   <td class="job-actions">
-                    <i class="material-icons md-dark md-custom action-btn viewData text-primary" data-toggle="modal" data-target="#modalRequeueShure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
+                    <i class="material-icons md-dark md-custom action-btn viewData text-primary" data-toggle="modal" data-target="#modalRequeueSure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
                     <i class="material-icons md-dark md-custom action-btn viewData text-success" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data">visibility</i>
-                    <i class="material-icons md-dark md-custom action-btn viewData text-danger" data-toggle="modal" data-target="#modalDeleteShure" @click="$emit('confirm-delete', job)" data-placement="top" title="Delete permanently">delete_forever</i>
+                    <i class="material-icons md-dark md-custom action-btn viewData text-danger" data-toggle="modal" data-target="#modalDeleteSure" @click="$emit('confirm-delete', job)" data-placement="top" title="Delete permanently">delete_forever</i>
                 </td>
             </tr>
           </tbody>
@@ -140,9 +140,9 @@ const jobList = Vue.component('job-list', {
                     <div class="card-responsive-status-title mr-2" style="font-size: 18px; display: flex; align-items: center">
                       <input v-model="multijobs" :id='job.job._id' type="checkbox" :value="job.job._id" class="card-responsive-checkbox"></input>
                     </div>
-                    <i class="material-icons md-dark md-custom action-btn viewData text-primary material-icons-size mr-1" data-toggle="modal" data-target="#modalRequeueShure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
+                    <i class="material-icons md-dark md-custom action-btn viewData text-primary material-icons-size mr-1" data-toggle="modal" data-target="#modalRequeueSure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
                     <i class="material-icons md-dark md-custom action-btn viewData text-success material-icons-size mr-1" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data">visibility</i>
-                    <i class="material-icons md-dark md-custom action-btn viewData text-danger material-icons-size" data-toggle="modal" data-target="#modalDeleteShure" @click="$emit('confirm-delete', job)" data-placement="top" title="Delete permanently">delete_forever</i>
+                    <i class="material-icons md-dark md-custom action-btn viewData text-danger material-icons-size" data-toggle="modal" data-target="#modalDeleteSure" @click="$emit('confirm-delete', job)" data-placement="top" title="Delete permanently">delete_forever</i>
                   </div>
                 </div>
                 <div class="card-body">
@@ -199,8 +199,8 @@ const jobList = Vue.component('job-list', {
                   <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">Previous</a></li>
                   <!-- <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">{{pagenumber -1}}</a></li>
                   <li class="page-item active"><a class="page-link">{{pagenumber}}</a></li>
-                  <li class="page-item"><a class="page-link" @click="$emit('pagechange', 'next')">{{pagenumber +1}}</a></li> -->
-                  <li class="page-item"><a class="page-link" @click="$emit('pagechange', 'next')">Next</a></li>
+                  <li class="page-item"><a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">{{pagenumber +1}}</a></li> -->
+                  <li class="page-item"><a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">Next</a></li>
                 </ul>
               </nav>
             </div>

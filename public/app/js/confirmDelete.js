@@ -14,7 +14,7 @@ const confirmDelete = Vue.component('confirm-delete', {
     }
   },
   template: `
-  <div class="modal fade" id="modalDeleteShure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalDeleteSure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <!-- Modal -->
     <div class="modal-dialog" role="document">
       <div class="modal-content">

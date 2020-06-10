@@ -14,7 +14,7 @@ const confirmDeleteMulti = Vue.component('confirm-multi-delete', {
     }
   },
   template: `
-  <div class="modal fade" id="modalDeleteShureMulti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalDeleteSureMulti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <!-- Modal -->
       <h1>MULTI</h1>
     <div class="modal-dialog" role="document">

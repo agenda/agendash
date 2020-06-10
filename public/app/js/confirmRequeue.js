@@ -14,7 +14,7 @@ const confirmRequeue = Vue.component('confirm-requeue', {
     }
   },
   template: `
-  <div class="modal fade" id="modalRequeueShure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalRequeueSure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <!-- Modal -->
     <div class="modal-dialog" role="document">
       <div class="modal-content">
