@@ -120,3 +120,54 @@ code {
 .json-editor {
   height: 150px;
 }
+.card-responsive-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-responsive-name {
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 1.25rem;
+}
+.card-responsive-status-title {
+  color: grey;
+  font-size: 14px;
+  text-align: center;
+}
+.card-responsive-checkbox {
+  width: 22px;
+  height: 22px;
+}
+.material-icons-size {
+  font-size: 25px;
+}
+.pill-own-card {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px
+}
+.pill-own-card-info {
+  font-size: 12px!important;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .col-md-10 {
+    flex: 0 0 70%;
+    max-width: 70%;
+  }
+  .col-md-2 {
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
+}
+@media (min-width: 1150px) {
+  .col-md-10 {
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
+  .col-md-2 {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}

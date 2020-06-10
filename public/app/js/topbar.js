@@ -1,5 +1,5 @@
-const topbar = Vue.component('topbar', {
-  props: ['name','state','search','property'],
+const topbar = Vue.component("topbar", {
+  props: ["name", "state", "search", "property"],
   data: () => ({
     // search: '',
     // property: 'data.id',
@@ -10,18 +10,18 @@ const topbar = Vue.component('topbar', {
     // state: '',
     object: false,
     stateobject: [
-                  {text: 'All', value: '', class: ''},
-                  {text: 'Scheduled', value: 'scheduled', class: ""},
-                  {text: 'Queued', value: 'queued', class: "text-primary"},
-                  {text: 'Running', value: 'running', class: 'text-warning'},
-                  {text: 'Completed', value: 'completed', class: 'text-success'},
-                  {text: 'Failed', value: 'failed', class: 'text-danger'},
-                  {text: 'Repeating', value: 'repeating', class: 'text-info'},
-                ]
+      { text: "All", value: "", class: "" },
+      { text: "Scheduled", value: "scheduled", class: "" },
+      { text: "Queued", value: "queued", class: "text-primary" },
+      { text: "Running", value: "running", class: "text-warning" },
+      { text: "Completed", value: "completed", class: "text-success" },
+      { text: "Failed", value: "failed", class: "text-danger" },
+      { text: "Repeating", value: "repeating", class: "text-info" }
+    ]
   }),
   methods: {
     submit() {
-      console.log(search)
+      console.log(search);
     }
   },
   template: `
@@ -76,9 +76,10 @@ const topbar = Vue.component('topbar', {
     </div>
     <div class="row mb-3">
       <div class="col-xs-12 col-md-3 ml-auto text-right">
-        <button @click="$emit('search-form', search, property, limit, skip, refresh, state, object)" class="btn btn-success"> Apply </button>
+        <button @click="$emit('search-form', search, property, limit, skip, refresh, state, object)" class="d-none d-md-inline-block btn btn-success"> Apply </button>
+        <button @click="$emit('search-form', search, property, limit, skip, refresh, state, object)" class="d-none d-inline-block d-md-none btn btn-block btn-success"> Apply </button>
       </div>
     </div>
   </div>
   `
-})
+});

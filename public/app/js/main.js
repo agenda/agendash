@@ -190,7 +190,7 @@ const app = Vue.component('app', {
           </main>
       </div>
       <div class="row bg-dark py-3">
-        <div class="col-3 m-auto text-light text-center">
+        <div class="col-6 m-auto text-light text-center">
           <small>Made with ❤ by <a class="text-light" href="https://www.softwareontheroad.com/about" target="_BLANK">Software On The Road</a></small>
         </div>
       </div>

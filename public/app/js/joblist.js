@@ -51,14 +51,14 @@ const jobList = Vue.component('job-list', {
   },
   template: `
   <div v-on:sendClean="cleanMulti">
-        <div v-if="multijobs.length > 0" class="row" >
-          <div class="col-3 ml-auto my-2">
-            <button data-toggle="modal" data-target="#modalRequeueShureMulti" @click="sendQueued" class="btn btn-primary" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>
+        <div v-if="multijobs.length > 0" >
+          <div class="d-flex justify-content-end mb-2">
+            <button data-toggle="modal" data-target="#modalRequeueShureMulti" @click="sendQueued" class="btn btn-primary mr-2" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>
             <button data-toggle="modal" data-target="#modalDeleteShureMulti" @click="sendDelete" class="btn btn-danger" data-placement="top" title="Delete list of selecteds Jobs"> Multiple Delete </button>
           </div>
         </div>
 
-        <table class="table table-striped">
+        <table class="table table-striped d-none d-xl-table">
           <thead class="thead-dark">
             <tr>
               <th  scope="col"> Multi </th>
@@ -126,6 +126,71 @@ const jobList = Vue.component('job-list', {
             </tr>
           </tbody>
         </table>
+
+
+        <div class="d-xl-none">
+          <div class="row">
+            <div v-for="job in sortedJobs" class="col col-xs-6 order-1 p-1">
+              <div class="card bg-light" >
+                <div class="card-header card-responsive-title-container">
+                  <div class="card-responsive-name">
+                    {{job.job.name}}
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class="card-responsive-status-title mr-2" style="font-size: 18px; display: flex; align-items: center">
+                      <input v-model="multijobs" :id='job.job._id' type="checkbox" :value="job.job._id" class="card-responsive-checkbox"></input>
+                    </div>
+                    <i class="material-icons md-dark md-custom action-btn viewData text-primary material-icons-size mr-1" data-toggle="modal" data-target="#modalRequeueShure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
+                    <i class="material-icons md-dark md-custom action-btn viewData text-success material-icons-size mr-1" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data">visibility</i>
+                    <i class="material-icons md-dark md-custom action-btn viewData text-danger material-icons-size" data-toggle="modal" data-target="#modalDeleteShure" @click="$emit('confirm-delete', job)" data-placement="top" title="Delete permanently">delete_forever</i>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-center mb-2">
+                    <i v-if="job.repeating" class="oi oi-timer pill-own mr-2 bg-info pill-own-card"><span class="pill-own-card-info">{{job.job.repeatInterval}}</span></i>
+                    <i v-if="job.scheduled" class="pill-own mr-2 bg-info pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Scheduled</span></i>
+                    <i v-if="job.completed" class="pill-own mr-2 bg-success pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Completed</span></i>
+                    <i v-if="job.queued" class="pill-own mr-2 bg-primary pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Queued</span></i>
+                    <i v-if="job.failed" class="pill-own mr-2 bg-danger pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Failed</span></i>
+                    <i v-if="job.running" class="pill-own mr-2 bg-warning pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Running</span></i>
+                  </div>
+                  <div class="row">
+                    <div class="col col-md-6 text-center">
+                      <div class="card-responsive-status-title">
+                        Last run started
+                      </div>
+                      <div class="mb-3">
+                        {{ formatDate(job.job.lastRunAt) }}
+                      </div>
+                      <div class="card-responsive-status-title">
+                        Last finished
+                      </div>
+                      <div>
+                        {{ formatDate(job.job.lastFinishedAt) }}
+                      </div>
+                    </div>
+                    <div class="col col-md-6 text-center">
+                      <div class="card-responsive-status-title">
+                        Next run starts
+                      </div>
+                      <div class="mb-3">
+                        {{ formatDate(job.job.nextRunAt) }}
+                      </div>
+                      <div class="card-responsive-status-title">
+                        Locked
+                      </div>
+                      <div>
+                        {{ job.job.lockedAt ? formatDate(job.job.lockedAt) : "-" }}
+                      </div>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div class="row">
             <div class="col d-flex justify-content-center">
