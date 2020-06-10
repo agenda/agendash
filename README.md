@@ -14,7 +14,7 @@ A modern, secure, and reliable dashboard for [Agenda](https://github.com/agenda/
 - Delete jobs (Useful for cleaning up old completed jobs)
 - Search jobs by name and metadata (supports for quering mongo Object Id)
 - Pagination (Original version had limitiation to 200 results only)
-
+- Responsive UI
 ---
 
 ### Screenshots
@@ -37,6 +37,16 @@ A modern, secure, and reliable dashboard for [Agenda](https://github.com/agenda/
 
 ---
 
+#### Responsive UI
+
+![Mobile UI small devices](mobile-ui-sm.png)
+
+
+
+![Mobile UI extra small devices](mobile-ui-xs.png)
+
+---
+
 # Motivation
 
 At [Software On The Road](softwareontheroad.com/about) we've been using agenda and agendash for almost every project since 2017 but it always had its limitation.
@@ -49,6 +59,7 @@ At first, we tried to just patch the existing code but it was written in backbon
 - [x] Improve default security
 - [x] Compatibility with agenda v3
 - [x] Polish backend so it is more efficient (MongoDB Aggregation queries were rewritten and optimized)
+- [x] Mobile/Responsive UI
 - [ ] Get more test coverage
 - [ ] Add middlewares for KOA, fastify, and other express-like libraries
 - [ ] You decide! Submit a feature request
