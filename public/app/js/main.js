@@ -25,8 +25,19 @@ const app = Vue.component('app', {
     state: '',
     nameprop: '',
     loading: false,
+    hideSlide: true,
   }),
   methods: {
+    openNav() {
+      document.getElementById("mySidebar").style.width = "100%";
+      document.getElementById("main").style.marginLeft = "100%";
+      this.hideSlide = false
+    },
+    closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+      this.hideSlide = true
+    },
     showJobDetail(data){
       this.jobData = data;
       this.showDetail = true;
@@ -142,15 +153,35 @@ const app = Vue.component('app', {
   },
   template: `
     <div class="container-fluid">
-      <div class="row">
+      <div class="">
         <div class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-          <div class="col-3">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0 tittle"> Agendash 2</a>
+          <div class="d-flex">
+            <div>
+              <a class="navbar-brand col-sm-10 col-md-10 mr-0 tittle"> Agendash 2</a>
+            </div>
+            <div class='d-md-none w-50'>
+              <div id="mySidebar" class="sidebar-collapse">
+                <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
+                <div v-if="hideSlide === false" class="bg-light overflow-auto">
+                  <sidebar
+                    v-on:search-sidebar="searchForm"
+                    v-on:new-job="newJob"
+                    :overview="overview"
+                    :pagesize="pagesize"
+                    :loading="loading"
+                    >
+                  </sidebar>
+                </div>
+              </div>
+              <div class="slidebar-container-button" id="main">
+                <button class="openbtn" @click="openNav()">&#9776;</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="row pt-5">
-          <div class="col-md-2 d-none d-md-block bg-light overflow-auto">
+          <div v-if="hideSlide === true" class="col-md-2 d-none d-md-block bg-light overflow-auto">
             <sidebar
               v-on:search-sidebar="searchForm"
               v-on:new-job="newJob"
