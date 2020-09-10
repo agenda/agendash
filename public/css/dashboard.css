@@ -11,10 +11,10 @@
 
 #sidebar {
   padding-top: 20px;
-  flex: 0 0 250px;
+  flex: 0 0 auto;
   order: 1;
   box-shadow: 4px 0px 3px -2px #eee;
-  overflow: scroll;
+  overflow: auto;
 }
 
 #main-pane {
@@ -23,14 +23,14 @@
   flex: 1 1;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
 }
 
 #list-pane {
   flex: 1 1 750px;
   order: 1;
   padding: 10px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 #details-pane {
@@ -39,7 +39,7 @@
   order: 2;
   box-shadow: 0px -2px 3px 0px #eee;
   margin-top: 10px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 #create-job-pane {
@@ -48,7 +48,7 @@
   order: 2;
   box-shadow: 0px -2px 3px 0px #eee;
   margin-top: 10px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 
