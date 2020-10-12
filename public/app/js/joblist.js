@@ -48,6 +48,12 @@ const jobList = Vue.component('job-list', {
       return moment(date).fromNow();
       // return new Date(date).toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: '2-digit', hour: "numeric", minute: "numeric", second: "numeric" })
     },
+    checkAllCheckboxes(){
+      const checkboxes = document.querySelectorAll('.checkbox-triggerable');
+      for (const checkbox of checkboxes) {
+        checkbox.click();
+      }
+    }
   },
   template: `
   <div v-on:sendClean="cleanMulti">
@@ -61,7 +67,7 @@ const jobList = Vue.component('job-list', {
         <table class="table table-striped d-none d-xl-table">
           <thead class="thead-dark">
             <tr>
-              <th  scope="col"> Multi </th>
+              <th   @click="checkAllCheckboxes()" scope="col"> Multi </th>
               <th   @click="sort('status')" scope="col"> Status </th>
               <th   @click="sort('name')" scope="col"> Name <i v-if="currentSort === 'name' && currentSortDir === 'asc'" class="material-icons sortable" title="Sort Z to A">arrow_drop_down</i>
                                                             <i v-else-if="currentSort === 'name' && currentSortDir === 'desc'" class="material-icons sortable" title="Sort A to Z">arrow_drop_up</i>
@@ -104,7 +110,9 @@ const jobList = Vue.component('job-list', {
 
           <tbody v-else>
             <tr v-for="job in sortedJobs">
-                  <td width="10" class="mult-select"><input v-model="multijobs" :id='job.job._id' type="checkbox" :value="job.job._id"></input></td>
+                  <td width="10" class="mult-select">
+                    <input v-model="multijobs" :id='job.job._id' class="checkbox-triggerable" type="checkbox" :value="job.job._id"></input>
+                  </td>
                   <td th scope="row" class="job-name">
                     <i v-if="job.repeating" class="oi oi-timer pill-own bg-info"><span>{{job.job.repeatInterval}}</span></i>
                     <i v-if="job.scheduled" class="pill-own bg-info pill-withoutIcon"><span>Scheduled</span></i>
