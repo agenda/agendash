@@ -53,14 +53,22 @@ const jobList = Vue.component('job-list', {
       for (const checkbox of checkboxes) {
         checkbox.click();
       }
+    },
+    toggleList(job) {
+      if(this.multijobs.includes(job.job._id)) {
+        this.multijobs.splice(this.multijobs.indexOf(job.job._id), 1);
+      } else {
+        this.multijobs.push(job.job._id);
+      }
     }
   },
   template: `
   <div v-on:sendClean="cleanMulti">
-        <div v-if="multijobs.length > 0" >
+        <div >
           <div class="d-flex justify-content-end mb-2">
-            <button data-toggle="modal" data-target="#modalRequeueSureMulti" @click="sendQueued" class="btn btn-primary mr-2" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>
-            <button data-toggle="modal" data-target="#modalDeleteSureMulti" @click="sendDelete" class="btn btn-danger" data-placement="top" title="Delete list of selecteds Jobs"> Multiple Delete </button>
+            <span class="mr-2">{{ multijobs.length }} jobs selected</span>
+            <button :disabled="!multijobs.length" data-toggle="modal" data-target="#modalRequeueSureMulti" @click="sendQueued" class="btn btn-primary mr-2" data-placement="top" title="Requeue list of selecteds Jobs"> Multiple Requeue </button>
+            <button :disabled="!multijobs.length" data-toggle="modal" data-target="#modalDeleteSureMulti" @click="sendDelete" class="btn btn-danger" data-placement="top" title="Delete list of selecteds Jobs"> Multiple Delete </button>
           </div>
         </div>
 
@@ -121,11 +129,11 @@ const jobList = Vue.component('job-list', {
                     <i v-if="job.failed" class="pill-own bg-danger pill-withoutIcon"><span>Failed</span></i>
                     <i v-if="job.running" class="pill-own bg-warning pill-withoutIcon"><span>Running</span></i>
                   </td>
-                  <td class="job-name"> {{job.job.name}} </td>
-                  <td class="job-lastRunAt"> {{ formatDate(job.job.lastRunAt) }} </td>
-                  <td class="job-nextRunAt"> {{ formatDate(job.job.nextRunAt) }} </td>
-                  <td class="job-finishedAt"> {{ formatDate(job.job.lastFinishedAt) }} </td>
-                  <td class="job-lockedAt"> {{ job.job.lockedAt ? formatDate(job.job.lockedAt) : "" }} </td>
+                  <td class="job-name"  @click="toggleList(job)"> {{job.job.name}} </td>
+                  <td class="job-lastRunAt"  @click="toggleList(job)"> {{ formatDate(job.job.lastRunAt) }} </td>
+                  <td class="job-nextRunAt"  @click="toggleList(job)"> {{ formatDate(job.job.nextRunAt) }} </td>
+                  <td class="job-finishedAt"  @click="toggleList(job)"> {{ formatDate(job.job.lastFinishedAt) }} </td>
+                  <td class="job-lockedAt"  @click="toggleList(job)"> {{ formatDate(job.job.lockedAt) }} </td>
                   <td class="job-actions">
                     <i class="material-icons md-dark md-custom action-btn viewData text-primary" data-toggle="modal" data-target="#modalRequeueSure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
                     <i class="material-icons md-dark md-custom action-btn viewData text-success" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data">visibility</i>
@@ -141,7 +149,7 @@ const jobList = Vue.component('job-list', {
             <div v-for="job in sortedJobs" class="col col-xs-6 order-1 p-1">
               <div class="card bg-light" >
                 <div class="card-header card-responsive-title-container">
-                  <div class="card-responsive-name">
+                  <div class="card-responsive-name"  @click="toggleList(job)">
                     {{job.job.name}}
                   </div>
                   <div class="d-flex align-items-center">

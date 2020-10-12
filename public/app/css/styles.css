@@ -38,7 +38,7 @@
   background: #000000;
 }
 .sidebar {
-  max-height: 100vh;
+  max-height: calc(100vh - 45px);
   overflow-y: scroll;
 }
 
