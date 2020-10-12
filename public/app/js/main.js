@@ -161,7 +161,7 @@ const app = Vue.component('app', {
               <a class="navbar-brand col-sm-10 col-md-10 mr-0 tittle"> Agendash 2</a>
             </div>
             <div class='d-md-none w-50'>
-              <div id="mySidebar" class="sidebar-collapse">
+              <div id="mySidebar" class="sidebar-collapse" @click="closeNav()">
                 <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
                 <div v-if="hideSlide === false" class="bg-light overflow-auto">
                   <sidebar
@@ -221,7 +221,7 @@ const app = Vue.component('app', {
             </div>
           </main>
       </div>
-      <div class="row bg-dark py-3">
+      <div class="row bg-dark py-3" v-if="false">
         <div class="col-6 m-auto text-light text-center">
           <small>Made with ❤ by <a class="text-light" href="https://www.softwareontheroad.com/about" target="_BLANK">Software On The Road</a></small>
         </div>
