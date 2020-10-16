@@ -65,9 +65,9 @@ const app = Vue.component('app', {
       this.jobData = data;
       this.showNewJob = true;
     },
-    searchForm(search, property, limit, skip, refresh, state, object){
+    searchForm(name, search, property, limit, skip, refresh, state, object){
         this.pagesize = limit ? limit : this.pagesize,
-        this.name = 'name',
+        this.name = name,
         this.search = search,
         this.property = property,
 
@@ -76,10 +76,10 @@ const app = Vue.component('app', {
         this.state = state,
         this.object = object ? object : this.object,
 
-        this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.state, this.object)
+        this.fetchData(this.name, this.search, this.property, this.pagesize, this.skip, this.refresh, this.state, this.object)
     },
     refreshData() {
-      this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh, this.state, this.object)
+      this.fetchData(this.name, this.search, this.property, this.pagesize, this.skip, this.refresh, this.state, this.object)
     },
     pagechange(action){
 
@@ -90,13 +90,13 @@ const app = Vue.component('app', {
         this.pagenumber--
       }
       this.skip = (this.pagenumber-1) * this.pagesize
-      this.fetchData(this.search, this.property, this.pagesize, this.skip, this.refresh,this.state, this.object)
+      this.fetchData(this.name, this.search, this.property, this.pagesize, this.skip, this.refresh,this.state, this.object)
     },
-    fetchData(search = '', property = '', limit = 15, skip = 0, refresh = 60, state = '', object){
+    fetchData(name = '', search = '', property = '', limit = 15, skip = 0, refresh = 60, state = '', object){
       this.loading = true;
       this.pagesize = this.pagesize === 0 ? parseInt(limit) : this.pagesize;
       this.refresh = parseFloat(refresh);
-      const url = `api?limit=${limit}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}${state ? `&state=${state}`: ''}&q=${search}`;
+      const url = `api?limit=${limit}&job=${name}&skip=${skip}&property=${property}${object ? '&isObjectId=true' : ""}${state ? `&state=${state}`: ''}&q=${search}`;
       return axios.get(url)
         .then(result => result.data)
         .then(
@@ -152,6 +152,7 @@ const app = Vue.component('app', {
     return this.fetchData();
   },
   template: `
+
     <div class="container-fluid">
       <div class="">
         <div class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -160,7 +161,7 @@ const app = Vue.component('app', {
               <a class="navbar-brand col-sm-10 col-md-10 mr-0 tittle"> Agendash 2</a>
             </div>
             <div class='d-md-none w-50'>
-              <div id="mySidebar" class="sidebar-collapse">
+              <div id="mySidebar" class="sidebar-collapse" @click="closeNav()">
                 <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
                 <div v-if="hideSlide === false" class="bg-light overflow-auto">
                   <sidebar
@@ -220,7 +221,7 @@ const app = Vue.component('app', {
             </div>
           </main>
       </div>
-      <div class="row bg-dark py-3">
+      <div class="row bg-dark py-3" v-if="false">
         <div class="col-6 m-auto text-light text-center">
           <small>Made with ❤ by <a class="text-light" href="https://www.softwareontheroad.com/about" target="_BLANK">Software On The Road</a></small>
         </div>

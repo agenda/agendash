@@ -24,16 +24,16 @@ const sidebar = Vue.component('sidebar', {
     searchSpecificJob(job, type){
       if(job === 'All Jobs'){
         if(type){
-          this.$emit('search-sidebar','','',this.pagesize,'','',type,'',);
+          this.$emit('search-sidebar','','','',this.pagesize,'','',type,'',);
         } else {
-          this.$emit('search-sidebar','','',this.pagesize,'','','','',);
+          this.$emit('search-sidebar','','','',this.pagesize,'','','','',);
         }
       }
       else if(type){
-          this.$emit('search-sidebar',job,'name',this.pagesize,'','',type,'',)
+          this.$emit('search-sidebar',job,'','',this.pagesize,'','',type,'',)
       }
       else {
-        this.$emit('search-sidebar', job, 'name',this.pagesize,'','','',);
+        this.$emit('search-sidebar', job, '','',this.pagesize,'','','',);
       }
     }
   },
