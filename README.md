@@ -9,7 +9,7 @@ A Dashboard for [Agenda](https://github.com/agenda/agenda)
 
 ### Features
 
-- Job status auto-refreshes (2-second polling by default)
+- Job status auto-refreshes (2-second polling by default).
 - Schedule a new job from the UI
 - Dive in to see more details about the job, like the json data
 - Requeue a job (clone the data and run immediately)
