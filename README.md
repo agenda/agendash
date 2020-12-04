@@ -47,6 +47,27 @@ A modern, secure, and reliable dashboard for [Agenda](https://github.com/agenda/
 
 ---
 
+# Requirements
+
+A minimun Node.js version 12 is required for `@hapi/@hapi` dependency (see [#23](https://github.com/agenda/agendash-v2/issues/23))
+
+
+# Troubleshooting
+
+### Index for sorting
+
+It may be required to create the following index for faster sorting (see [#24](https://github.com/agenda/agendash-v2/issues/24))
+
+```
+db.agendaJobs.ensureIndex({
+    "nextRunAt" : -1,
+    "lastRunAt" : -1,
+    "lastFinishedAt" : -1
+}, "agendash2")
+```
+
+---
+
 # Motivation
 
 At [Software On The Road](softwareontheroad.com/about) we've been using agenda and agendash for almost every project since 2017 but it always had its limitation.
