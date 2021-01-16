@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-  - 8
-  - 9
   - 10
+  - 12
+  - 14
 matrix:
   fast_finish: true
 services:
@@ -21,4 +21,5 @@ before_script:
   - 'if [ "$AGENDA_VERSION" ]; then yarn add agenda@$AGENDA_VERSION; fi'
   - 'until nc -z 127.0.0.1 27017 ; do echo Waiting for MongoDB; sleep 1; done'
 env:
-  - AGENDA_VERSION=^2.0.0
+  - AGENDA_VERSION=^4.0.0
+  - AGENDA_VERSION=^3.1.0

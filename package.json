@@ -1,11 +1,11 @@
 {
-  "name": "agendash2",
-  "version": "0.8.2",
+  "name": "agendash",
+  "version": "2.0.0",
   "description": "A modern dashboard for Agenda.js with Pagination and Search capabilities",
   "main": "app.js",
   "bin": "bin/agendash-standalone.js",
   "engines": {
-    "node": ">=8.9.0"
+    "node": ">=10.0.0"
   },
   "scripts": {
     "postversion": "npm publish",
@@ -22,17 +22,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/agenda/agendash-v2.git"
+    "url": "git+https://github.com/agenda/agendash.git"
   },
   "bugs": {
-    "url": "https://github.com/agenda/agendash-v2/issues"
+    "url": "https://github.com/agenda/agendash/issues"
   },
-  "homepage": "https://github.com/agenda/agendash-v2#readme",
+  "homepage": "https://github.com/agenda/agendash#readme",
   "license": "MIT",
   "dependencies": {
     "@hapi/hapi": "^19.1.1",
     "@hapi/inert": "^6.0.1",
-    "agenda": "^3.1.0",
+    "agenda": "^3.1.0 || ^4.0.0",
     "async": "^2.6.0",
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",

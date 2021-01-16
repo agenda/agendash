@@ -1,20 +1,20 @@
-# Agendash 2
+# Agendash
 
-A modern, secure, and reliable dashboard for [Agenda](https://github.com/agenda/agenda) with search and pagination capabilities written in vue.js
+A Dashboard for [Agenda](https://github.com/agenda/agenda).
 
 ---
 
 ### Features
 
-- Dropin replacement for old agendash just change your `require(agendash)` to `require(agendash2)`
-- Job status auto-refreshes (60-second polling by default)
-- Schedule a new job from the UI
-- Dive in to see more details about the job, like the json data
-- Requeue a job (clone the data and run immediately)
-- Delete jobs (Useful for cleaning up old completed jobs)
-- Search jobs by name and metadata (supports for quering mongo Object Id)
-- Pagination (Original version had limitiation to 200 results only)
+- Job status auto-refreshes: 60-second polling by default.
+- Schedule a new job from the UI.
+- Dive in to see more details about the job, like the json data.
+- Requeue a job. Clone the data and run immediately.
+- Delete jobs. Useful for cleaning up old completed jobs.
+- Search jobs by name and metadata. Supports querying by Mongo Object Id.
+- Pagination
 - Responsive UI
+
 ---
 
 ### Screenshots
@@ -49,38 +49,27 @@ A modern, secure, and reliable dashboard for [Agenda](https://github.com/agenda/
 
 # Requirements
 
-A minimun Node.js version 12 is required for `@hapi/@hapi` dependency (see [#23](https://github.com/agenda/agendash-v2/issues/23))
+A minimun Node.js version 12 is required for `@hapi/@hapi` dependency (see [#23](https://github.com/agenda/agendash/issues/23))
 
 
 # Troubleshooting
 
 ### Index for sorting
 
-It may be required to create the following index for faster sorting (see [#24](https://github.com/agenda/agendash-v2/issues/24))
+It may be required to create the following index for faster sorting (see [#24](https://github.com/agenda/agendash/issues/24))
 
 ```
 db.agendaJobs.ensureIndex({
     "nextRunAt" : -1,
     "lastRunAt" : -1,
     "lastFinishedAt" : -1
-}, "agendash2")
+}, "agendash")
 ```
 
 ---
 
-# Motivation
-
-At [Software On The Road](softwareontheroad.com/about) we've been using agenda and agendash for almost every project since 2017 but it always had its limitation.
-And due to a critical security issue that we found on the server middleware, we decided to fork agendash and rewrote it from scratch.
-At first, we tried to just patch the existing code but it was written in backbone.js, so it would be more effort to learn it that just use vue.js to re-create the existing features. After all, this is just a simple CRUD with pagination and search, nothing fancy.
-
-
 # Roadmap
 
-- [x] Improve default security
-- [x] Compatibility with agenda v3
-- [x] Polish backend so it is more efficient (MongoDB Aggregation queries were rewritten and optimized)
-- [x] Mobile/Responsive UI
 - [ ] Get more test coverage
 - [ ] Add middlewares for KOA, fastify, and other express-like libraries
 - [ ] You decide! Submit a feature request
@@ -88,16 +77,15 @@ At first, we tried to just patch the existing code but it was written in backbon
 ### Install
 
 ```
-npm install --save agendash2
+npm install --save agendash
 ```
 
 *Note*: `Agendash` requires mongodb version >2.6.0 to perform the needed aggregate queries. This is your mongo database version, not your node package version! To check your database version, connect to mongo and run `db.version()`.
 
-
 ### Middleware usage
 
-Agendash2 provides Express middleware you can use at a specified path, for example this will
-make Agendash2 available on your site at the `/dash` path. Note: Do not try to mount Agendash2
+Agendash provides Express middleware you can use at a specified path, for example this will
+make Agendash available on your site at the `/dash` path. Note: Do not try to mount Agendash
 at the root level like `app.use('/', Agendash(agenda))`.
 
 ```js
@@ -107,7 +95,7 @@ var app = express();
 // ... your other express middleware like body-parser
 
 var Agenda = require('agenda');
-var Agendash = require('agendash2');
+var Agendash = require('agendash');
 
 var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/agendaDb'}});
 // or provide your own mongo client:
@@ -120,7 +108,7 @@ app.use('/dash', Agendash(agenda));
 // ... start your server
 ```
 
-By mounting Agendash2 as middleware on a specific path, you may provide your
+By mounting Agendash as middleware on a specific path, you may provide your
 own authentication for that path. For example if you have an authenticated
 session using passport, you can protect the dashboard path like this:
 
@@ -154,17 +142,17 @@ Note that if you use a CSRF protection middleware like [`csurf`](https://www.npm
 Agendash comes with a standalone Express app which you can use like this:
 
 ```bash
-./node_modules/.bin/agendash2 --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
 ```
 
 or like this, for default collection `agendaJobs` and default port `3000`:
 
 ```bash
-./node_modules/.bin/agendash2 --db=mongodb://localhost/agendaDb
+./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb
 ```
 
 If you are using npm >= 5.2, then you can use [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
 
 ```bash
-npx agendash2 --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+npx agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
 ```

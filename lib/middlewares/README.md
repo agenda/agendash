@@ -8,7 +8,7 @@ Works with [Hapijs](https://hapijs.com/) >= v18
 First install the dependencies in your app:
 
 ```bash
-npm install @hapi/hapi @hapi/inert agenda agendash2
+npm install @hapi/hapi @hapi/inert agenda agendash
 ```
 
 Then use it as follows:
@@ -17,7 +17,7 @@ Then use it as follows:
 
 const Hapi = require('hapi');
 const Agenda = require('agenda');
-const Agendash = require('agendash2');
+const Agendash = require('agendash');
 
 var agenda = new Agenda({
     db: { address: '<mongoUrl>'
