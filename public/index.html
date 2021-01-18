@@ -5,175 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Agendash</title>
+    <title>Agendash 2</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,300;1,400;1,500;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.20.0/themes/prism.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/vue-prism-editor@0.6.1/dist/VuePrismEditor.css">
+    <link href="app/css/styles.css" rel="stylesheet">
   </head>
-
   <body>
-    <div id="app">
-      <div id="sidebar">
-        <div class="sidebar-header">
-          <h1 class="page-title"></h1>
-          <div class="form-group">
-            <label for="overviewFilter">Filter by name</label>
-            <input type="text" class="overview-filter form-control">
-          </div>
-          <div class="form-group">
-            <label for="overviewFilter">Refresh interval (seconds)</label>
-            <input type="number" value="2" class="refresh-interval form-control">
-          </div>
-        </div>
-        <div id="job-overview-list"></div>
-      </div>
-      <div id="main-pane">
-        <div id="list-pane">
-          <div class="page-header">
-            <h2 id="active-title">
-              <span class="active-job"></span>
-              <small class="active-state"></small>
-            </h2>
-            <ul id="select-jobs" class="nav nav-pills">
-              <li role="presentation"><a role="button" data-action="schedule-job">Schedule job</a></li>
-              <li role="presentation"><a role="button" data-action="select-all">Select all</a></li>
-              <li role="presentation"><a role="button" data-action="select-none">Select none</a></li>
-            </ul>
-            <div class="clearfix"></div>
-          </div>
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Status</th>
-                  <th>Name</th>
-                  <th>Last run started</th>
-                  <th>Next run starts</th>
-                  <th>Last finished</th>
-                  <th>Locked</th>
-                </tr>
-              </thead>
-              <tbody id="job-list"></tbody>
-            </table>
-          </div>
-        </div>
-        <div id="details-pane">
-          <h2 class="sub-header"><span class="number-selected">0</span> <small>selected</small></h2>
-          <button type="button" class="btn btn-danger btn-xs" data-action="requeue-jobs">Requeue selected</button>
-          <button type="button" class="btn btn-danger btn-xs pull-right" data-action="delete-jobs">Delete selected</button>
-          <hr />
-          <div id="details-list"></div>
-        </div>
-        <div id="create-job-pane">
-          <h2 class="sub-header">Create Job</h2>
-          <hr />
-          <div class="form-group">
-            <label>Job name</label>
-            <input type="text" class="job-name form-control">
-          </div>
-          <div class="form-group">
-            <label>Schedule</label>
-            <input type="text" class="job-schedule form-control">
-          </div>
-          <div class="form-group">
-            <label>Repeat every</label>
-            <input type="text" class="job-repeat-every form-control">
-          </div>
-          <div class="form-group">
-            <label>Job data (json)</label>
-            <textarea class="job-data form-control">{}</textarea>
-          </div>
-          <div class="form-group">
-            <span class="btn btn-default btn-success" data-action="save">Save</span>
-            <span class="btn btn-default btn-warning" data-action="cancel">Cancel</span>
-          </div>
-        </div>
-      </div>
+    <div id="agendash-v2-root">
+      <app></app>
     </div>
-
-    <script type="text/template" id="overview-item-template">
-      <ul class="nav nav-sidebar">
-        <li data-state="">
-          <a class="text-muted" href="#">
-            <strong><%- displayName %></strong>
-            <span class="label label-default pull-right"><%- total %></span>
-            <div class="progress">
-              <div class="progress-bar progress-bar-info" style="flex-grow: <%- Math.log2(1 + scheduled) %>"></div>
-              <div class="progress-bar progress-bar-primary" style="flex-grow: <%- Math.log2(1 + queued) %>"></div>
-              <div class="progress-bar progress-bar-warning" style="flex-grow: <%- Math.log2(1 + running) %>"></div>
-              <div class="progress-bar progress-bar-success" style="flex-grow: <%- Math.log2(1 + completed) %>"></div>
-              <div class="progress-bar progress-bar-danger" style="flex-grow: <%- Math.log2(1 + failed) %>"></div>
-            </div>
-          </a>
-        </li>
-        <ul class="nav nav-sidebar">
-          <li data-state="scheduled"><a class="text-info" href="#">Scheduled<span class="label label-info pull-right"><%- scheduled %></span></a></li>
-          <li data-state="queued"><a class="text-primary" href="#">Queued<span class="label label-primary pull-right"><%- queued %></span></a></li>
-          <li data-state="running"><a class="text-warning" href="#">Running<span class="label label-warning pull-right"><%- running %></span></a></li>
-          <li data-state="completed"><a class="text-success" href="#">Completed<span class="label label-success pull-right"><%- completed %></span></a></li>
-          <li data-state="failed"><a class="text-danger" href="#">Failed<span class="label label-danger pull-right"><%- failed %></span></a></li>
-          <li data-state="repeating"><a class="text-info" href="#">Repeating<span class="label label-info pull-right"><%- repeating %></span></a></li>
-        </ul>
-      </ul>
+    <script src="https://cdn.jsdelivr.net/combine/npm/prismjs@1.20.0,npm/vue-prism-editor@0.6.1,npm/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="app/js/confirms.js"></script>
+    <script src="app/js/confirmDelete.js"></script>
+    <script src="app/js/confirmDeleteMulti.js"></script>
+    <script src="app/js/confirmRequeue.js"></script>
+    <script src="app/js/confirmRequeueMulti.js"></script>
+    <script src="app/js/newJob.js"></script>
+    <script src="app/js/jobdetail.js"></script>
+    <script src="app/js/joblist.js"></script>
+    <script src="app/js/sidebar.js"></script>
+    <script src="app/js/topbar.js"></script>
+    <script src="app/js/main.js"></script>
+    <script>
+      Vue.component('prism-editor', VuePrismEditor)
+      new Vue({ el: '#agendash-v2-root' })
     </script>
-
-    <script type="text/template" id="job-item-template">
-      <td>
-        <% if (repeating) { %><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> <%- job.repeatInterval %></span><% } %>
-        <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
-        <% if (queued) { %><span class="label label-primary">Queued</span><% } %>
-        <% if (running) { %><span class="label label-warning">Running</span><% } %>
-        <% if (completed) { %><span class="label label-success">Completed</span><% } %>
-        <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
-      </td>
-      <td>
-        <%- job.name %>
-      </td>
-      <td><% if (job.lastRunAt) { %><time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).fromNow() %></time><% } %></td>
-      <td><% if (job.nextRunAt) { %><time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).fromNow() %></time><% } %></td>
-      <td><% if (job.lastFinishedAt) { %><time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).fromNow() %></time><% } %></td>
-      <td><% if (job.lockedAt) { %><time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).fromNow() %></time><% } %></td>
-    </script>
-
-    <script type="text/template" id="job-item-details-template">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h3 class="panel-title"><%- job.name %></h3>
-          <% if (repeating) { %><span class="label label-info"><i class="glyphicon glyphicon-repeat"></i> <%- job.repeatInterval %></span><% } %>
-          <% if (scheduled) { %><span class="label label-info">Scheduled</span><% } %>
-          <% if (queued) { %><span class="label label-primary">Queued</span><% } %>
-          <% if (running) { %><span class="label label-warning">Running</span><% } %>
-          <% if (completed) { %><span class="label label-success">Completed</span><% } %>
-          <% if (failed) { %><span class="label label-danger">Failed</span><% } %>
-        </div>
-        <div class="panel-body">
-          <% if (job.lastRunAt) { %><p>Last run <time datetime="<%- moment(job.lastRunAt).toISOString() %>"><%- moment(job.lastRunAt).fromNow() %></time></p><% } %>
-          <% if (job.nextRunAt) { %><p>Next run <time datetime="<%- moment(job.nextRunAt).toISOString() %>"><%- moment(job.nextRunAt).fromNow() %></time></p><% } %>
-          <% if (job.lastFinishedAt) { %><p>Last finished <time datetime="<%- moment(job.lastFinishedAt).toISOString() %>"><%- moment(job.lastFinishedAt).fromNow() %></time></p><% } %>
-          <% if (job.lockedAt) { %><p>Locked <time datetime="<%- moment(job.lockedAt).toISOString() %>"><%- moment(job.lockedAt).fromNow() %></time></p><% } %>
-          <% if (job.repeatInterval) { %><p>Repeat each <%- job.repeatInterval %></p><% } %>
-
-          <strong>Job data</strong>
-          <pre><%- JSON.stringify(job.data, null, 2) %></pre>
-          <% if (failed) { %>
-            <strong>Failure reason</strong>
-            <pre><%- JSON.stringify(job.failReason || '', null, 2) %></pre>
-          <% } %>
-        </div>
-        <div class="panel-footer clearfix">
-          <button type="button" class="btn btn-danger btn-sm" data-action="requeue">Requeue</button>
-          <button type="button" class="btn btn-danger btn-sm pull-right" data-action="delete">Delete permanently</button>
-        </div>
-      </div>
-    </script>
-
-    <script src="js/jquery-2.2.0.min.js"></script>
-    <script src="js/lodash.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/backbone-min.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="js/main.js"></script>
-
   </body>
 </html>

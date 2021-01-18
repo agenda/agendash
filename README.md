@@ -1,35 +1,78 @@
 # Agendash
-[![Build Status](https://travis-ci.org/agenda/agendash.svg)](https://travis-ci.org/agenda/agendash)
-<a href="https://slackin-ekwifvcwbr.now.sh/"><img src="https://slackin-ekwifvcwbr.now.sh/badge.svg" alt="Slack Status"></a>
-[![Known Vulnerabilities](https://snyk.io/test/github/agenda/agendash/badge.svg?targetFile=package.json)](https://snyk.io/test/github/agenda/agendash?targetFile=package.json)
 
-A Dashboard for [Agenda](https://github.com/agenda/agenda)
+A Dashboard for [Agenda](https://github.com/agenda/agenda).
 
 ---
 
 ### Features
 
-- Job status auto-refreshes (2-second polling by default)
-- Schedule a new job from the UI
-- Dive in to see more details about the job, like the json data
-- Requeue a job (clone the data and run immediately)
-- Delete jobs (Useful for cleaning up old completed jobs)
-
-### Notes
-
- - Automatically creates additional indexes on several columns (See #24).
+- Job status auto-refreshes: 60-second polling by default.
+- Schedule a new job from the UI.
+- Dive in to see more details about the job, like the json data.
+- Requeue a job. Clone the data and run immediately.
+- Delete jobs. Useful for cleaning up old completed jobs.
+- Search jobs by name and metadata. Supports querying by Mongo Object Id.
+- Pagination
+- Responsive UI
 
 ---
 
 ### Screenshots
 
+#### Dashboard
+
 ![Auto-refresh list of jobs](all-jobs.png)
 
 ---
 
-![See job details, requeue or delete jobs](job-details.png)
+#### Create jobs
+
+![See job details, requeue or delete jobs](create-job.png)
 
 ---
+
+#### Search by name, metadata, job status
+
+![Search for a job by name or metadata ](search.png)
+
+---
+
+#### Responsive UI
+
+![Mobile UI small devices](mobile-ui-sm.png)
+
+
+
+![Mobile UI extra small devices](mobile-ui-xs.png)
+
+---
+
+# Requirements
+
+A minimun Node.js version 12 is required for `@hapi/@hapi` dependency (see [#23](https://github.com/agenda/agendash/issues/23))
+
+
+# Troubleshooting
+
+### Index for sorting
+
+It may be required to create the following index for faster sorting (see [#24](https://github.com/agenda/agendash/issues/24))
+
+```
+db.agendaJobs.ensureIndex({
+    "nextRunAt" : -1,
+    "lastRunAt" : -1,
+    "lastFinishedAt" : -1
+}, "agendash")
+```
+
+---
+
+# Roadmap
+
+- [ ] Get more test coverage
+- [ ] Add middlewares for KOA, fastify, and other express-like libraries
+- [ ] You decide! Submit a feature request
 
 ### Install
 
@@ -38,26 +81,6 @@ npm install --save agendash
 ```
 
 *Note*: `Agendash` requires mongodb version >2.6.0 to perform the needed aggregate queries. This is your mongo database version, not your node package version! To check your database version, connect to mongo and run `db.version()`.
-
-### Standalone usage
-
-Agendash comes with a standalone Express app which you can use like this:
-
-```bash
-./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
-```
-
-or like this, for default collection `agendaJobs` and default port `3000`:
-
-```bash
-./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb
-```
-
-If you are using npm >= 5.2, then you can use [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
-
-```bash
-npx agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
-```
 
 ### Middleware usage
 
@@ -89,7 +112,7 @@ By mounting Agendash as middleware on a specific path, you may provide your
 own authentication for that path. For example if you have an authenticated
 session using passport, you can protect the dashboard path like this:
 
-```
+```js
 app.use('/dash',
   function (req, res, next) {
     if (!req.user || !req.user.is_admin) {
@@ -113,17 +136,23 @@ app.use('/agendash', Agendash(agenda, {
 
 Note that if you use a CSRF protection middleware like [`csurf`](https://www.npmjs.com/package/csurf), you might need to [configure it off](https://github.com/agenda/agendash/issues/23#issuecomment-270917949) for Agendash-routes.
 
-### Additional options
 
-The second argument to Agendash is an optional object. Valid keys are:
+### Standalone usage
 
-- `middleware`: Currently only `'express'` is supported. I'd like to use `'koa'` soon.
-- `title`: Defaults to `"Agendash"`. Useful if you are running multiple Agenda pools.
+Agendash comes with a standalone Express app which you can use like this:
 
-### Help appreciated
+```bash
+./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+```
 
-There are several things I would like help with:
+or like this, for default collection `agendaJobs` and default port `3000`:
 
--  [ ] I'm rusty with Backbone. Clean up the client code. I wasn't sure on the best way to trigger and handle update events.
--  [ ] Write some tests!
--  [ ] Use Agendash and submit issues!
+```bash
+./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb
+```
+
+If you are using npm >= 5.2, then you can use [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
+
+```bash
+npx agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+```

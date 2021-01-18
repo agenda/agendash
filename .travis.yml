@@ -1,10 +1,17 @@
 language: node_js
 node_js:
-  - 8
-  - 9
   - 10
+  - 12
+  - 14
+env:
+- AGENDA_VERSION=^4.0.0
+- AGENDA_VERSION=^3.1.0
 matrix:
   fast_finish: true
+# Run npm test, unless it's Node.js 10 and then run just lint+Express tests
+# since Hapi isn't compatible with Node.js 10
+script: 'if [ "${TRAVIS_NODE_VERSION:0:2}" == "10" ]; then npm run lint && npm run ava test/test-express.js; else npm test; fi'
+install: npm ci
 services:
   - mongodb
 sudo: false
@@ -18,7 +25,5 @@ addons:
 before_script:
   - mongo --version
   - mongod --version
-  - 'if [ "$AGENDA_VERSION" ]; then yarn add agenda@$AGENDA_VERSION; fi'
+  - 'if [ "$AGENDA_VERSION" ]; then npm install agenda@$AGENDA_VERSION; fi'
   - 'until nc -z 127.0.0.1 27017 ; do echo Waiting for MongoDB; sleep 1; done'
-env:
-  - AGENDA_VERSION=^2.0.0

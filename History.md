@@ -1,3 +1,25 @@
+2.0.0 / 2020-01-16 - First public release of v2 as Agendash proper
+====
+
+Complete rewrite of Agendash in Vue.js!
+
+Supports Node.js 10 and up.
+
+2.0.0-beta0.8.2 / 2020-12-04 - As agendash2, in parallel repository https://github.com/agenda/agendash-v2
+====
+ * fix: search by job name, small side bar design fix and toggle improvements (thanks @simllll)
+ * fix: joblist reset fix (thanks @simllll)
+ * fix: improve design on desktop + close sidebar on mobile when clicked on something (thanks @simllll)
+ * feat: enable options.query as number (thanks @Enubia @simllll)
+ * feat: multiselect checkboxes (thanks @Enubia @simllll)
+
+2.0.0-beta0.1.0 / 2020-04-30 - First public release of Agendash2 in parallel repository https://github.com/agenda/agendash-v2
+====
+ * New frontend written from scratch in Vue.js
+ * Add search
+ * Add pagination
+ * Change default refresh interval to 60 seconds
+
 1.0.0 / 2019-02-25
 ====
 * Add Hapi v17 middleware, drop support for Node.js v6 & v7 (#81) by umens (**BREAKING**)

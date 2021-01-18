@@ -1,11 +1,16 @@
 # Middlewares
+
 ## Hapi
-Works with [Hapijs](https://hapijs.com/) >= v17
+
+Works with [Hapijs](https://hapijs.com/) >= v18
+
 ### usage
 First install the dependencies in your app:
+
 ```bash
-npm install hapi inert agenda agendash
+npm install @hapi/hapi @hapi/inert agenda agendash
 ```
+
 Then use it as follows:
 ```javascript
 'use strict';
@@ -26,7 +31,7 @@ const server = Hapi.server({
 const init = async () => {
 
   await server.register(
-    require('inert'),
+    require('@hapi/inert'),
     {
       plugin: Agendash(agenda, {
         middleware: 'hapi'
