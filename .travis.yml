@@ -1,17 +1,16 @@
 language: node_js
+node_js:
+  - 10
+  - 12
+  - 14
+env:
+- AGENDA_VERSION=^4.0.0
+- AGENDA_VERSION=^3.1.0
 matrix:
   fast_finish: true
-  include:
-  - node_js: 10
-    ENV: RUN='npm run lint && npm run ava test/test-express.js'
-  - node_js: 12
-    ENV: RUN='npm test'
-  - node_js: 14
-    ENV: RUN='npm test'
-env:
-  - AGENDA_VERSION=^4.0.0
-  - AGENDA_VERSION=^3.1.0
-script: '$RUN'
+# Run npm test, unless it's Node.js 10 and then run just lint+Express tests
+# since Hapi isn't compatible with Node.js 10
+script: 'if [ "${TRAVIS_NODE_VERSION:0:2}" == "10" ]; then npm run lint && npm run ava test/test-express.js; else npm test; fi'
 install: npm ci
 services:
   - mongodb
