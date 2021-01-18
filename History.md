@@ -1,4 +1,4 @@
-2.0.0 / 2020-01-16 - First public release of v2 as Agendash proper
+2.0.0 - First public release of v2 as Agendash proper
 ====
 
 Complete rewrite of Agendash in Vue.js!
