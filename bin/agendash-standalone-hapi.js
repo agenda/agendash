@@ -16,7 +16,7 @@ if (!program.db) {
   process.exit(1);
 }
 
-const init = async () => {
+const init = async() => {
   const server = Hapi.server({
     port: 3002,
     host: 'localhost'
@@ -33,8 +33,8 @@ const init = async () => {
   console.log('Server running on %s', server.info.uri);
 };
 
-process.on('unhandledRejection', err => {
-  console.log(err);
+process.on('unhandledRejection', error => {
+  console.log(error);
   process.exit(1);
 });
 

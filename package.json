@@ -33,7 +33,6 @@
     "@hapi/hapi": "^19.1.1",
     "@hapi/inert": "^6.0.1",
     "agenda": "^3.1.0 || ^4.0.0",
-    "async": "^2.6.0",
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
     "express": "^4.0.0",
@@ -42,10 +41,9 @@
   },
   "devDependencies": {
     "ava": "^3.5.1",
-    "nodemon": "^2.0.3",
     "npm-run-all": "^4.1.2",
     "supertest": "^3.0.0",
-    "xo": "^0.18.2"
+    "xo": "^0.37.1"
   },
   "xo": {
     "space": 2,
