@@ -20,6 +20,13 @@ test.beforeEach(async() => {
   await agenda._collection.deleteMany({}, null);
 });
 
+test.serial('GET /api with no jobs should return the correct overview', async t => {
+  const response = await request.get('/api?limit=200&skip=0');
+
+  t.is(response.body.overview[0].displayName, 'All Jobs');
+  t.is(response.body.jobs.length, 0);
+});
+
 test.serial('POST /api/jobs/create should confirm the job exists', async t => {
   const response = await request.post('/api/jobs/create')
     .send({
@@ -38,15 +45,6 @@ test.serial('POST /api/jobs/create should confirm the job exists', async t => {
       throw new Error('Expected one document in database');
     }
   });
-});
-
-// @TODO: fix broken test https://github.com/agenda/agendash/issues/139
-// eslint-disable-next-line ava/no-skip-test
-test.skip('GET /api with no jobs should return the correct overview', async t => {
-  const response = await request.get('/api?limit=200&skip=0');
-
-  t.is(response.body.overview[0].displayName, 'All Jobs');
-  t.is(response.body.jobs.length, 0);
 });
 
 test.serial('POST /api/jobs/delete should delete the job', async t => {
