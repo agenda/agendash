@@ -41,6 +41,7 @@ test.serial('POST /api/jobs/create should confirm the job exists', async t => {
 });
 
 // @TODO: fix broken test https://github.com/agenda/agendash/issues/139
+// eslint-disable-next-line ava/no-skip-test
 test.skip('GET /api with no jobs should return the correct overview', async t => {
   const response = await request.get('/api?limit=200&skip=0');
 
