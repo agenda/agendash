@@ -1,11 +1,17 @@
 language: node_js
-node_js:
-  - 10
-  - 12
-  - 14
+jobs:
+  include:
+  - node_js: 10
+    ENV: RUN='npm run lint && npm run ava test/test-express.js'
+  - node_js: 12
+    ENV: RUN='npm test'
+  - node_js: 14
+    ENV: RUN='npm test'
 env:
   - AGENDA_VERSION=^4.0.0
   - AGENDA_VERSION=^3.1.0
+script: '$RUN'
+install: npm ci
 matrix:
   fast_finish: true
 services:
