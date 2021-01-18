@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 'use strict';
-const http = require('http');
 const Agenda = require('agenda');
 const Hapi = require('@hapi/hapi');
 const program = require('commander');
@@ -18,10 +17,9 @@ if (!program.db) {
 }
 
 const init = async () => {
-
   const server = Hapi.server({
-      port: 3002,
-      host: 'localhost'
+    port: 3002,
+    host: 'localhost'
   });
 
   const agenda = new Agenda().database(program.db, program.collection);
@@ -35,9 +33,9 @@ const init = async () => {
   console.log('Server running on %s', server.info.uri);
 };
 
-  process.on('unhandledRejection', (err) => {
-    console.log(err);
-    process.exit(1);
+process.on('unhandledRejection', err => {
+  console.log(err);
+  process.exit(1);
 });
 
 init();

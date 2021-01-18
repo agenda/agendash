@@ -1,6 +1,6 @@
 const test = require('ava');
 const supertest = require('supertest');
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 const Agenda = require('agenda');
 
 const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection');
