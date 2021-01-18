@@ -1,5 +1,6 @@
 language: node_js
-jobs:
+matrix:
+  fast_finish: true
   include:
   - node_js: 10
     ENV: RUN='npm run lint && npm run ava test/test-express.js'
@@ -12,8 +13,6 @@ env:
   - AGENDA_VERSION=^3.1.0
 script: '$RUN'
 install: npm ci
-matrix:
-  fast_finish: true
 services:
   - mongodb
 sudo: false
