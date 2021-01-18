@@ -47,14 +47,12 @@ test.serial('POST /api/jobs/create should confirm the job exists', async t => {
 });
 
 // @TODO: Fix broken test. https://github.com/agenda/agendash/issues/138
-/*
-test.serial('GET /api with no jobs should return the correct overview', async t => {
+test.skip('GET /api with no jobs should return the correct overview', async t => {
   const response = await request.get('/api?limit=200&skip=0');
 
   t.is(response.body.overview[0].displayName, 'All Jobs');
   t.is(response.body.jobs.length, 0);
 });
-*/
 
 test.serial('POST /api/jobs/delete should delete the job', async t => {
   const job = await agenda.create('Test Job', {})
