@@ -8,8 +8,6 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "postversion": "npm publish",
-    "postpublish": "git push origin --all; git push origin --tags",
     "test": "run-p lint ava",
     "lint": "xo",
     "ava": "ava -v -c 1"
