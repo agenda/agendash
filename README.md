@@ -202,3 +202,15 @@ npx agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --p
 ```
 
 Then browse to `http://localhost:3002/`.
+
+### Docker usage
+
+Agendash can also be run within a Docker container like this:
+
+```bash
+docker run -p 3000:3000 \
+  --env MONGODB_URI=mongo://myUser:myPass@myHost/myDb \
+  --env COLLECTION=myAgendaCollection agenda/agendash
+```
+
+Then browse to `http://localhost:3000/`.

@@ -1,4 +1,4 @@
-FROM node:14.15.4-alpine
+FROM node:14-alpine
 
 # Dependencies
 # RUN apk update && apk upgrade && \
