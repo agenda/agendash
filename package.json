@@ -30,8 +30,6 @@
   "homepage": "https://github.com/agenda/agendash#readme",
   "license": "MIT",
   "dependencies": {
-    "@hapi/hapi": "^19.1.1",
-    "@hapi/inert": "^6.0.1",
     "agenda": "^3.1.0 || ^4.0.0",
     "body-parser": "^1.15.0",
     "commander": "^2.9.0",
@@ -40,6 +38,8 @@
     "semver": "^5.3.0"
   },
   "devDependencies": {
+    "@hapi/hapi": "^19.1.1",
+    "@hapi/inert": "^6.0.1",
     "ava": "^3.5.1",
     "npm-run-all": "^4.1.2",
     "supertest": "^3.0.0",
