@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const Agenda = require('agenda');
+const agendash = require('../app');
 const Hapi = require('@hapi/hapi');
 const program = require('commander');
 
@@ -25,7 +26,7 @@ const init = async() => {
   const agenda = new Agenda().database(program.db, program.collection);
 
   await server.register(require('@hapi/inert'));
-  await server.register(require('../app')(agenda, {
+  await server.register(agendash(agenda, {
     middleware: 'hapi'
   }));
 

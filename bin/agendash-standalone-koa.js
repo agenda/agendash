@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-const http = require('http');
 const Agenda = require('agenda');
 const agendash = require('../app');
-const express = require('express');
+const Koa = require('koa');
 const program = require('commander');
 
 program
@@ -18,16 +17,24 @@ if (!program.db) {
   process.exit(1);
 }
 
-const app = express();
+const init = async() => {
+  const agenda = new Agenda().database(program.db, program.collection);
 
-const agenda = new Agenda().database(program.db, program.collection);
-app.use('/', agendash(agenda, {
-  title: program.title
-}));
+  const app = new Koa();
+  const middlewares = agendash(agenda, {
+    middleware: 'koa'
+  });
+  for (const middleware of middlewares) {
+    app.use(middleware);
+  }
 
-app.set('port', program.port);
+  await app.listen(program.port);
+  console.log('Server running on port %s', program.port);
+};
 
-const server = http.createServer(app);
-server.listen(program.port, () => {
-  console.log(`Agendash started http://localhost:${program.port}`);
+process.on('unhandledRejection', error => {
+  console.log(error);
+  process.exit(1);
 });
+
+init();
