@@ -11,6 +11,7 @@ program
   .option('-c, --collection <collection>', '[optional] Mongo collection, same as Agenda collection name, default agendaJobs', 'agendaJobs')
   .option('-p, --port <port>', '[optional] Server port, default 3000', (n, d) => Number(n) || d, 3000)
   .option('-t, --title <title>', '[optional] Page title, default Agendash', 'Agendash')
+  .option('-p, --path <path>', '[optional] Path to bind Agendash to, default /', '/')
   .parse(process.argv);
 
 if (!program.db) {
@@ -21,7 +22,7 @@ if (!program.db) {
 const app = express();
 
 const agenda = new Agenda().database(program.db, program.collection);
-app.use('/', agendash(agenda, {
+app.use(program.path, agendash(agenda, {
   title: program.title
 }));
 
@@ -29,5 +30,5 @@ app.set('port', program.port);
 
 const server = http.createServer(app);
 server.listen(program.port, () => {
-  console.log(`Agendash started http://localhost:${program.port}`);
+  console.log(`Agendash started http://localhost:${program.port}${program.path}`);
 });
