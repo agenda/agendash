@@ -156,6 +156,8 @@ await server.register(Agendash(agenda, {
 await server.start();
 ```
 
+Then browse to `http://localhost:3002/`.
+
 #### Koa
 
 ```shell
@@ -177,12 +179,14 @@ for (const middleware of middlewares) {
 await app.listen(3002);
 ```
 
+Then browse to `http://localhost:3002/`.
+
 ### Standalone usage
 
 Agendash comes with a standalone Express app which you can use like this:
 
 ```bash
-./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+./node_modules/.bin/agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3002
 ```
 
 or like this, for default collection `agendaJobs` and default port `3000`:
@@ -194,5 +198,19 @@ or like this, for default collection `agendaJobs` and default port `3000`:
 If you are using npm >= 5.2, then you can use [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
 
 ```bash
-npx agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3001
+npx agendash --db=mongodb://localhost/agendaDb --collection=agendaCollection --port=3002
 ```
+
+Then browse to `http://localhost:3002/`.
+
+### Docker usage
+
+Agendash can also be run within a Docker container like this:
+
+```bash
+docker run -p 3000:3000 \
+  --env MONGODB_URI=mongo://myUser:myPass@myHost/myDb \
+  --env COLLECTION=myAgendaCollection agenda/agendash
+```
+
+Then browse to `http://localhost:3000/`.

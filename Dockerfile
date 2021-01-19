@@ -1,4 +1,4 @@
-FROM node:14.15.4-alpine
+FROM node:14-alpine
 
 # Dependencies
 # RUN apk update && apk upgrade && \
@@ -6,7 +6,8 @@ FROM node:14.15.4-alpine
 
 ENV NODE_ENV=production \
   MONGODB_URI=mongodb://mongodb \
-  COLLECTION=agendaJobs
+  COLLECTION=agendaJobs \
+  BASE_PATH=/
 
 RUN mkdir -p /agendash
 WORKDIR /agendash
