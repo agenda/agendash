@@ -6,7 +6,8 @@ FROM node:14-alpine
 
 ENV NODE_ENV=production \
   MONGODB_URI=mongodb://mongodb \
-  COLLECTION=agendaJobs
+  COLLECTION=agendaJobs \
+  BASE_PATH=/
 
 RUN mkdir -p /agendash
 WORKDIR /agendash

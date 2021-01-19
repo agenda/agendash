@@ -19,6 +19,11 @@ if (!program.db) {
   process.exit(1);
 }
 
+if (!program.path.startsWith('/')) {
+  console.error('--path must begin with /');
+  process.exit(1);
+}
+
 const app = express();
 
 const agenda = new Agenda().database(program.db, program.collection);
