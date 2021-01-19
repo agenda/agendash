@@ -47,11 +47,6 @@ A Dashboard for [Agenda](https://github.com/agenda/agenda).
 
 ---
 
-# Requirements
-
-A minimun Node.js version 12 is required for `@hapi/@hapi` dependency (see [#23](https://github.com/agenda/agendash/issues/23))
-
-
 # Troubleshooting
 
 ### Index for sorting
@@ -71,7 +66,7 @@ db.agendaJobs.ensureIndex({
 # Roadmap
 
 - [ ] Get more test coverage
-- [ ] Add middlewares for KOA, fastify, and other express-like libraries
+- [ ] Add middlewares for fastify, and other express-like libraries
 - [ ] You decide! Submit a feature request
 
 ### Install
@@ -83,6 +78,8 @@ npm install --save agendash
 *Note*: `Agendash` requires mongodb version >2.6.0 to perform the needed aggregate queries. This is your mongo database version, not your node package version! To check your database version, connect to mongo and run `db.version()`.
 
 ### Middleware usage
+
+#### Express
 
 Agendash provides Express middleware you can use at a specified path, for example this will
 make Agendash available on your site at the `/dash` path. Note: Do not try to mount Agendash
@@ -130,12 +127,55 @@ You'll just have to update the last line to require the middleware you need:
 
 ```js
 app.use('/agendash', Agendash(agenda, {
-  middleware: 'koa'
+  middleware: 'connect'
 }));
 ```
 
 Note that if you use a CSRF protection middleware like [`csurf`](https://www.npmjs.com/package/csurf), you might need to [configure it off](https://github.com/agenda/agendash/issues/23#issuecomment-270917949) for Agendash-routes.
 
+#### Hapi
+
+A minimum Node.js version 12 is required for `@hapi/hapi` dependency.
+
+```shell
+npm i @hapi/inert @hapi/hapi
+```
+
+```js
+const agenda = new Agenda().database("mongodb://127.0.0.1/agendaDb", "agendaJobs");
+
+const server = require('@hapi/hapi').server({
+  port: 3002,
+  host: 'localhost'
+});
+await server.register(require('@hapi/inert'));
+await server.register(Agendash(agenda, {
+  middleware: 'hapi'
+}));
+
+await server.start();
+```
+
+#### Koa
+
+```shell
+npm i koa koa-bodyparser koa-router koa-static
+```
+
+```js
+const agenda = new Agenda().database("mongodb://127.0.0.1/agendaDb", "agendaJobs");
+
+const Koa = require('koa');
+const app = new Koa();
+const middlewares = Agendash(agenda, {
+  middleware: 'koa'
+});
+for (const middleware of middlewares) {
+  app.use(middleware);
+}
+
+await app.listen(3002);
+```
 
 ### Standalone usage
 
