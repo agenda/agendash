@@ -8,9 +8,7 @@ env:
 - AGENDA_VERSION=^3.1.0
 matrix:
   fast_finish: true
-# Run npm test, unless it's Node.js 10 and then run just lint+Express tests
-# since Hapi isn't compatible with Node.js 10
-script: 'if [ "${TRAVIS_NODE_VERSION:0:2}" == "10" ]; then npm run lint && npm run ava test/test-express.js; else npm test; fi'
+script: npm test
 install: npm ci
 services:
   - mongodb
