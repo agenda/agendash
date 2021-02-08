@@ -1,19 +1,19 @@
-const newJob = Vue.component('new-job', {
-  data: () =>({
-    jobName: '',
-    jobSchedule: '',
-    jobRepeatEvery: '',
+const newJob = Vue.component("new-job", {
+  data: () => ({
+    jobName: "",
+    jobSchedule: "",
+    jobRepeatEvery: "",
     jobData: `{ "name": "Your medatada goes here..." }`,
   }),
-  props: ['job'],
+  props: ["job"],
   methods: {
-    clear(){
-      this.jobName = '',
-      this.jobSchedule = '',
-      this.jobRepeatEvery = '',
-      this.jobData = ''
+    clear() {
+      (this.jobName = ""),
+        (this.jobSchedule = ""),
+        (this.jobRepeatEvery = ""),
+        (this.jobData = "");
     },
-    create(){
+    create() {
       const url = `api/jobs/create`;
       let body = {
         jobName: this.jobName,
@@ -21,15 +21,16 @@ const newJob = Vue.component('new-job', {
         jobRepeatEvery: this.jobRepeatEvery,
         jobData: JSON.parse(this.jobData),
       };
-      return axios.post(url, body)
-        .then(result => result.data)
-        .then(data => {
-          this.$emit('popup-message');
-          this.$emit('refresh-data');
+      return axios
+        .post(url, body)
+        .then((result) => result.data)
+        .then((data) => {
+          this.$emit("popup-message");
+          this.$emit("refresh-data");
           this.clear();
         })
-        .catch(console.log)
-    }
+        .catch(console.log);
+    },
   },
   template: `
   <div class="modal fade" id="modalNewJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -71,5 +72,5 @@ const newJob = Vue.component('new-job', {
       </div>
     </div>
   </div>
-  `
-})
+  `,
+});

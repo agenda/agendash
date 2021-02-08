@@ -16,13 +16,23 @@ const topbar = Vue.component("topbar", {
       { text: "Running", value: "running", class: "text-warning" },
       { text: "Completed", value: "completed", class: "text-success" },
       { text: "Failed", value: "failed", class: "text-danger" },
-      { text: "Repeating", value: "repeating", class: "text-info" }
-    ]
+      { text: "Repeating", value: "repeating", class: "text-info" },
+    ],
   }),
   methods: {
     submit() {
-      this.$emit('search-form', this.name, this.search, this.property, this.limit, this.skip, this.refresh, this.state, this.object)
-    }
+      this.$emit(
+        "search-form",
+        this.name,
+        this.search,
+        this.property,
+        this.limit,
+        this.skip,
+        this.refresh,
+        this.state,
+        this.object
+      );
+    },
   },
   template: `
   <form @submit.prevent="submit">
@@ -81,5 +91,5 @@ const topbar = Vue.component("topbar", {
       </div>
     </div>
   </form>
-  `
+  `,
 });

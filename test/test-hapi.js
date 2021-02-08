@@ -1,105 +1,119 @@
-const nodeVersionIsSupported = Number(process.versions.node.split('.')[0]) > 10;
+const nodeVersionIsSupported = Number(process.versions.node.split(".")[0]) > 10;
 
-const test = require('ava');
-const supertest = require('supertest');
-const Agenda = require('agenda');
+const test = require("ava");
+const supertest = require("supertest");
+const Agenda = require("agenda");
 
-const agenda = new Agenda().database('mongodb://127.0.0.1/agendash-test-db', 'agendash-test-collection');
+const agenda = new Agenda().database(
+  "mongodb://127.0.0.1/agendash-test-db",
+  "agendash-test-collection"
+);
 let request;
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable ava/no-unknown-modifiers */
-const testType = nodeVersionIsSupported ? 'serial' : 'skip';
+const testType = nodeVersionIsSupported ? "serial" : "skip";
 
-test.before.cb(t => {
+test.before.cb((t) => {
   if (!nodeVersionIsSupported) {
     return t.end();
   }
 
-  const Hapi = require('@hapi/hapi');
+  const Hapi = require("@hapi/hapi");
   const server = Hapi.server({
     port: 3000,
-    host: 'localhost'
+    host: "localhost",
   });
-  server.register(require('@hapi/inert'));
-  server.register(require('../app')(agenda, {
-    middleware: 'hapi'
-  }));
+  server.register(require("@hapi/inert"));
+  server.register(
+    require("../app")(agenda, {
+      middleware: "hapi",
+    })
+  );
 
   request = supertest(server.listener);
 
-  agenda.on('ready', () => {
+  agenda.on("ready", () => {
     t.end();
   });
 });
 
-test.beforeEach(async() => {
+test.beforeEach(async () => {
   await agenda._collection.deleteMany({}, null);
 });
 
-test[testType]('GET /api with no jobs should return the correct overview', async t => {
-  const response = await request.get('/api?limit=200&skip=0');
+test[testType](
+  "GET /api with no jobs should return the correct overview",
+  async (t) => {
+    const response = await request.get("/api?limit=200&skip=0");
 
-  t.is(response.body.overview[0].displayName, 'All Jobs');
-  t.is(response.body.jobs.length, 0);
-});
+    t.is(response.body.overview[0].displayName, "All Jobs");
+    t.is(response.body.jobs.length, 0);
+  }
+);
 
-test[testType]('POST /api/jobs/create should confirm the job exists', async t => {
-  const response = await request.post('/api/jobs/create')
-    .send({
-      jobName: 'Test Job',
-      jobSchedule: 'in 2 minutes',
-      jobRepeatEvery: '',
-      jobData: {}
-    })
-    .set('Accept', 'application/json');
+test[testType](
+  "POST /api/jobs/create should confirm the job exists",
+  async (t) => {
+    const response = await request
+      .post("/api/jobs/create")
+      .send({
+        jobName: "Test Job",
+        jobSchedule: "in 2 minutes",
+        jobRepeatEvery: "",
+        jobData: {},
+      })
+      .set("Accept", "application/json");
 
-  t.true('created' in response.body);
+    t.true("created" in response.body);
 
-  agenda._collection.count({}, null, (error, result) => {
-    t.falsy(error);
-    if (result !== 1) {
-      throw new Error('Expected one document in database');
-    }
-  });
-});
+    agenda._collection.count({}, null, (error, result) => {
+      t.falsy(error);
+      if (result !== 1) {
+        throw new Error("Expected one document in database");
+      }
+    });
+  }
+);
 
-test[testType]('POST /api/jobs/delete should delete the job', async t => {
-  const job = await agenda.create('Test Job', {})
-    .schedule('in 4 minutes')
+test[testType]("POST /api/jobs/delete should delete the job", async (t) => {
+  const job = await agenda
+    .create("Test Job", {})
+    .schedule("in 4 minutes")
     .save();
 
-  const response = await request.post('/api/jobs/delete')
+  const response = await request
+    .post("/api/jobs/delete")
     .send({
-      jobIds: [job.attrs._id]
+      jobIds: [job.attrs._id],
     })
-    .set('Accept', 'application/json');
+    .set("Accept", "application/json");
 
-  t.true('deleted' in response.body);
+  t.true("deleted" in response.body);
 
   const count = await agenda._collection.count({}, null);
   t.is(count, 0);
 });
 
-test[testType]('POST /api/jobs/requeue should requeue the job', async t => {
+test[testType]("POST /api/jobs/requeue should requeue the job", async (t) => {
   const job = await new Promise((resolve, reject) => {
-    agenda.create('Test Job', {})
-      .schedule('in 4 minutes')
+    agenda
+      .create("Test Job", {})
+      .schedule("in 4 minutes")
       .save()
-      .then(job => {
+      .then((job) => {
         resolve(job);
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });
 
-  const response = await request.post('/api/jobs/requeue')
+  const response = await request
+    .post("/api/jobs/requeue")
     .send({
-      jobIds: [job.attrs._id]
+      jobIds: [job.attrs._id],
     })
-    .set('Accept', 'application/json');
+    .set("Accept", "application/json");
 
-  t.false('newJobs' in response.body);
+  t.false("newJobs" in response.body);
 
   const count = await agenda._collection.count({}, null);
   t.is(count, 2);

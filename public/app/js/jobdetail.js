@@ -1,14 +1,14 @@
-const jobDetail = Vue.component('job-detail', {
-  props: ['job'],
+const jobDetail = Vue.component("job-detail", {
+  props: ["job"],
   filters: {
-    formatJSON(jsonstr){
+    formatJSON(jsonstr) {
       return JSON.stringify(jsonstr, null, 2);
     },
   },
   methods: {
-    formatDate(date){
-      return moment(date).format('DD-MM-YYYY HH:mm:ss')
-    }
+    formatDate(date) {
+      return moment(date).format("DD-MM-YYYY HH:mm:ss");
+    },
   },
   template: `
   <div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -44,5 +44,5 @@ const jobDetail = Vue.component('job-detail', {
       </div>
     </div>
   </div>
-  `
-})
+  `,
+});

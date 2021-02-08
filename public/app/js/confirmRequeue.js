@@ -1,17 +1,18 @@
-const confirmRequeue = Vue.component('confirm-requeue', {
-  props: ['job'],
+const confirmRequeue = Vue.component("confirm-requeue", {
+  props: ["job"],
   methods: {
-    RequeueOne(id){
+    RequeueOne(id) {
       const url = `api/jobs/requeue`;
-      let body = {jobIds: [id]};
-      return axios.post(url, body)
-        .then(result => result.data)
-        .then(data => {
-          this.$emit('popup-message');
-          this.$emit('refresh-data');
+      let body = { jobIds: [id] };
+      return axios
+        .post(url, body)
+        .then((result) => result.data)
+        .then((data) => {
+          this.$emit("popup-message");
+          this.$emit("refresh-data");
         })
-        .catch(console.log)
-    }
+        .catch(console.log);
+    },
   },
   template: `
   <div class="modal fade" id="modalRequeueSure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -35,5 +36,5 @@ const confirmRequeue = Vue.component('confirm-requeue', {
       </div>
     </div>
   </div>
-  `
-})
+  `,
+});

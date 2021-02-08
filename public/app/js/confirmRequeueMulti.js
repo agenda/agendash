@@ -1,18 +1,19 @@
-const confirmRequeueMulti = Vue.component('confirm-multi-requeue', {
-  props: ['jobs'],
+const confirmRequeueMulti = Vue.component("confirm-multi-requeue", {
+  props: ["jobs"],
   methods: {
-    RequeueMulti(ids){
+    RequeueMulti(ids) {
       const url = `api/jobs/requeue`;
-      let body = {jobIds: ids};
-      return axios.post(url, body)
-        .then(result => result.data)
-        .then(data => {
-          this.$emit('popup-message');
-          this.$emit('refresh-data');
-          this.$emit('ready-clean')
+      let body = { jobIds: ids };
+      return axios
+        .post(url, body)
+        .then((result) => result.data)
+        .then((data) => {
+          this.$emit("popup-message");
+          this.$emit("refresh-data");
+          this.$emit("ready-clean");
         })
-        .catch(console.log)
-    }
+        .catch(console.log);
+    },
   },
   template: `
   <div class="modal fade" id="modalRequeueSureMulti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -40,5 +41,5 @@ const confirmRequeueMulti = Vue.component('confirm-multi-requeue', {
       </div>
     </div>
   </div>
-  `
-})
+  `,
+});

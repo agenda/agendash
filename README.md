@@ -41,8 +41,6 @@ A Dashboard for [Agenda](https://github.com/agenda/agenda).
 
 ![Mobile UI small devices](mobile-ui-sm.png)
 
-
-
 ![Mobile UI extra small devices](mobile-ui-xs.png)
 
 ---
@@ -75,7 +73,7 @@ db.agendaJobs.ensureIndex({
 npm install --save agendash
 ```
 
-*Note*: `Agendash` requires mongodb version >2.6.0 to perform the needed aggregate queries. This is your mongo database version, not your node package version! To check your database version, connect to mongo and run `db.version()`.
+_Note_: `Agendash` requires mongodb version >2.6.0 to perform the needed aggregate queries. This is your mongo database version, not your node package version! To check your database version, connect to mongo and run `db.version()`.
 
 ### Middleware usage
 
@@ -86,19 +84,19 @@ make Agendash available on your site at the `/dash` path. Note: Do not try to mo
 at the root level like `app.use('/', Agendash(agenda))`.
 
 ```js
-var express = require('express');
+var express = require("express");
 var app = express();
 
 // ... your other express middleware like body-parser
 
-var Agenda = require('agenda');
-var Agendash = require('agendash');
+var Agenda = require("agenda");
+var Agendash = require("agendash");
 
-var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/agendaDb'}});
+var agenda = new Agenda({ db: { address: "mongodb://127.0.0.1/agendaDb" } });
 // or provide your own mongo client:
 // var agenda = new Agenda({mongo: myMongoClient})
 
-app.use('/dash', Agendash(agenda));
+app.use("/dash", Agendash(agenda));
 
 // ... your other routes
 
@@ -110,7 +108,8 @@ own authentication for that path. For example if you have an authenticated
 session using passport, you can protect the dashboard path like this:
 
 ```js
-app.use('/dash',
+app.use(
+  "/dash",
   function (req, res, next) {
     if (!req.user || !req.user.is_admin) {
       res.send(401);
@@ -126,9 +125,12 @@ Other middlewares will come soon in the folder `/lib/middlewares/`.
 You'll just have to update the last line to require the middleware you need:
 
 ```js
-app.use('/agendash', Agendash(agenda, {
-  middleware: 'connect'
-}));
+app.use(
+  "/agendash",
+  Agendash(agenda, {
+    middleware: "connect",
+  })
+);
 ```
 
 Note that if you use a CSRF protection middleware like [`csurf`](https://www.npmjs.com/package/csurf), you might need to [configure it off](https://github.com/agenda/agendash/issues/23#issuecomment-270917949) for Agendash-routes.
@@ -142,16 +144,21 @@ npm i @hapi/inert @hapi/hapi
 ```
 
 ```js
-const agenda = new Agenda().database("mongodb://127.0.0.1/agendaDb", "agendaJobs");
+const agenda = new Agenda().database(
+  "mongodb://127.0.0.1/agendaDb",
+  "agendaJobs"
+);
 
-const server = require('@hapi/hapi').server({
+const server = require("@hapi/hapi").server({
   port: 3002,
-  host: 'localhost'
+  host: "localhost",
 });
-await server.register(require('@hapi/inert'));
-await server.register(Agendash(agenda, {
-  middleware: 'hapi'
-}));
+await server.register(require("@hapi/inert"));
+await server.register(
+  Agendash(agenda, {
+    middleware: "hapi",
+  })
+);
 
 await server.start();
 ```
@@ -165,12 +172,15 @@ npm i koa koa-bodyparser koa-router koa-static
 ```
 
 ```js
-const agenda = new Agenda().database("mongodb://127.0.0.1/agendaDb", "agendaJobs");
+const agenda = new Agenda().database(
+  "mongodb://127.0.0.1/agendaDb",
+  "agendaJobs"
+);
 
-const Koa = require('koa');
+const Koa = require("koa");
 const app = new Koa();
 const middlewares = Agendash(agenda, {
-  middleware: 'koa'
+  middleware: "koa",
 });
 for (const middleware of middlewares) {
   app.use(middleware);

@@ -5,6 +5,7 @@
 Works with [Hapijs](https://hapijs.com/) >= v18
 
 ### usage
+
 First install the dependencies in your app:
 
 ```bash
@@ -12,6 +13,7 @@ npm install @hapi/hapi @hapi/inert agenda agendash
 ```
 
 Then use it as follows:
+
 ```javascript
 'use strict';
 

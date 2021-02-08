@@ -1,17 +1,18 @@
-const confirmDelete = Vue.component('confirm-delete', {
-  props: ['job'],
+const confirmDelete = Vue.component("confirm-delete", {
+  props: ["job"],
   methods: {
-    deleteOne(id){
+    deleteOne(id) {
       const url = `api/jobs/delete`;
-      let body = {jobIds: [id]};
-      return axios.post(url, body)
-        .then(result => result.data)
-        .then(data => {
-          this.$emit('popup-message', 'delete');
-          this.$emit('refresh-data');
+      let body = { jobIds: [id] };
+      return axios
+        .post(url, body)
+        .then((result) => result.data)
+        .then((data) => {
+          this.$emit("popup-message", "delete");
+          this.$emit("refresh-data");
         })
-        .catch(console.log)
-    }
+        .catch(console.log);
+    },
   },
   template: `
   <div class="modal fade" id="modalDeleteSure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -35,5 +36,5 @@ const confirmDelete = Vue.component('confirm-delete', {
       </div>
     </div>
   </div>
-  `
-})
+  `,
+});
