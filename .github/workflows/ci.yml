@@ -1,0 +1,33 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    name: Test with Node.js v${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ['10', '12', '14']
+        mongodb-version: [ 3.4, 3.6, 4.0, 4.2, 4.4 ]
+        agenda-version: [ 3.1, 4.0 ]
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup Node.js v${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.3.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+
+      - run: npm install
+
+      - name: Install agenda
+        run: npm i agenda@${{matrix.agenda-version}}
+
+      - run: npm test
+        env:
+          CI: true
