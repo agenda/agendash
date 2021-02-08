@@ -2,11 +2,10 @@ name: CI
 on: [push, pull_request]
 jobs:
   test:
-    name: Test with Node.js v${{ matrix.node }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Test with Node.js v${{ matrix.node }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         node: ['10', '12', '14']
         mongodb-version: [ 3.4, 3.6, 4.0, 4.2, 4.4 ]
         agenda-version: [ 3.1, 4.0 ]
