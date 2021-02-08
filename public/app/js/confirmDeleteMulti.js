@@ -1,17 +1,18 @@
-const confirmDeleteMulti = Vue.component('confirm-multi-delete', {
-  props: ['jobs'],
+const confirmDeleteMulti = Vue.component("confirm-multi-delete", {
+  props: ["jobs"],
   methods: {
-    deleteMulti(ids){
+    deleteMulti(ids) {
       const url = `api/jobs/delete`;
-      let body = {jobIds: ids};
-      return axios.post(url, body)
-        .then(result => result.data)
-        .then(data => {
-          this.$emit('popup-message', 'delete');
-          this.$emit('refresh-data');
+      let body = { jobIds: ids };
+      return axios
+        .post(url, body)
+        .then((result) => result.data)
+        .then((data) => {
+          this.$emit("popup-message", "delete");
+          this.$emit("refresh-data");
         })
-        .catch(console.log)
-    }
+        .catch(console.log);
+    },
   },
   template: `
   <div class="modal fade" id="modalDeleteSureMulti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -40,5 +41,5 @@ const confirmDeleteMulti = Vue.component('confirm-multi-delete', {
       </div>
     </div>
   </div>
-  `
-})
+  `,
+});

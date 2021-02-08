@@ -1,72 +1,75 @@
-const jobList = Vue.component('job-list', {
+const jobList = Vue.component("job-list", {
   data: () => ({
     multijobs: [],
-    currentSort:'name',
-    currentSortDir:'asc',
+    currentSort: "name",
+    currentSortDir: "asc",
   }),
-  props: ['jobs','pagesize','pagenumber','sendClean','loading'],
-  computed:{
-    sortedJobs:function() {
-      return this.jobs.sort((a,b) => {
-        let displayA, displayB
-        if(this.currentSort === "name") {
-          displayA = a.job[this.currentSort] ? a.job[this.currentSort].toLowerCase() : ''
-          displayB = a.job[this.currentSort] ? b.job[this.currentSort].toLowerCase() : ''
-        }
-        else {
-          displayA = moment(a.job[this.currentSort])
-          displayB = moment(b.job[this.currentSort])
+  props: ["jobs", "pagesize", "pagenumber", "sendClean", "loading"],
+  computed: {
+    sortedJobs: function () {
+      return this.jobs.sort((a, b) => {
+        let displayA, displayB;
+        if (this.currentSort === "name") {
+          displayA = a.job[this.currentSort]
+            ? a.job[this.currentSort].toLowerCase()
+            : "";
+          displayB = a.job[this.currentSort]
+            ? b.job[this.currentSort].toLowerCase()
+            : "";
+        } else {
+          displayA = moment(a.job[this.currentSort]);
+          displayB = moment(b.job[this.currentSort]);
         }
         let modifier = 1;
-        if(this.currentSortDir === 'desc') modifier = -1;
-        if(displayA < displayB) return -1 * modifier;
-        if(displayA > displayB) return 1 * modifier;
+        if (this.currentSortDir === "desc") modifier = -1;
+        if (displayA < displayB) return -1 * modifier;
+        if (displayA > displayB) return 1 * modifier;
         return 0;
       });
-    }
+    },
   },
   watch: {
     jobs() {
       // reset multijobs when jobs have changed
       this.multijobs = [];
-    }
+    },
   },
   methods: {
     sort(s) {
       //if s == current sort, reverse
-      if(s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
       }
       this.currentSort = s;
     },
-    sendQueued(){
-      this.$emit('confirm-multi-requeue', this.multijobs)
+    sendQueued() {
+      this.$emit("confirm-multi-requeue", this.multijobs);
       // this.multijobs = []
     },
-    sendDelete(){
-      this.$emit('confirm-multi-delete', this.multijobs)
+    sendDelete() {
+      this.$emit("confirm-multi-delete", this.multijobs);
       // this.multijobs = []
     },
     cleanMulti() {
-      return console.log("received Clean Multi")
+      return console.log("received Clean Multi");
     },
     formatDate(date) {
       return moment(date).fromNow();
       // return new Date(date).toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: '2-digit', hour: "numeric", minute: "numeric", second: "numeric" })
     },
-    checkAllCheckboxes(){
-      const checkboxes = document.querySelectorAll('.checkbox-triggerable');
+    checkAllCheckboxes() {
+      const checkboxes = document.querySelectorAll(".checkbox-triggerable");
       for (const checkbox of checkboxes) {
         checkbox.click();
       }
     },
     toggleList(job) {
-      if(this.multijobs.includes(job.job._id)) {
+      if (this.multijobs.includes(job.job._id)) {
         this.multijobs.splice(this.multijobs.indexOf(job.job._id), 1);
       } else {
         this.multijobs.push(job.job._id);
       }
-    }
+    },
   },
   template: `
   <div v-on:sendClean="cleanMulti">
@@ -228,5 +231,5 @@ const jobList = Vue.component('job-list', {
             </div>
         </div>
 </div>
-  `
-})
+  `,
+});

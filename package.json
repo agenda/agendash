@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "run-p lint ava",
-    "lint": "xo",
+    "lint": "eslint ./",
     "ava": "ava -v -c 1"
   },
   "keywords": [
@@ -39,35 +39,26 @@
     "@hapi/hapi": "^19.1.1",
     "@hapi/inert": "^6.0.1",
     "ava": "^3.5.1",
+    "eslint": "^7.19.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.0.0",
     "koa-static": "^5.0.0",
     "npm-run-all": "^4.1.2",
-    "supertest": "^6.1.1",
-    "xo": "^0.37.1"
+    "prettier": "^2.2.1",
+    "supertest": "^6.1.1"
   },
-  "xo": {
-    "space": 2,
-    "rules": {
-      "space-before-function-paren": [
-        "error",
-        "never"
-      ],
-      "max-params": [
-        "error",
-        5
-      ],
-      "max-nested-callbacks": [
-        "error",
-        5
-      ]
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2019
     },
-    "envs": [
-      "node"
-    ],
-    "ignores": [
-      "public/**/*"
-    ]
-  }
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "extends": "eslint:recommended"
+  },
+  "eslintIgnore": [
+    "public"
+  ]
 }

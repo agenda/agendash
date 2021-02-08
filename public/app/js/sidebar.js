@@ -1,41 +1,66 @@
-const sidebar = Vue.component('sidebar', {
-  props: ['overview','pagesize','loading'],
+const sidebar = Vue.component("sidebar", {
+  props: ["overview", "pagesize", "loading"],
   computed: {
     sortedArray() {
-      function compare(a, b){
+      function compare(a, b) {
         let displayNameA = a.displayName.toLowerCase();
         let displayNameB = b.displayName.toLowerCase();
-        if (displayNameA === 'all jobs' || displayNameB === 'all jobs')
-          return
-        if (displayNameA < displayNameB)
-          return -1;
-        if (displayNameA > displayNameB)
-          return 1;
+        if (displayNameA === "all jobs" || displayNameB === "all jobs") return;
+        if (displayNameA < displayNameB) return -1;
+        if (displayNameA > displayNameB) return 1;
         return 0;
       }
 
       return this.overview.sort(compare);
-    }
+    },
   },
   methods: {
-    flexgrow(number){
-      return Math.log2(1 + number)
+    flexgrow(number) {
+      return Math.log2(1 + number);
     },
-    searchSpecificJob(job, type){
-      if(job === 'All Jobs'){
-        if(type){
-          this.$emit('search-sidebar','','','',this.pagesize,'','',type,'',);
+    searchSpecificJob(job, type) {
+      if (job === "All Jobs") {
+        if (type) {
+          this.$emit(
+            "search-sidebar",
+            "",
+            "",
+            "",
+            this.pagesize,
+            "",
+            "",
+            type,
+            ""
+          );
         } else {
-          this.$emit('search-sidebar','','','',this.pagesize,'','','','',);
+          this.$emit(
+            "search-sidebar",
+            "",
+            "",
+            "",
+            this.pagesize,
+            "",
+            "",
+            "",
+            ""
+          );
         }
+      } else if (type) {
+        this.$emit(
+          "search-sidebar",
+          job,
+          "",
+          "",
+          this.pagesize,
+          "",
+          "",
+          type,
+          ""
+        );
+      } else {
+        this.$emit("search-sidebar", job, "", "", this.pagesize, "", "", "");
       }
-      else if(type){
-          this.$emit('search-sidebar',job,'','',this.pagesize,'','',type,'',)
-      }
-      else {
-        this.$emit('search-sidebar', job, '','',this.pagesize,'','','',);
-      }
-    }
+    },
   },
   template: `
     <div class="col sidebar">
@@ -92,5 +117,5 @@ const sidebar = Vue.component('sidebar', {
         </div>
       </div> <!-- row -->
     </div> <!-- div -->
-  `
-})
+  `,
+});
