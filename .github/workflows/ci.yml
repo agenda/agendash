@@ -10,7 +10,7 @@ jobs:
         mongodb-version: [ 3.4, 3.6, 4.0, 4.2, 4.4 ]
         agenda-version: [ 3.1, 4.0 ]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Setup Node.js v${{ matrix.node }}
         uses: actions/setup-node@v1
