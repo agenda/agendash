@@ -15,11 +15,20 @@ const newJob = Vue.component("new-job", {
     },
     create() {
       const url = `api/jobs/create`;
+
+      let jobData = "";
+      try {
+        jobData = JSON.parse(this.jobData);
+      } catch (err) {
+        $("#jobDataValidate").text(err.message);
+        return;
+      }
+
       let body = {
         jobName: this.jobName,
         jobSchedule: this.jobSchedule,
         jobRepeatEvery: this.jobRepeatEvery,
-        jobData: JSON.parse(this.jobData),
+        jobData: jobData,
       };
       return axios
         .post(url, body)
@@ -27,6 +36,7 @@ const newJob = Vue.component("new-job", {
         .then((data) => {
           this.$emit("popup-message");
           this.$emit("refresh-data");
+          $("#modalNewJob").modal("hide");
           this.clear();
         })
         .catch(console.log);
@@ -62,11 +72,12 @@ const newJob = Vue.component("new-job", {
               <div class="form-group">
                 <label for="jobData">Job Metadata</label>
                 <prism-editor class="json-editor" :lineNumbers="true" v-model="jobData" language="json"></prism-editor>
+								<small id="jobDataValidate" class="form-text text-muted"></small>
               </div>
             </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" data-dismiss="modal" @click="create()">Create Job</button>
+          <button type="button" class="btn btn-info" @click="create()">Create Job</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
       </div>
