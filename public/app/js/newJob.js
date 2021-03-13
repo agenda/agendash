@@ -1,5 +1,6 @@
 const newJob = Vue.component("new-job", {
   data: () => ({
+    jobDataParseError: "",
     jobName: "",
     jobSchedule: "",
     jobRepeatEvery: "",
@@ -8,7 +9,8 @@ const newJob = Vue.component("new-job", {
   props: ["job"],
   methods: {
     clear() {
-      (this.jobName = ""),
+      (this.jobDataParseError = ""),
+        (this.jobName = ""),
         (this.jobSchedule = ""),
         (this.jobRepeatEvery = ""),
         (this.jobData = "");
@@ -20,7 +22,7 @@ const newJob = Vue.component("new-job", {
       try {
         jobData = JSON.parse(this.jobData);
       } catch (err) {
-        $("#jobDataValidate").text(err.message);
+        this.jobDataParseError = err.message;
         return;
       }
 
@@ -72,7 +74,7 @@ const newJob = Vue.component("new-job", {
               <div class="form-group">
                 <label for="jobData">Job Metadata</label>
                 <prism-editor class="json-editor" :lineNumbers="true" v-model="jobData" language="json"></prism-editor>
-								<small id="jobDataValidate" class="form-text text-muted"></small>
+                <small class="form-text text-muted">{{jobDataParseError}}</small>
               </div>
             </form>
         </div>
