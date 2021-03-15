@@ -13,7 +13,7 @@ const newJob = Vue.component("new-job", {
         (this.jobName = ""),
         (this.jobSchedule = ""),
         (this.jobRepeatEvery = ""),
-        (this.jobData = "");
+        (this.jobData = `{ "name": "Your medatada goes here..." }`);
     },
     create() {
       const url = `api/jobs/create`;
@@ -38,7 +38,7 @@ const newJob = Vue.component("new-job", {
         .then((data) => {
           this.$emit("popup-message");
           this.$emit("refresh-data");
-          $("#modalNewJob").modal("hide");
+          this.$refs.Close.click();
           this.clear();
         })
         .catch(console.log);
