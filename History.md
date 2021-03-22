@@ -1,3 +1,7 @@
+# 2.1.0 - JSON validation when creating jobs
+
+- feat: Add json validator message when createJob #169 (thanks @love8587)
+
 # 2.0.0 - First public release of v2 as Agendash proper
 
 Complete rewrite of Agendash in Vue.js!
