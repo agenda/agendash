@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/agenda/agendash#readme",
   "license": "MIT",
+  "files": ["bin", "lib", "public", "app.js", "*.png", "Dockerfile", "entrypoint.sh"],
   "dependencies": {
     "agenda": "^3.1.0 || ^4.0.0",
     "body-parser": "^1.15.0",
