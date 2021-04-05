@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 const http = require("http");
-const Agenda = require("agenda");
+const { Agenda } = require("agenda");
 const agendash = require("../app");
 const express = require("express");
 const program = require("commander");

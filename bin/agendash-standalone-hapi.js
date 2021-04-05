@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 "use strict";
-const Agenda = require("agenda");
+const { Agenda } = require("agenda");
 const agendash = require("../app");
 const Hapi = require("@hapi/hapi");
 const program = require("commander");

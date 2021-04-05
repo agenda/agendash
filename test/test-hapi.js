@@ -2,7 +2,7 @@ const nodeVersionIsSupported = Number(process.versions.node.split(".")[0]) > 10;
 
 const test = require("ava");
 const supertest = require("supertest");
-const Agenda = require("agenda");
+const { Agenda } = require("agenda");
 
 const agenda = new Agenda().database(
   "mongodb://127.0.0.1/agendash-test-db",
