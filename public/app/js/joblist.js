@@ -55,7 +55,7 @@ const jobList = Vue.component("job-list", {
     },
     formatTitle(date) {
       if(!date) return;
-      return new Date(date).toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: '2-digit', hour: "numeric", minute: "numeric", second: "numeric" })
+      return moment(date).format();
     },
     formatDate(date) {
       if(!date) return;
