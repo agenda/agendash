@@ -24,7 +24,7 @@ const jobDetail = Vue.component("job-detail", {
         <div class="modal-body">
         <div class="row my-3">
           <div class="col">
-            <p><strong>Next run starts: </strong>{{ formatDate(job.job.lastRunAt) }}</p>
+            <p><strong>Next run starts: </strong>{{ formatDate(job.job.nextRunAt) }}</p>
             <p><strong>Last run started: </strong>{{ formatDate(job.job.lastRunAt) }}</p>
           </div>
         </div>
