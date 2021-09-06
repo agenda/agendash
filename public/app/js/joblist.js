@@ -53,9 +53,13 @@ const jobList = Vue.component("job-list", {
     cleanMulti() {
       return console.log("received Clean Multi");
     },
+    formatTitle(date) {
+      if(!date) return;
+      return moment(date).format();
+    },
     formatDate(date) {
+      if(!date) return;
       return moment(date).fromNow();
-      // return new Date(date).toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: '2-digit', hour: "numeric", minute: "numeric", second: "numeric" })
     },
     checkAllCheckboxes() {
       const checkboxes = document.querySelectorAll(".checkbox-triggerable");
@@ -139,10 +143,10 @@ const jobList = Vue.component("job-list", {
                     <i v-if="job.running" class="pill-own bg-warning pill-withoutIcon"><span>Running</span></i>
                   </td>
                   <td class="job-name"  @click="toggleList(job)"> {{job.job.name}} </td>
-                  <td class="job-lastRunAt"  @click="toggleList(job)"> {{ formatDate(job.job.lastRunAt) }} </td>
-                  <td class="job-nextRunAt"  @click="toggleList(job)"> {{ formatDate(job.job.nextRunAt) }} </td>
-                  <td class="job-finishedAt"  @click="toggleList(job)"> {{ formatDate(job.job.lastFinishedAt) }} </td>
-                  <td class="job-lockedAt"  @click="toggleList(job)"> {{ formatDate(job.job.lockedAt) }} </td>
+                  <td class="job-lastRunAt" :title="formatTitle(job.job.lastRunAt)" @click="toggleList(job)"> {{ formatDate(job.job.lastRunAt) }} </td>
+                  <td class="job-nextRunAt" :title="formatTitle(job.job.nextRunAt)" @click="toggleList(job)"> {{ formatDate(job.job.nextRunAt) }} </td>
+                  <td class="job-finishedAt" :title="formatTitle(job.job.lastFinishedAt)" @click="toggleList(job)"> {{ formatDate(job.job.lastFinishedAt) }} </td>
+                  <td class="job-lockedAt" :title="formatTitle(job.job.lockedAt)" @click="toggleList(job)"> {{ formatDate(job.job.lockedAt) }} </td>
                   <td class="job-actions">
                     <i class="material-icons md-dark md-custom action-btn viewData text-primary" data-toggle="modal" data-target="#modalRequeueSure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
                     <i class="material-icons md-dark md-custom action-btn viewData text-success" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data">visibility</i>
@@ -184,13 +188,13 @@ const jobList = Vue.component("job-list", {
                       <div class="card-responsive-status-title">
                         Last run started
                       </div>
-                      <div class="mb-3">
+                      <div class="mb-3" :title="formatTitle(job.job.lastRunAt)">
                         {{ formatDate(job.job.lastRunAt) }}
                       </div>
                       <div class="card-responsive-status-title">
                         Last finished
                       </div>
-                      <div>
+                      <div :title="formatTitle(job.job.lastFinishedAt)">
                         {{ formatDate(job.job.lastFinishedAt) }}
                       </div>
                     </div>
@@ -198,14 +202,14 @@ const jobList = Vue.component("job-list", {
                       <div class="card-responsive-status-title">
                         Next run starts
                       </div>
-                      <div class="mb-3">
+                      <div class="mb-3" :title="formatTitle(job.job.nextRunAt">
                         {{ formatDate(job.job.nextRunAt) }}
                       </div>
                       <div class="card-responsive-status-title">
                         Locked
                       </div>
-                      <div>
-                        {{ job.job.lockedAt ? formatDate(job.job.lockedAt) : "-" }}
+                      <div :title="formatTitle(job.job.lockedAt)">
+                        {{ formatDate(job.job.lockedAt) || "-" }}
                       </div>
                     </div>
                   </div>
