@@ -8,6 +8,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
+    "start": "node ./bin/agendash-standalone.js",
     "test": "run-p lint ava",
     "lint": "eslint ./",
     "ava": "ava -v -c 1"
