@@ -39,3 +39,6 @@ node_modules
 # do not commit env variables (except examples)
 .env*
 !.env*.template
+
+# package-lock.json (use yarn.lock instead)
+package-lock.json
