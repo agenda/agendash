@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 "use strict";
 const { Agenda } = require("agenda");
+const program = require("./agendash-options");
+
 const agendash = require("../app");
 const Hapi = require("@hapi/hapi");
-const program = require("./agendash-options");
 
 const init = async () => {
   const server = Hapi.server({

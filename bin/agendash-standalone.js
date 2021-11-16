@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 "use strict";
+const program = require("./agendash-options");
+
 const http = require("http");
 const { Agenda } = require("agenda");
 const agendash = require("../app");
 const express = require("express");
-const program = require("./agendash-options");
 
 const app = express();
 
