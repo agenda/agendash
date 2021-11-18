@@ -51,6 +51,8 @@ program.addOption(
 program.parse(process.argv);
 const options = program.opts()
 
+// console.log(JSON.stringify(options, null, 2));
+
 if (!options.db) {
   console.error("--db required");
   process.exit(1);
