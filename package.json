@@ -44,6 +44,8 @@
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
     "express": "^4.0.0",
+    "human-interval": "^2.0.1",
+    "iso-datestring-validator": "^2.2.0",
     "lodash": "^4.17.21",
     "mongodb": "*",
     "ms": "^2.1.3",
