@@ -93,7 +93,7 @@ const cleanupStaleJobs = (agenda) => {
     setTimeout(cleanup, CLEANUP_INTERVAL_MS);
   };
 
-  agenda.on("ready", async () => {
+  agenda.once("ready", async () => {
     cleanup();
   });
 }
