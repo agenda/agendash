@@ -76,7 +76,7 @@ const cleanupStaleJobs = (agenda) => {
           }
 
           if (lastFinishedAt.isBefore(expirationTime)) {
-            console.log(`[${jobId}] Deleting ${job.name} (job finished ${JOB_EXPIRATION_DURATION_STR} ago)`);
+            console.log(`[${jobId}] Deleting ${job.name} (job finished ${lastFinishedAt.fromNow()})`);
             agenda.cancel({
               _id: ObjectId(jobId),
             });
