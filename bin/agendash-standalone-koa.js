@@ -5,6 +5,9 @@ const program = require("./agendash-options");
 
 const agendash = require("../app");
 const Koa = require("koa");
+const { attachExitHandlers, cleanupStaleJobs } = require("./utils");
+
+attachExitHandlers();
 
 const init = async () => {
   const agenda = new Agenda().database(program.db, program.collection);
@@ -19,11 +22,9 @@ const init = async () => {
 
   await app.listen(program.port);
   console.log("Server running on port %s", program.port);
+
+  cleanupStaleJobs(agenda);
 };
 
-process.on("unhandledRejection", (error) => {
-  console.log(error);
-  process.exit(1);
-});
-
+// noinspection JSIgnoredPromiseFromCall
 init();

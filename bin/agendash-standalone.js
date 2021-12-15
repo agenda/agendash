@@ -6,6 +6,9 @@ const http = require("http");
 const { Agenda } = require("agenda");
 const agendash = require("../app");
 const express = require("express");
+const { attachExitHandlers, cleanupStaleJobs } = require("./utils");
+
+attachExitHandlers();
 
 const app = express();
 
@@ -25,3 +28,5 @@ server.listen(program.port, () => {
     `Agendash started http://localhost:${program.port}${program.path}`
   );
 });
+
+cleanupStaleJobs(agenda);

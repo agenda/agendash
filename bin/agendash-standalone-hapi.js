@@ -5,6 +5,9 @@ const program = require("./agendash-options");
 
 const agendash = require("../app");
 const Hapi = require("@hapi/hapi");
+const { attachExitHandlers, cleanupStaleJobs } = require("./utils");
+
+attachExitHandlers();
 
 const init = async () => {
   const server = Hapi.server({
@@ -23,11 +26,10 @@ const init = async () => {
 
   await server.start();
   console.log("Server running on %s", server.info.uri);
+
+  cleanupStaleJobs(agenda);
 };
 
-process.on("unhandledRejection", (error) => {
-  console.log(error);
-  process.exit(1);
-});
-
+// noinspection JSIgnoredPromiseFromCall
 init();
+
