@@ -202,7 +202,7 @@ const jobList = Vue.component("job-list", {
                       <div class="card-responsive-status-title">
                         Next run starts
                       </div>
-                      <div class="mb-3" :title="formatTitle(job.job.nextRunAt">
+                      <div class="mb-3" :title="formatTitle(job.job.nextRunAt)">
                         {{ formatDate(job.job.nextRunAt) }}
                       </div>
                       <div class="card-responsive-status-title">
