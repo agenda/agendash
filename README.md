@@ -191,6 +191,33 @@ await app.listen(3002);
 
 Then browse to `http://localhost:3002/`.
 
+#### Fastify
+
+```shell
+npm i fastify
+```
+
+```js
+const agenda = new Agenda().database(
+  "mongodb://127.0.0.1/agendaDb",
+  "agendaJobs"
+);
+
+const Fastify = require("fastify");
+const fastify = new Fastify();
+
+fastify.register(
+  Agendash(
+    agenda, 
+    { middleware: "fastify" }
+  );
+);
+
+await fastify.listen(3002);
+```
+
+Then browse to `http://localhost:3002/`.
+
 ### Standalone usage
 
 Agendash comes with a standalone Express app which you can use like this:
