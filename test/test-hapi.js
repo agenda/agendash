@@ -1,6 +1,7 @@
 const test = require("ava");
 const supertest = require("supertest");
-const { Agenda } = require("agenda");
+let Agenda = require("agenda");
+Agenda = Agenda.Agenda || Agenda;
 
 const agenda = new Agenda().database(
   "mongodb://127.0.0.1/agendash-test-db",
