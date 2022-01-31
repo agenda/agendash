@@ -54,11 +54,11 @@ const jobList = Vue.component("job-list", {
       return console.log("received Clean Multi");
     },
     formatTitle(date) {
-      if(!date) return;
+      if (!date) return;
       return moment(date).format();
     },
     formatDate(date) {
-      if(!date) return;
+      if (!date) return;
       return moment(date).fromNow();
     },
     checkAllCheckboxes() {

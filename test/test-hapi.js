@@ -1,5 +1,3 @@
-const nodeVersionIsSupported = Number(process.versions.node.split(".")[0]) > 10;
-
 const test = require("ava");
 const supertest = require("supertest");
 const Agenda = require("agenda");
@@ -9,13 +7,7 @@ const agenda = new Agenda().database(
   "agendash-test-collection"
 );
 let request;
-const testType = nodeVersionIsSupported ? "serial" : "skip";
-
 test.before.cb((t) => {
-  if (!nodeVersionIsSupported) {
-    return t.end();
-  }
-
   const Hapi = require("@hapi/hapi");
   const server = Hapi.server({
     port: 3000,
@@ -39,7 +31,7 @@ test.beforeEach(async () => {
   await agenda._collection.deleteMany({}, null);
 });
 
-test[testType](
+test.serial(
   "GET /api with no jobs should return the correct overview",
   async (t) => {
     const response = await request.get("/api?limit=200&skip=0");
@@ -49,7 +41,7 @@ test[testType](
   }
 );
 
-test[testType](
+test.serial(
   "POST /api/jobs/create should confirm the job exists",
   async (t) => {
     const response = await request
@@ -73,7 +65,7 @@ test[testType](
   }
 );
 
-test[testType]("POST /api/jobs/delete should delete the job", async (t) => {
+test.serial("POST /api/jobs/delete should delete the job", async (t) => {
   const job = await agenda
     .create("Test Job", {})
     .schedule("in 4 minutes")
@@ -92,7 +84,7 @@ test[testType]("POST /api/jobs/delete should delete the job", async (t) => {
   t.is(count, 0);
 });
 
-test[testType]("POST /api/jobs/requeue should requeue the job", async (t) => {
+test.serial("POST /api/jobs/requeue should requeue the job", async (t) => {
   const job = await new Promise((resolve, reject) => {
     agenda
       .create("Test Job", {})
