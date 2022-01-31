@@ -1,10 +1,12 @@
 # 3.0.0
 
-- BREAKING: Drop support for MongoDB v3.4
+- BREAKING: Drop support for MongoDB v3.4, only >=v3.6 is supported now.
 - BREAKING: Drop support for node 10, but added node 16 support.
-- Add `fastify` support
+- feat: add `fastify` support #194
+- fix: a lot of rendering issues
+- fix: newer version of `mongodb` compatibility #193
 
-This file won't mention contributors anymore. Because all contributors are listed on the [main page](https://github.com/agenda/agendash) now. Thanks GitHub!
+This file won't mention contributors anymore. Because all contributors are listed on the [main page](https://github.com/agenda/agendash) now. Thanks, GitHub!
 
 # 2.1.0 - JSON validation when creating jobs
 
