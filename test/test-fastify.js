@@ -13,7 +13,7 @@ const fastify = Fastify();
 
 fastify.register(
   require("../app")(agenda, {
-    middleware: 'fastify',
+    middleware: "fastify",
   })
 );
 
@@ -26,7 +26,7 @@ test.before.cb((t) => {
 });
 
 test.before(async () => {
-  await fastify.ready()
+  await fastify.ready();
 });
 
 test.beforeEach(async () => {

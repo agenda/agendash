@@ -49,7 +49,7 @@ const agenda = new Agenda().database(program.db, program.collection);
 
 fastify.register(
   agendash(agenda, {
-    middleware: 'fastify',
+    middleware: "fastify",
     title: program.title,
   })
 );
