@@ -1,3 +1,7 @@
+# 3.1.0
+
+- Add Content-Security-Policy header to all server implementations
+
 # 3.0.0
 
 - BREAKING: Drop support for MongoDB v3.4, only >=v3.6 is supported now.
