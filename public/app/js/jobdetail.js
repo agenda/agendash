@@ -13,7 +13,7 @@ const jobDetail = Vue.component("job-detail", {
   template: `
   <div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <!-- Modal -->
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog job-detail-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Job Data - {{job.job.name}}</h5>
