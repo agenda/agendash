@@ -231,7 +231,7 @@ const app = Vue.component("app", {
               >
             </sidebar>
           </div>
-          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 pt-3">
+          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 pt-3 pb-5">
             <div class="col-12">
               <topbar v-on:search-form="searchForm"
               :name='name'
