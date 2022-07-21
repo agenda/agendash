@@ -221,7 +221,7 @@ const app = Vue.component("app", {
         </div>
       </div>
       <div class="row pt-5">
-          <div v-if="hideSlide === true" class="col-md-2 d-none d-md-block bg-light overflow-auto pt-2">
+          <div v-if="hideSlide === true" class="col-md-2 d-none d-md-block bg-light overflow-auto">
             <sidebar
               v-on:search-sidebar="searchForm"
               v-on:new-job="newJob"
