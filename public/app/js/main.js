@@ -221,7 +221,7 @@ const app = Vue.component("app", {
         </div>
       </div>
       <div class="row pt-5">
-          <div v-if="hideSlide === true" class="col-md-2 d-none d-md-block bg-light overflow-auto">
+          <div v-if="hideSlide === true" class="col-md-2 d-none d-md-block bg-light overflow-auto pt-2">
             <sidebar
               v-on:search-sidebar="searchForm"
               v-on:new-job="newJob"
@@ -231,7 +231,7 @@ const app = Vue.component("app", {
               >
             </sidebar>
           </div>
-          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
+          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 pt-3">
             <div class="col-12">
               <topbar v-on:search-form="searchForm"
               :name='name'
