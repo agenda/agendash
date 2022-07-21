@@ -67,14 +67,19 @@ const app = Vue.component("app", {
       this.showNewJob = true;
     },
     searchForm(name, search, property, limit, skip, refresh, state, object) {
-      (this.pagesize = limit ? limit : this.pagesize),
-        (this.name = name),
-        (this.search = search),
-        (this.property = property),
-        (this.skip = skip),
-        (this.refresh = refresh),
-        (this.state = state),
-        (this.object = object ? object : this.object),
+      this.pagesize = limit ? limit : this.pagesize
+        this.name = name
+        this.search = search
+        this.property = property
+        this.skip = skip
+        this.refresh = refresh
+        this.state = state
+        this.object = object ? object : this.object
+
+        // Form changed, reset the pagination state
+        this.pagenumber = 1
+        this.totalPages = 1
+
         this.fetchData(
           this.name,
           this.search,
