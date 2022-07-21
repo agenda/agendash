@@ -120,9 +120,9 @@ const app = Vue.component("app", {
       name = "",
       search = "",
       property = "",
-      limit = 15,
+      limit = 50,
       skip = 0,
-      refresh = 60,
+      refresh = 30,
       state = "",
       object
     ) {
