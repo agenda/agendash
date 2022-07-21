@@ -7,7 +7,7 @@ const jobList = Vue.component("job-list", {
   props: ["jobs", "pagesize", "pagenumber", "sendClean", "loading"],
   computed: {
     sortedJobs: function () {
-      return this.jobs.sort((a, b) => {
+      var sortedJobs = this.jobs.sort((a, b) => {
         let displayA, displayB;
         if (this.currentSort === "name") {
           displayA = a.job[this.currentSort]
@@ -26,6 +26,12 @@ const jobList = Vue.component("job-list", {
         if (displayA > displayB) return 1 * modifier;
         return 0;
       });
+
+      /** Show recurring jobs first */
+      return Array.prototype.concat(
+        sortedJobs.filter(job => job.repeating === true),
+        sortedJobs.filter(job => job.repeating === false),
+      )
     },
   },
   watch: {
