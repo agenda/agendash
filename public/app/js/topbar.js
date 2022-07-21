@@ -4,9 +4,9 @@ const topbar = Vue.component("topbar", {
     // search: '',
     // property: 'data.id',
     // name: '',
-    limit: 15,
+    limit: 50,
     skip: 0,
-    refresh: 60,
+    refresh: 30,
     // state: '',
     object: false,
     stateobject: [

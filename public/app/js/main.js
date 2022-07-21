@@ -2,7 +2,7 @@ const app = Vue.component("app", {
   data: () => ({
     jobs: [],
     overview: [],
-    refresh: 60,
+    refresh: 30,
     showDetail: false,
     pagenumber: 1,
     showConfirm: false,
@@ -13,7 +13,7 @@ const app = Vue.component("app", {
     jobData: {},
     deletec: false,
     requeuec: false,
-    pagesize: 15,
+    pagesize: 50,
     sendClean: false,
     createc: false,
     property: "",
