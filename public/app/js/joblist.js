@@ -4,7 +4,7 @@ const jobList = Vue.component("job-list", {
     currentSort: "name",
     currentSortDir: "asc",
   }),
-  props: ["jobs", "pagesize", "pagenumber", "sendClean", "loading"],
+  props: ["jobs", "pagesize", "pagenumber", "totalPages", "sendClean", "loading"],
   computed: {
     sortedJobs: function () {
       var sortedJobs = this.jobs.sort((a, b) => {
@@ -232,14 +232,21 @@ const jobList = Vue.component("job-list", {
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                   <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">Previous</a></li>
-                  <!-- <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">{{pagenumber -1}}</a></li>
+                  <!--
+                  <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">{{pagenumber -1}}</a></li>
                   <li class="page-item active"><a class="page-link">{{pagenumber}}</a></li>
-                  <li class="page-item"><a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">{{pagenumber +1}}</a></li> -->
-                  <li class="page-item"><a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">Next</a></li>
+                  <li class="page-item"><a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">{{pagenumber +1}}</a></li>
+                  -->
+
+                  <li class="page-item" :class="pagenumber >= totalPages ? 'disabled': ''">
+                    <a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">Next</a>
+                    Page: {{pagenumber}} / {{totalPages}}
+                  </li>
                 </ul>
               </nav>
             </div>
         </div>
+
 </div>
   `,
 });

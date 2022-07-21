@@ -5,6 +5,7 @@ const app = Vue.component("app", {
     refresh: 30,
     showDetail: false,
     pagenumber: 1,
+    totalPages: 0,
     showConfirm: false,
     showConfirmMulti: false,
     showConfirmRequeue: false,
@@ -143,6 +144,7 @@ const app = Vue.component("app", {
             this.object = object;
             this.overview = data.overview;
             this.loading = false;
+            this.totalPages = data.totalPages;
           },
           () => {
             this.loading = false;
@@ -249,6 +251,7 @@ const app = Vue.component("app", {
                   v-on:pagechange="pagechange"
                   :pagesize="pagesize"
                   :pagenumber='pagenumber'
+                  :totalPages='totalPages'
                   :skip="skip"
                   :jobs="jobs"
                   :sendClean='sendClean'
