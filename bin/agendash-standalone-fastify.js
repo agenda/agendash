@@ -4,7 +4,7 @@ const { Agenda } = require("agenda");
 const agendash = require("../app");
 const Fastify = require("fastify");
 const program = require("./agendash-options");
-const {cleanupStaleJobs, attachExitHandlers} = require("./utils");
+const {cleanupStaleJobs, attachExitHandlers, notifyOnFailure } = require("./utils");
 
 attachExitHandlers();
 
@@ -26,3 +26,4 @@ fastify.listen(program.port, function () {
 });
 
 cleanupStaleJobs(agenda);
+notifyOnFailure(agenda, program.notify);

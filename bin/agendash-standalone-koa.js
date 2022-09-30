@@ -5,7 +5,7 @@ const program = require("./agendash-options");
 
 const agendash = require("../app");
 const Koa = require("koa");
-const { attachExitHandlers, cleanupStaleJobs } = require("./utils");
+const { attachExitHandlers, cleanupStaleJobs, notifyOnFailure } = require("./utils");
 
 attachExitHandlers();
 
@@ -24,6 +24,7 @@ const init = async () => {
   console.log("Server running on port %s", program.port);
 
   cleanupStaleJobs(agenda);
+  notifyOnFailure(agenda, program.notify);
 };
 
 // noinspection JSIgnoredPromiseFromCall

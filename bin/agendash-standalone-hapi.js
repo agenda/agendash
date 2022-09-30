@@ -5,7 +5,7 @@ const program = require("./agendash-options");
 
 const agendash = require("../app");
 const Hapi = require("@hapi/hapi");
-const { attachExitHandlers, cleanupStaleJobs } = require("./utils");
+const { attachExitHandlers, cleanupStaleJobs, notifyOnFailure } = require("./utils");
 
 attachExitHandlers();
 
@@ -28,6 +28,7 @@ const init = async () => {
   console.log("Server running on %s", server.info.uri);
 
   cleanupStaleJobs(agenda);
+  notifyOnFailure(agenda, program.notify);
 };
 
 // noinspection JSIgnoredPromiseFromCall

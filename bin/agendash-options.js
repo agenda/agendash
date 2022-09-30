@@ -48,6 +48,13 @@ program.addOption(
     .default("/")
     .env('AGENDASH_PATH'));
 
+program.addOption(
+  new Option(
+    "--notify <notify>",
+    "[optional] Comma-separated list of emails to send job failure notifications to")
+    .default("devops@movesfinancial.com")
+    .env('AGENDASH_NOTIFY_EMAILS'));
+
 program.parse(process.argv);
 const options = program.opts()
 

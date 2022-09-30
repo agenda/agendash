@@ -98,7 +98,15 @@ const cleanupStaleJobs = (agenda) => {
   });
 }
 
+// agenda: Agenda instance
+// notificationList: String, list of emails to send notifications to
+const notifyOnFailure = (agenda, notificationList) => {
+
+}
+
+
 module.exports = {
   attachExitHandlers,
-  cleanupStaleJobs
+  cleanupStaleJobs,
+  notifyOnFailure,
 }

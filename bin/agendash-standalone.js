@@ -6,7 +6,7 @@ const http = require("http");
 const { Agenda } = require("agenda");
 const agendash = require("../app");
 const express = require("express");
-const { attachExitHandlers, cleanupStaleJobs } = require("./utils");
+const { attachExitHandlers, cleanupStaleJobs, notifyOnFailure } = require("./utils");
 
 attachExitHandlers();
 
@@ -30,3 +30,4 @@ server.listen(program.port, () => {
 });
 
 cleanupStaleJobs(agenda);
+notifyOnFailure(agenda, program.notify);
