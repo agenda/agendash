@@ -47,7 +47,7 @@
   "devDependencies": {
     "@hapi/hapi": "^20.2.1",
     "@hapi/inert": "^6.0.5",
-    "ava": "3.15.0",
+    "ava": "5.2.0",
     "eslint": "7.19.0",
     "fastify": "^3.24.0",
     "fastify-static": "^4.5.0",
