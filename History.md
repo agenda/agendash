@@ -1,5 +1,10 @@
 # 4.0.0
+
 - Drop support for node 12. Add support for node 18 and MongoDB 5.0.
+- Fastify upgraded to v4. #215
+- Various UI fixes. #212 #203
+- Vulnerability fixes. #220
+- Requeue and Delete job fixes. #226 #227
 
 # 3.1.0
 
