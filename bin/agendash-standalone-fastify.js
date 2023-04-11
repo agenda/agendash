@@ -54,7 +54,7 @@ fastify.register(
   })
 );
 
-fastify.listen(program.port, function () {
+fastify.listen({ port: program.port }, function () {
   console.log(
     `Agendash started http://localhost:${program.port}${program.path}`
   );
