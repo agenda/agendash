@@ -122,8 +122,20 @@ code {
   margin: 0 2px;
 }
 
+.job-detail-dialog {
+  max-width: calc(100vw - 1.75rem * 2);
+}
+.modal-body > * {
+  flex: 0 1 auto;
+}
+.modal-body {
+  display: flex;
+  flex-flow: column;
+  max-height: calc(100vh - 195px);
+}
+
 .json-editor {
-  height: 150px;
+  flex: 1 1 auto;
 }
 .card-responsive-title-container {
   display: flex;
