@@ -2,9 +2,10 @@ const app = Vue.component("app", {
   data: () => ({
     jobs: [],
     overview: [],
-    refresh: 60,
+    refresh: 30,
     showDetail: false,
     pagenumber: 1,
+    totalPages: 0,
     showConfirm: false,
     showConfirmMulti: false,
     showConfirmRequeue: false,
@@ -13,7 +14,7 @@ const app = Vue.component("app", {
     jobData: {},
     deletec: false,
     requeuec: false,
-    pagesize: 15,
+    pagesize: 50,
     sendClean: false,
     createc: false,
     property: "",
@@ -66,14 +67,19 @@ const app = Vue.component("app", {
       this.showNewJob = true;
     },
     searchForm(name, search, property, limit, skip, refresh, state, object) {
-      (this.pagesize = limit ? limit : this.pagesize),
-        (this.name = name),
-        (this.search = search),
-        (this.property = property),
-        (this.skip = skip),
-        (this.refresh = refresh),
-        (this.state = state),
-        (this.object = object ? object : this.object),
+      this.pagesize = limit ? limit : this.pagesize
+        this.name = name
+        this.search = search
+        this.property = property
+        this.skip = skip
+        this.refresh = refresh
+        this.state = state
+        this.object = object ? object : this.object
+
+        // Form changed, reset the pagination state
+        this.pagenumber = 1
+        this.totalPages = 1
+
         this.fetchData(
           this.name,
           this.search,
@@ -120,9 +126,9 @@ const app = Vue.component("app", {
       name = "",
       search = "",
       property = "",
-      limit = 15,
+      limit = 50,
       skip = 0,
-      refresh = 60,
+      refresh = 30,
       state = "",
       object
     ) {
@@ -143,6 +149,7 @@ const app = Vue.component("app", {
             this.object = object;
             this.overview = data.overview;
             this.loading = false;
+            this.totalPages = data.totalPages;
           },
           () => {
             this.loading = false;
@@ -229,7 +236,7 @@ const app = Vue.component("app", {
               >
             </sidebar>
           </div>
-          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
+          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 pt-3 pb-5">
             <div class="col-12">
               <topbar v-on:search-form="searchForm"
               :name='name'
@@ -249,6 +256,7 @@ const app = Vue.component("app", {
                   v-on:pagechange="pagechange"
                   :pagesize="pagesize"
                   :pagenumber='pagenumber'
+                  :totalPages='totalPages'
                   :skip="skip"
                   :jobs="jobs"
                   :sendClean='sendClean'

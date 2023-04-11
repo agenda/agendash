@@ -4,10 +4,10 @@ const jobList = Vue.component("job-list", {
     currentSort: "name",
     currentSortDir: "asc",
   }),
-  props: ["jobs", "pagesize", "pagenumber", "sendClean", "loading"],
+  props: ["jobs", "pagesize", "pagenumber", "totalPages", "sendClean", "loading"],
   computed: {
     sortedJobs: function () {
-      return this.jobs.sort((a, b) => {
+      var sortedJobs = this.jobs.sort((a, b) => {
         let displayA, displayB;
         if (this.currentSort === "name") {
           displayA = a.job[this.currentSort]
@@ -26,6 +26,12 @@ const jobList = Vue.component("job-list", {
         if (displayA > displayB) return 1 * modifier;
         return 0;
       });
+
+      /** Show recurring jobs first */
+      return Array.prototype.concat(
+        sortedJobs.filter(job => job.repeating === true),
+        sortedJobs.filter(job => job.repeating === false),
+      )
     },
   },
   watch: {
@@ -226,12 +232,15 @@ const jobList = Vue.component("job-list", {
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                   <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">Previous</a></li>
-                  <!-- <li class="page-item" :class="pagenumber === 1 ? 'disabled': ''"><a class="page-link" @click="$emit('pagechange', 'prev')">{{pagenumber -1}}</a></li>
-                  <li class="page-item active"><a class="page-link">{{pagenumber}}</a></li>
-                  <li class="page-item"><a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">{{pagenumber +1}}</a></li> -->
-                  <li class="page-item"><a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">Next</a></li>
+                  <li class="page-item" :class="pagenumber >= totalPages ? 'disabled': ''"> <a style="cursor:pointer;" class="page-link" @click="$emit('pagechange', 'next')">Next</a> </li>
                 </ul>
               </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+              Page: {{pagenumber}} / {{totalPages}}
             </div>
         </div>
 </div>
