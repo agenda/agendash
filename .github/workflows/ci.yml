@@ -6,8 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['12', '14', '16']
-        mongodb-version: [ 3.6, 4.0, 4.2, 4.4 ]
+        node: ['14', '16', '18']
+        mongodb-version: [ 3.6, 4.0, 4.2, 4.4, 5.0 ]
         agenda-version: [ 3.1, 4.0 ]
     steps:
       - uses: actions/checkout@v2

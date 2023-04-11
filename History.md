@@ -1,3 +1,6 @@
+# 4.0.0
+- Drop support for node 12. Add support for node 18 and MongoDB 5.0.
+
 # 3.1.0
 
 - Add Content-Security-Policy header to all server implementations
