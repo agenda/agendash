@@ -132,6 +132,7 @@ code {
   display: flex;
   flex-flow: column;
   max-height: calc(100vh - 195px);
+  overflow-y: scroll;
 }
 
 .json-editor {
