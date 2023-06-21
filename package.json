@@ -42,7 +42,7 @@
     "commander": "^2.9.0",
     "express": "^4.17.3",
     "mongodb": "*",
-    "semver": "^7.3.4"
+    "semver": "^7.5.2"
   },
   "devDependencies": {
     "@fastify/static": "^6.5.0",
