@@ -27,6 +27,7 @@ const app = Vue.component("app", {
     nameprop: "",
     loading: false,
     hideSlide: true,
+    title: "Agendash"
   }),
   methods: {
     openNav() {
@@ -150,6 +151,7 @@ const app = Vue.component("app", {
             this.overview = data.overview;
             this.loading = false;
             this.totalPages = data.totalPages;
+            this.title = data.title || "Agendash";
           },
           () => {
             this.loading = false;
@@ -196,13 +198,12 @@ const app = Vue.component("app", {
     return this.fetchData();
   },
   template: `
-
     <div class="container-fluid">
       <div class="">
         <div class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
           <div class="d-flex">
             <div>
-              <a class="navbar-brand col-sm-10 col-md-10 mr-0 tittle"> Agendash</a>
+              <a class="navbar-brand col-sm-10 col-md-10 mr-0 tittle"> {{ title }}</a>
             </div>
             <div class='d-md-none w-50'>
               <div id="mySidebar" class="sidebar-collapse" @click="closeNav()">
