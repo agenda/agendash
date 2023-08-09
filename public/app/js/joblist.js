@@ -142,6 +142,7 @@ const jobList = Vue.component("job-list", {
                   </td>
                   <td th scope="row" class="job-name">
                     <i v-if="job.repeating" class="oi oi-timer pill-own bg-info"><span>{{job.job.repeatInterval}}</span></i>
+                    <i v-if="job.job.repeatIntervalHuman" class="oi oi-timer pill-own bg-info"><span>{{job.job.repeatIntervalHuman}}</span></i>
                     <i v-if="job.scheduled" class="pill-own bg-info pill-withoutIcon"><span>Scheduled</span></i>
                     <i v-if="job.completed" class="pill-own bg-success pill-withoutIcon"><span>Completed</span></i>
                     <i v-if="job.queued" class="pill-own bg-primary pill-withoutIcon"><span>Queued</span></i>
@@ -183,6 +184,7 @@ const jobList = Vue.component("job-list", {
                 <div class="card-body">
                   <div class="d-flex justify-content-center mb-2">
                     <i v-if="job.repeating" class="oi oi-timer pill-own mr-2 bg-info pill-own-card"><span class="pill-own-card-info">{{job.job.repeatInterval}}</span></i>
+                    <i v-if="job.job.repeatIntervalHuman" class="oi oi-timer pill-own mr-2 bg-info pill-own-card"><span class="pill-own-card-info">{{job.job.repeatIntervalHuman}}</span></i>
                     <i v-if="job.scheduled" class="pill-own mr-2 bg-info pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Scheduled</span></i>
                     <i v-if="job.completed" class="pill-own mr-2 bg-success pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Completed</span></i>
                     <i v-if="job.queued" class="pill-own mr-2 bg-primary pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Queued</span></i>
