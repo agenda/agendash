@@ -53,6 +53,7 @@ It may be required to create the following index for faster sorting (see [#24](h
 
 ```
 db.agendaJobs.ensureIndex({
+    "repeatInterval": -1,
     "nextRunAt" : -1,
     "lastRunAt" : -1,
     "lastFinishedAt" : -1
