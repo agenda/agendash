@@ -1,13 +1,18 @@
 "use strict";
 const path = require("path");
 
-module.exports = (agenda, options) => {
+module.exports = async (agenda, options) => {
   options = options || {};
   if (!options.middleware) {
     options.middleware = "express";
   }
 
-  const agendash = require("./lib/controllers/agendash")(agenda, options);
+  const agendashPromise = require("./lib/controllers/agendash")(
+    agenda,
+    options
+  );
+
+  const agendash = await agendashPromise;
   const middlewarePath = path.join(
     __dirname,
     "./lib/middlewares",

@@ -1652,6 +1652,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hokify/agenda@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "@hokify/agenda@npm:6.3.0"
+  dependencies:
+    cron-parser: "npm:^4"
+    date.js: "npm:~0.3.3"
+    debug: "npm:~4"
+    human-interval: "npm:~2"
+    luxon: "npm:^3"
+    mongodb: "npm:^4"
+  checksum: 22c097492c31417e8dad72d1706f6a03e48f4fd0372bdb1eca32110bf033c9538c9432911408718c7f317af51d39a4a87f00a0f53c5a35bc4cec6adb162372ea
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.13":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -4256,20 +4270,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"agenda@npm:^4.2.1":
-  version: 4.4.0
-  resolution: "agenda@npm:4.4.0"
-  dependencies:
-    cron-parser: "npm:^3.0.0"
-    date.js: "npm:~0.3.3"
-    debug: "npm:~4.3.0"
-    human-interval: "npm:~2.0.0"
-    moment-timezone: "npm:~0.5.37"
-    mongodb: "npm:^4.1.0"
-  checksum: e6cb4357b515cc2969968328e1cb2fb8a2e96eb59e042572040cc7c2089964403aa2acf044b837a0e67429c726d2617a23eb1e60b06468a5d8159e05bbcf0cfa
-  languageName: node
-  linkType: hard
-
 "agendas@workspace:.":
   version: 0.0.0-use.local
   resolution: "agendas@workspace:."
@@ -4327,7 +4327,7 @@ __metadata:
     "@fastify/static": "npm:^6.5.0"
     "@hapi/hapi": "npm:^20.2.1"
     "@hapi/inert": "npm:^6.0.5"
-    agenda: "npm:^4.2.1"
+    "@hokify/agenda": "npm:^6.3.0"
     ava: "npm:3.15.0"
     body-parser: "npm:^1.19.2"
     commander: "npm:^2.9.0"
@@ -5435,13 +5435,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cron-parser@npm:^3.0.0":
-  version: 3.5.0
-  resolution: "cron-parser@npm:3.5.0"
+"cron-parser@npm:^4":
+  version: 4.9.0
+  resolution: "cron-parser@npm:4.9.0"
   dependencies:
-    is-nan: "npm:^1.3.2"
-    luxon: "npm:^1.26.0"
-  checksum: 09bb87285e36baddec1b3a87f441c80d3e01f349e341c8cf6f9f01045a532bd5388f9fd52dfc374818e58a93cb172b000379ce02a411e4fc94a99302e7fe2330
+    luxon: "npm:^3.2.1"
+  checksum: ffca5e532a5ee0923412ee6e4c7f9bbceacc6ddf8810c16d3e9fb4fe5ec7e2de1b6896d7956f304bb6bc96b0ce37ad7e3935304179d52951c18d84107184faa7
   languageName: node
   linkType: hard
 
@@ -5537,7 +5536,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.0.0, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:~4.3.0":
+"debug@npm:4, debug@npm:^4.0.0, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:~4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -7171,7 +7170,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"human-interval@npm:~2.0.0":
+"human-interval@npm:~2":
   version: 2.0.1
   resolution: "human-interval@npm:2.0.1"
   dependencies:
@@ -7497,16 +7496,6 @@ __metadata:
   version: 1.0.1
   resolution: "is-lambda@npm:1.0.1"
   checksum: 93a32f01940220532e5948538699ad610d5924ac86093fcee83022252b363eb0cc99ba53ab084a04e4fb62bf7b5731f55496257a4c38adf87af9c4d352c71c35
-  languageName: node
-  linkType: hard
-
-"is-nan@npm:^1.3.2":
-  version: 1.3.2
-  resolution: "is-nan@npm:1.3.2"
-  dependencies:
-    call-bind: "npm:^1.0.0"
-    define-properties: "npm:^1.1.3"
-  checksum: 1f784d3472c09bc2e47acba7ffd4f6c93b0394479aa613311dc1d70f1bfa72eb0846c81350967722c959ba65811bae222204d6c65856fdce68f31986140c7b0e
   languageName: node
   linkType: hard
 
@@ -8127,10 +8116,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^1.26.0":
-  version: 1.28.1
-  resolution: "luxon@npm:1.28.1"
-  checksum: dfba84bb3cd72f359c77115d374937c31eccdfa6b383284b6848c075f85e02269d4d9a717608944f2c11c4ca5d3df0fc18197ce4ca21313ddd72619b39ee034c
+"luxon@npm:^3, luxon@npm:^3.2.1":
+  version: 3.4.4
+  resolution: "luxon@npm:3.4.4"
+  checksum: c14164bc338987349075a08e63ea3ff902866735f7f5553a355b27be22667919765ff96fde4d3413d0e9a0edc4ff9e2e74ebcb8f86eae0ce8b14b27330d87d6e
   languageName: node
   linkType: hard
 
@@ -8442,22 +8431,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:~0.5.37":
-  version: 0.5.44
-  resolution: "moment-timezone@npm:0.5.44"
-  dependencies:
-    moment: "npm:^2.29.4"
-  checksum: 72f0a425c52a858cca76d5ab35dfb02d68ac7292b60e4b34fb432c1fae07e32ad7f67de7ff5d2d2c868eee8052c9981fc3244f5fc9a2f454fc4fd15db2ec45a7
-  languageName: node
-  linkType: hard
-
-"moment@npm:^2.29.4":
-  version: 2.30.1
-  resolution: "moment@npm:2.30.1"
-  checksum: ae42d876d4ec831ef66110bdc302c0657c664991e45cf2afffc4b0f6cd6d251dde11375c982a5c0564ccc0fa593fc564576ddceb8c8845e87c15f58aa6baca69
-  languageName: node
-  linkType: hard
-
 "monaco-editor@npm:^0.39.0":
   version: 0.39.0
   resolution: "monaco-editor@npm:0.39.0"
@@ -8519,7 +8492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb@npm:^4.1.0":
+"mongodb@npm:^4":
   version: 4.17.2
   resolution: "mongodb@npm:4.17.2"
   dependencies:

@@ -1,37 +1,16 @@
 "use strict";
-const semver = require("semver");
 const { ObjectId } = require("mongodb"); // We rely on the Agenda's "mongodb", thus our package.json lists "*" as required version
 
-module.exports = function (agenda, options) {
+/**
+ *
+ * @param {Agenda} agenda
+ * @param {*} options
+ * @returns
+ */
+module.exports = async function (agenda, options) {
   options = options || {};
 
-  agenda.on("ready", () => {
-    const collection = agenda._collection.collection || agenda._collection;
-    collection.createIndexes(
-      [
-        { key: { nextRunAt: -1, lastRunAt: -1, lastFinishedAt: -1 } },
-        { key: { name: 1, nextRunAt: -1, lastRunAt: -1, lastFinishedAt: -1 } },
-      ],
-      (error) => {
-        if (error) {
-          // Ignoring for now
-        }
-      }
-    );
-
-    // Mongoose internals changed at some point. This will fix crash for older versions.
-    const mdb = agenda._mdb.admin ? agenda._mdb : agenda._mdb.db;
-
-    mdb.admin().serverInfo((error, serverInfo) => {
-      if (error) {
-        throw error;
-      }
-
-      if (!semver.satisfies(semver.coerce(serverInfo.version), ">=3.6.0")) {
-        throw new Error("MongoDB version not supported");
-      }
-    });
-  });
+  await agenda.ready;
 
   // Options = {query = '', property = '', isObjectId = false, limit, skip}
   const getJobs = function (job, state, options) {
@@ -55,7 +34,7 @@ module.exports = function (agenda, options) {
       postMatch[state] = true;
     }
 
-    const collection = agenda._collection.collection || agenda._collection;
+    const collection = agenda.db.collection;
     return collection
       .aggregate([
         { $match: preMatch },
@@ -123,7 +102,7 @@ module.exports = function (agenda, options) {
   };
 
   const getOverview = async () => {
-    const collection = agenda._collection.collection || agenda._collection;
+    const collection = agenda.db.collection;
     const results = await collection
       .aggregate([
         {
@@ -282,7 +261,7 @@ module.exports = function (agenda, options) {
       return Promise.reject(new Error("Agenda instance is not ready"));
     }
 
-    const collection = agenda._collection.collection || agenda._collection;
+    const collection = agenda.db.collection;
     const jobs = await collection
       .find({
         _id: { $in: jobIds.map((jobId) => new ObjectId(jobId)) },

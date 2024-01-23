@@ -38,7 +38,7 @@
     "entrypoint.sh"
   ],
   "dependencies": {
-    "agenda": "^4.2.1",
+    "@hokify/agenda": "^6.3.0",
     "body-parser": "^1.19.2",
     "commander": "^2.9.0",
     "cors": "^2.8.5",
