@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "yarn workspace agendash standalone & yarn workspace agendash-react dev",
-    "build": "yarn workspace agendash-react build && cp -r react/build/ agendash/public/"
+    "build": "yarn workspace agendash-react build && cp -r react/build/ agendash/public/",
+    "prepare": "yarn build"
   },
   "workspaces": [
     "react",
