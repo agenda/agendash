@@ -1,75 +1,13 @@
 {
-  "name": "agendash",
-  "version": "4.0.0",
-  "description": "A modern dashboard for Agenda.js with Pagination and Search capabilities",
-  "main": "app.js",
-  "bin": "bin/agendash-standalone.js",
-  "engines": {
-    "node": ">=14.0.0"
-  },
+  "name": "agendas",
+  "private": true,
   "scripts": {
-    "test": "run-p lint ava",
-    "lint": "eslint ./",
-    "ava": "ava -v -c 1"
+    "dev": "yarn workspace agendash standalone & yarn workspace agendash-react dev",
+    "build": "yarn workspace agendash-react build && cp -r react/build/ agendash/public/"
   },
-  "keywords": [
-    "agenda",
-    "agendash",
-    "dashboard",
-    "job-queues"
+  "workspaces": [
+    "react",
+    "agendash"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/agenda/agendash.git"
-  },
-  "bugs": {
-    "url": "https://github.com/agenda/agendash/issues"
-  },
-  "homepage": "https://github.com/agenda/agendash#readme",
-  "license": "MIT",
-  "files": [
-    "bin",
-    "lib",
-    "public",
-    "app.js",
-    "*.png",
-    "Dockerfile",
-    "entrypoint.sh"
-  ],
-  "dependencies": {
-    "agenda": "^4.2.1",
-    "body-parser": "^1.19.2",
-    "commander": "^2.9.0",
-    "express": "^4.17.3",
-    "mongodb": "*",
-    "semver": "^7.3.4"
-  },
-  "devDependencies": {
-    "@fastify/static": "^6.5.0",
-    "@hapi/hapi": "^20.2.1",
-    "@hapi/inert": "^6.0.5",
-    "ava": "3.15.0",
-    "eslint": "7.19.0",
-    "fastify": "^4.9.2",
-    "koa": "2.13.1",
-    "koa-bodyparser": "4.3.0",
-    "koa-router": "10.0.0",
-    "koa-static": "5.0.0",
-    "npm-run-all": "4.1.5",
-    "prettier": "2.2.1",
-    "supertest": "^6.2.2"
-  },
-  "eslintConfig": {
-    "parserOptions": {
-      "ecmaVersion": 2019
-    },
-    "env": {
-      "es6": true,
-      "node": true
-    },
-    "extends": "eslint:recommended"
-  },
-  "eslintIgnore": [
-    "public"
-  ]
+  "packageManager": "yarn@4.0.2"
 }
