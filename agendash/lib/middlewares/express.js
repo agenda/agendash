@@ -6,17 +6,25 @@ const csp = require("../csp");
 module.exports = (agendash) => {
   const { api, requeueJobs, deleteJobs, createJob } = agendash;
   const app = express();
+
+  // Body parser middleware
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
+  // CSP middleware
   app.use((req, res, next) => {
     res.header("Content-Security-Policy", csp);
     next();
   });
 
-  app.use("/", express.static(path.join(__dirname, "../../public")));
+  // Serving static files (React app)
+  app.use(
+    "/agenda-dashboard",
+    express.static(path.join(__dirname, "../../public"))
+  );
 
-  app.get("/api", async (request, response) => {
+  // Agendash API routes
+  app.get("/agenda-dashboard/api", async (request, response) => {
     try {
       const {
         job,
@@ -40,7 +48,7 @@ module.exports = (agendash) => {
     }
   });
 
-  app.post("/api/jobs/requeue", async (request, response) => {
+  app.post("/agenda-dashboard/api/jobs/requeue", async (request, response) => {
     try {
       const newJobs = await requeueJobs(request.body.jobIds);
       response.send(newJobs);
@@ -49,7 +57,7 @@ module.exports = (agendash) => {
     }
   });
 
-  app.post("/api/jobs/delete", async (request, response) => {
+  app.post("/agenda-dashboard/api/jobs/delete", async (request, response) => {
     try {
       const deleted = await deleteJobs(request.body.jobIds);
       if (deleted) {
@@ -62,7 +70,7 @@ module.exports = (agendash) => {
     }
   });
 
-  app.post("/api/jobs/create", async (request, response) => {
+  app.post("/agenda-dashboard/api/jobs/create", async (request, response) => {
     try {
       await createJob(
         request.body.jobName,
@@ -74,6 +82,11 @@ module.exports = (agendash) => {
     } catch (error) {
       response.status(400).json(error);
     }
+  });
+
+  // Catch-all route to serve index.html for all other requests
+  app.get("/agenda-dashboard/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/index.html"));
   });
 
   return app;

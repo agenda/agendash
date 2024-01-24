@@ -1,10 +1,23 @@
 {
-  "name": "agendas",
-  "private": true,
+  "name": "agenda-react",
+  "version": "0.0.4",
+  "description": "A Dashboard for @hokify/agenda",
+  "license": "MIT",
   "scripts": {
     "dev": "yarn workspace agendash standalone & yarn workspace agendash-react dev",
-    "build": "yarn workspace agendash-react build && cp -r react/build/ agendash/public/",
+    "build": "yarn workspace agendash-react build && rm -rf agendash/public && cp -r react/build/ agendash/public/",
     "prepare": "yarn build"
+  },
+  "keywords": [
+    "agenda",
+    "agendash",
+    "dashboard",
+    "job-queues",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoang-minh-ekn/agendash"
   },
   "workspaces": [
     "react",

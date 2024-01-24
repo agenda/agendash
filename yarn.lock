@@ -4270,9 +4270,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"agendas@workspace:.":
+"agenda-react@workspace:.":
   version: 0.0.0-use.local
-  resolution: "agendas@workspace:."
+  resolution: "agenda-react@workspace:."
   languageName: unknown
   linkType: soft
 
