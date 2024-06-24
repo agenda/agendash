@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/sealos/agendash/compare/v1.0.3...v1.0.4) (2024-06-24)
+
+
+### Bug Fixes
+
+* fix scroll issue ([0b99dac](https://github.com/sealos/agendash/commit/0b99dac42e56b7a679122f8241607d4fc8d42812))
+
 ## [1.0.3](https://github.com/sealos/agendash/compare/v1.0.2...v1.0.3) (2024-06-24)
 
 
