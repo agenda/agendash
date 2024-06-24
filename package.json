@@ -37,9 +37,7 @@
     "dist",
     "public",
     "app.js",
-    "*.png",
-    "Dockerfile",
-    "entrypoint.sh"
+    "*.png"
   ],
   "dependencies": {
     "@sealos/agenda": "^1.1.2",
