@@ -18,7 +18,7 @@
 - fix: a lot of rendering issues
 - fix: newer version of `mongodb` compatibility #193
 
-This file won't mention contributors anymore. Because all contributors are listed on the [main page](https://github.com/agenda/agendash) now. Thanks, GitHub!
+This file won't mention contributors anymore. Because all contributors are listed on the [main page](https://github.com/sealos/agendash) now. Thanks, GitHub!
 
 # 2.1.0 - JSON validation when creating jobs
 
@@ -30,7 +30,7 @@ Complete rewrite of Agendash in Vue.js!
 
 Supports Node.js 10 and up.
 
-# 2.0.0-beta0.8.2 / 2020-12-04 - As agendash2, in parallel repository https://github.com/agenda/agendash-v2
+# 2.0.0-beta0.8.2 / 2020-12-04 - As agendash2, in parallel repository https://github.com/sealos/agendash-v2
 
 - fix: search by job name, small side bar design fix and toggle improvements (thanks @simllll)
 - fix: joblist reset fix (thanks @simllll)
@@ -38,7 +38,7 @@ Supports Node.js 10 and up.
 - feat: enable options.query as number (thanks @Enubia @simllll)
 - feat: multiselect checkboxes (thanks @Enubia @simllll)
 
-# 2.0.0-beta0.1.0 / 2020-04-30 - First public release of Agendash2 in parallel repository https://github.com/agenda/agendash-v2
+# 2.0.0-beta0.1.0 / 2020-04-30 - First public release of Agendash2 in parallel repository https://github.com/sealos/agendash-v2
 
 - New frontend written from scratch in Vue.js
 - Add search

@@ -49,7 +49,7 @@ A Dashboard for [Agenda](https://github.com/agenda/agenda).
 
 ### Index for sorting
 
-It may be required to create the following index for faster sorting (see [#24](https://github.com/agenda/agendash/issues/24))
+It may be required to create the following index for faster sorting (see [#24](https://github.com/sealos/agendash/issues/24))
 
 ```
 db.agendaJobs.ensureIndex({
@@ -109,15 +109,15 @@ session using passport, you can protect the dashboard path like this:
 
 ```js
 app.use(
-  "/dash",
-  function (req, res, next) {
-    if (!req.user || !req.user.is_admin) {
-      res.send(401);
-    } else {
-      next();
-    }
-  },
-  Agendash(agenda)
+    "/dash",
+    function (req, res, next) {
+        if (!req.user || !req.user.is_admin) {
+            res.send(401);
+        } else {
+            next();
+        }
+    },
+    AgendashController(agenda)
 );
 ```
 
@@ -126,14 +126,14 @@ You'll just have to update the last line to require the middleware you need:
 
 ```js
 app.use(
-  "/agendash",
-  Agendash(agenda, {
-    middleware: "connect",
-  })
+    "/agendash",
+    AgendashController(agenda, {
+        middleware: "connect",
+    })
 );
 ```
 
-Note that if you use a CSRF protection middleware like [`csurf`](https://www.npmjs.com/package/csurf), you might need to [configure it off](https://github.com/agenda/agendash/issues/23#issuecomment-270917949) for Agendash-routes.
+Note that if you use a CSRF protection middleware like [`csurf`](https://www.npmjs.com/package/csurf), you might need to [configure it off](https://github.com/sealos/agendash/issues/23#issuecomment-270917949) for Agendash-routes.
 
 #### Hapi
 
@@ -145,19 +145,19 @@ npm i @hapi/inert @hapi/hapi
 
 ```js
 const agenda = new Agenda().database(
-  "mongodb://127.0.0.1/agendaDb",
-  "agendaJobs"
+    "mongodb://127.0.0.1/agendaDb",
+    "agendaJobs"
 );
 
 const server = require("@hapi/hapi").server({
-  port: 3002,
-  host: "localhost",
+    port: 3002,
+    host: "localhost",
 });
 await server.register(require("@hapi/inert"));
 await server.register(
-  Agendash(agenda, {
-    middleware: "hapi",
-  })
+    AgendashController(agenda, {
+        middleware: "hapi",
+    })
 );
 
 await server.start();
@@ -173,17 +173,17 @@ npm i koa koa-bodyparser koa-router koa-static
 
 ```js
 const agenda = new Agenda().database(
-  "mongodb://127.0.0.1/agendaDb",
-  "agendaJobs"
+    "mongodb://127.0.0.1/agendaDb",
+    "agendaJobs"
 );
 
 const Koa = require("koa");
 const app = new Koa();
-const middlewares = Agendash(agenda, {
-  middleware: "koa",
+const middlewares = AgendashController(agenda, {
+    middleware: "koa",
 });
 for (const middleware of middlewares) {
-  app.use(middleware);
+    app.use(middleware);
 }
 
 await app.listen(3002);
@@ -199,19 +199,20 @@ npm i fastify
 
 ```js
 const agenda = new Agenda().database(
-  "mongodb://127.0.0.1/agendaDb",
-  "agendaJobs"
+    "mongodb://127.0.0.1/agendaDb",
+    "agendaJobs"
 );
 
 const Fastify = require("fastify");
 const fastify = new Fastify();
 
 fastify.register(
-  Agendash(
-    agenda, 
-    { middleware: "fastify" }
-  );
-);
+    AgendashController(
+        agenda,
+        { middleware: "fastify" }
+    );
+)
+;
 
 await fastify.listen(3002);
 ```
@@ -247,7 +248,7 @@ Agendash can also be run within a Docker container like this:
 ```bash
 docker run -p 3000:3000 \
   --env MONGODB_URI=mongo://myUser:myPass@myHost/myDb \
-  --env COLLECTION=myAgendaCollection agenda/agendash
+  --env COLLECTION=myAgendaCollection sealos/agendash
 ```
 
 Then browse to `http://localhost:3000/`.

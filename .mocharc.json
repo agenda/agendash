@@ -1,0 +1,12 @@
+{
+    "diff": true,
+    "exit": true,
+    "extension": ["test.ts"],
+    "package": "./package.json",
+    "reporter": "spec",
+    "slow": 100,
+    "timeout": 25000,
+    "recursive": true,
+    "ui": "bdd",
+    "spec": ["test/**/*.test.ts", "src/**/*.test.ts"]
+}

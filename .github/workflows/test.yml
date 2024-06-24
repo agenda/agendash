@@ -1,0 +1,23 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    name: Node ${{ matrix.node }}, Mongo ${{ matrix.mongodb-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 20 ]
+        mongodb-version: [ 6.0, 7.0 ]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js with cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - run: npm install
+
+      - run: npm test

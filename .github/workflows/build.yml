@@ -1,0 +1,27 @@
+name: Build
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    name: Build on Node.js ${{ matrix.node-version }} and MongoDB ${{ matrix.mongodb-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
+        mongodb-version: [6.0, 7.0]
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js with cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install Packages
+        run: npm install
+
+      - name: Build
+        run: npm run build
