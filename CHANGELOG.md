@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/sealos/agendash/compare/v1.0.2...v1.0.3) (2024-06-24)
+
+
+### Bug Fixes
+
+* fix package name ([d05ef10](https://github.com/sealos/agendash/commit/d05ef10605053013f6ffffb4afd30b01e525021f))
+* fix public files not being accessible ([ded5a97](https://github.com/sealos/agendash/commit/ded5a975bf5b6b897d9aaa7863da6ed788c673cd))
+
 ## [1.0.2](https://github.com/sealos/agendash/compare/v1.0.1...v1.0.2) (2024-06-24)
 
 
