@@ -52,6 +52,8 @@
     "@typescript-eslint/parser": "^6.20.0",
     "eslint": "^7.19.0",
     "mocha": "^10.4.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "mongodb-memory-server": "^9.3.0",
     "prettier": "^2.2.1",
     "semantic-release": "^24.0.0",
