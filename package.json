@@ -1,6 +1,6 @@
 {
   "name": "@sealos/agendadash",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A fork of dashboard for Agenda.js with Pagination and Search capabilities",
   "main": "dist/app.js",
   "engines": {

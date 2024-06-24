@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/sealos/agendash/compare/v1.0.1...v1.0.2) (2024-06-24)
+
+
+### Bug Fixes
+
+* mark npm package as public ([8804e84](https://github.com/sealos/agendash/commit/8804e84274a062bf6db9cc25680a68b13e4e4f69))
+* remove docker files ([d791c6a](https://github.com/sealos/agendash/commit/d791c6a1798d5e71c579b97a3f4c00f99f6bd79c))
+
 ## [1.0.1](https://github.com/sealos/agendash/compare/v1.0.0...v1.0.1) (2024-06-24)
 
 
