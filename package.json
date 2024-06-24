@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "dev": "ts-node standalone.ts",
     "prepublishOnly": "npm run build",
     "release": "semantic-release",
     "lint": "eslint ./",
