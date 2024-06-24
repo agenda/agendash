@@ -20,7 +20,7 @@ async function start() {
   const app = express();
   app.use('/', Agendash(agenda));
 
-  let serverPort = process.env.PORT || 3000;
+  const serverPort = process.env.PORT || 3000;
   app.set("port", serverPort);
 
   const server = http.createServer(app);
