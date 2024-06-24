@@ -28,12 +28,6 @@ async function start() {
     console.log(
       `Agendash started http://localhost:${serverPort}/`
     );
-    // print all routes
-    app._router.stack.forEach((r: any) => {
-      if (r.route && r.route.path) {
-        console.log(r.route.path);
-      }
-    });
   });
 }
 
