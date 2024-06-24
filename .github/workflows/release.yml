@@ -8,6 +8,10 @@ jobs:
   semantic-release:
     name: Semantic release
     runs-on: ubuntu-latest
+
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     steps:
       - name: Git checkout
         uses: actions/checkout@v4
