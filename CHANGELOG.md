@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/sealos/agendash/compare/v1.0.0...v1.0.1) (2024-06-24)
+
+
+### Bug Fixes
+
+* trigger release ([56b3008](https://github.com/sealos/agendash/commit/56b300806f8cc1d68efdfc7d973f525c1642c28b))
+
 # 1.0.0 (2024-06-24)
 
 
