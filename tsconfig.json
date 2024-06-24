@@ -25,5 +25,8 @@
 		"declaration": true
 	},
 	"exclude": ["node_modules", "**/__tests__"],
-	"include": ["./lib"]
+	"include": [
+    "./lib",
+    "./dist"
+  ]
 }

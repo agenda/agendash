@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="standalone.ts" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="standalone.ts" working-dir="$PROJECT_DIR$">
+    <envs>
+      <env name="NODE_ENV" value="test" />
+      <env name="NODE_OPTIONS" value="--require ts-node/register" />
+    </envs>
+    <method v="2" />
+  </configuration>
+</component>

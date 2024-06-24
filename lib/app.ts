@@ -1,5 +1,5 @@
 import path from 'path';
-import express from 'express';
+import express, { Router } from 'express';
 import bodyParser from 'body-parser';
 
 import { AgendashController } from './controllers/agendash';
@@ -35,18 +35,18 @@ const csp = Object.entries(CSP)
   .join("; ")
 
 function expressMiddleware(agendash: AgendashController) {
-  const app = express();
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
+  const expressApp = express();
+  expressApp.use(bodyParser.json());
+  expressApp.use(bodyParser.urlencoded({ extended: false }));
 
-  app.use((req, res, next) => {
+  expressApp.use((req, res, next) => {
     res.header('Content-Security-Policy', csp);
     next();
   });
 
-  app.use('/', express.static(path.join(__dirname, '../../public')));
+  expressApp.use('/', express.static(path.join(__dirname, '../public')));
 
-  app.get('/api', async (request, response) => {
+  expressApp.get('/api', async (request, response) => {
     try {
       const {
         job,
@@ -78,7 +78,7 @@ function expressMiddleware(agendash: AgendashController) {
     }
   });
 
-  app.post('/api/jobs/requeue', async (request, response) => {
+  expressApp.post('/api/jobs/requeue', async (request, response) => {
     try {
       const newJobs = await agendash.requeueJobs(request.body.jobIds);
       response.send(newJobs);
@@ -87,7 +87,7 @@ function expressMiddleware(agendash: AgendashController) {
     }
   });
 
-  app.post('/api/jobs/delete', async (request, response) => {
+  expressApp.post('/api/jobs/delete', async (request, response) => {
     try {
       const body = request.body as { jobIds: string[] };
       const deleted = await agendash.deleteJobs(body.jobIds);
@@ -101,7 +101,7 @@ function expressMiddleware(agendash: AgendashController) {
     }
   });
 
-  app.post('/api/jobs/create', async (request, response) => {
+  expressApp.post('/api/jobs/create', async (request, response) => {
     try {
       const body = request.body as {
         jobName: string;
@@ -121,7 +121,7 @@ function expressMiddleware(agendash: AgendashController) {
     }
   });
 
-  return app;
+  return expressApp;
 }
 
 export default function Agendash(agenda: Agenda) {
