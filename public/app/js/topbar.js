@@ -1,24 +1,29 @@
 const topbar = Vue.component("topbar", {
   props: ["name", "state", "search", "property"],
-  data: () => ({
-    // search: '',
-    // property: 'data.id',
-    // name: '',
-    limit: 50,
-    skip: 0,
-    refresh: 30,
-    // state: '',
-    object: false,
-    stateobject: [
-      { text: "All", value: "", class: "" },
-      { text: "Scheduled", value: "scheduled", class: "" },
-      { text: "Queued", value: "queued", class: "text-primary" },
-      { text: "Running", value: "running", class: "text-warning" },
-      { text: "Completed", value: "completed", class: "text-success" },
-      { text: "Failed", value: "failed", class: "text-danger" },
-      { text: "Repeating", value: "repeating", class: "text-info" },
-    ],
-  }),
+  data: () => {
+    const url = new URL(window.location);
+    const limitParam = url.searchParams.get("limit");
+
+    return {
+      // search: '',
+      // property: 'data.id',
+      // name: '',
+      limit: limitParam ?? 100,
+      skip: 0,
+      refresh: 30,
+      // state: '',
+      object: false,
+      stateobject: [
+        { text: "All", value: "", class: "" },
+        { text: "Scheduled", value: "scheduled", class: "" },
+        { text: "Queued", value: "queued", class: "text-primary" },
+        { text: "Running", value: "running", class: "text-warning" },
+        { text: "Completed", value: "completed", class: "text-success" },
+        { text: "Failed", value: "failed", class: "text-danger" },
+        { text: "Repeating", value: "repeating", class: "text-info" },
+      ],
+    }
+  },
   methods: {
     submit() {
       this.$emit(

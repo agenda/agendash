@@ -1,33 +1,38 @@
 const app = Vue.component("app", {
-  data: () => ({
-    jobs: [],
-    overview: [],
-    refresh: 30,
-    showDetail: false,
-    pagenumber: 1,
-    totalPages: 0,
-    showConfirm: false,
-    showConfirmMulti: false,
-    showConfirmRequeue: false,
-    showConfirmRequeueMulti: false,
-    showNewJob: false,
-    jobData: {},
-    deletec: false,
-    requeuec: false,
-    pagesize: 50,
-    sendClean: false,
-    createc: false,
-    property: "",
-    search: "",
-    object: "",
-    newLimit: null,
-    skip: 0,
-    name: "",
-    state: "",
-    nameprop: "",
-    loading: false,
-    hideSlide: true,
-  }),
+  data: () => {
+    const url = new URL(window.location);
+    const jobType = url.searchParams.get("jobType");
+
+    return {
+      jobs: [],
+      overview: [],
+      refresh: 30,
+      showDetail: false,
+      pagenumber: 1,
+      totalPages: 0,
+      showConfirm: false,
+      showConfirmMulti: false,
+      showConfirmRequeue: false,
+      showConfirmRequeueMulti: false,
+      showNewJob: false,
+      jobData: {},
+      deletec: false,
+      requeuec: false,
+      pagesize: 50,
+      sendClean: false,
+      createc: false,
+      property: "",
+      search: "",
+      object: "",
+      newLimit: null,
+      skip: 0,
+      name: "",
+      state: jobType ?? "",
+      nameprop: "",
+      loading: false,
+      hideSlide: true,
+    }
+  },
   methods: {
     openNav() {
       document.getElementById("mySidebar").style.width = "100%";
@@ -67,6 +72,10 @@ const app = Vue.component("app", {
       this.showNewJob = true;
     },
     searchForm(name, search, property, limit, skip, refresh, state, object) {
+      const url = new URL(window.location);
+      url.searchParams.set("limit", limit);
+      window.history.replaceState({}, '', url);
+
       this.pagesize = limit ? limit : this.pagesize
         this.name = name
         this.search = search

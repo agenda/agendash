@@ -32,6 +32,9 @@ const sidebar = Vue.component("sidebar", {
             type,
             ""
           );
+          const url = new URL(window.location);
+          url.searchParams.set("jobType", type);
+          window.history.replaceState({}, '', url);
         } else {
           this.$emit(
             "search-sidebar",
