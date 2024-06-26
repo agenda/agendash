@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/sealos/agendash/compare/v1.0.4...v1.1.0) (2024-06-26)
+
+
+### Features
+
+* add query params ([#3](https://github.com/sealos/agendash/issues/3)) ([287612e](https://github.com/sealos/agendash/commit/287612e3022917668c9795c7a4ced8c5791256a8))
+
 ## [1.0.4](https://github.com/sealos/agendash/compare/v1.0.3...v1.0.4) (2024-06-24)
 
 
