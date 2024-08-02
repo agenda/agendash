@@ -63,7 +63,7 @@ const sidebar = Vue.component("sidebar", {
     },
   },
   template: `
-    <div class="col sidebar pt-4">
+    <div class="col sidebar pt-4 overflow-hidden">
       <div class="row">
         <div class="col ">
            <button data-toggle="modal" data-target="#modalNewJob" @click="$emit('new-job')" data-placement="top" title="Add a new job" class="btn btn-block btn-outline-success"><i class="oi oi-plus IcoInButton"></i> New Job</button>

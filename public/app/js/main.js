@@ -68,28 +68,28 @@ const app = Vue.component("app", {
     },
     searchForm(name, search, property, limit, skip, refresh, state, object) {
       this.pagesize = limit ? limit : this.pagesize
-        this.name = name
-        this.search = search
-        this.property = property
-        this.skip = skip
-        this.refresh = refresh
-        this.state = state
-        this.object = object ? object : this.object
+      this.name = name
+      this.search = search
+      this.property = property
+      this.skip = skip
+      this.refresh = refresh
+      this.state = state
+      this.object = object ? object : this.object
 
-        // Form changed, reset the pagination state
-        this.pagenumber = 1
-        this.totalPages = 1
+      // Form changed, reset the pagination state
+      this.pagenumber = 1
+      this.totalPages = 1
 
-        this.fetchData(
-          this.name,
-          this.search,
-          this.property,
-          this.pagesize,
-          this.skip,
-          this.refresh,
-          this.state,
-          this.object
-        );
+      this.fetchData(
+        this.name,
+        this.search,
+        this.property,
+        this.pagesize,
+        this.skip,
+        this.refresh,
+        this.state,
+        this.object
+      );
     },
     refreshData() {
       this.fetchData(
@@ -197,7 +197,7 @@ const app = Vue.component("app", {
   },
   template: `
 
-    <div class="container-fluid">
+    <div class="container-fluid min-vh-100">
       <div class="">
         <div class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
           <div class="d-flex">
@@ -207,7 +207,7 @@ const app = Vue.component("app", {
             <div class='d-md-none w-50'>
               <div id="mySidebar" class="sidebar-collapse" @click="closeNav()">
                 <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
-                <div v-if="hideSlide === false" class="bg-light overflow-auto">
+                <div v-if="hideSlide === false" class="bg-light overflow-auto" style="max-height:calc(100vh - 45px);min-height:calc(100vh - 45px)">
                   <sidebar
                     v-on:search-sidebar="searchForm"
                     v-on:new-job="newJob"
@@ -225,8 +225,8 @@ const app = Vue.component("app", {
           </div>
         </div>
       </div>
-      <div class="row pt-5">
-          <div v-if="hideSlide === true" class="col-md-2 d-none d-md-block bg-light overflow-auto">
+      <div class="row pt-5" style="height:calc(100vh - 50px)">
+          <div v-if="hideSlide === true" class="col-md-2 d-none d-md-block bg-light overflow-auto h-100 pb-3">
             <sidebar
               v-on:search-sidebar="searchForm"
               v-on:new-job="newJob"
@@ -236,7 +236,7 @@ const app = Vue.component("app", {
               >
             </sidebar>
           </div>
-          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 pt-3 pb-5">
+          <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 pt-3 pb-5 mh-100 overflow-auto">
             <div class="col-12">
               <topbar v-on:search-form="searchForm"
               :name='name'

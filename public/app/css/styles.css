@@ -42,13 +42,8 @@ body {
   overflow-y: hidden;
 }
 
-.sidebar, main {
-  max-height: calc(100vh - 45px);
-  overflow-y: scroll;
-}
-
 .joblist {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .sortable{
   float: right
