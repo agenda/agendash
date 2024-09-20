@@ -1,64 +1,85 @@
 #!/usr/bin/env node
 "use strict";
+
 const http = require("http");
-const { Agenda } = require("agenda");
+const { Agenda, DataSource } = require("@cawstudios/agenda");
 const agendash = require("../app");
 const express = require("express");
-const program = require("commander");
+const { Command } = require("commander");
+
+const program = new Command();
 
 program
-  .option(
-    "-d, --db <db>",
-    "[required] Mongo connection string, same as Agenda connection string"
-  )
-  .option(
-    "-c, --collection <collection>",
-    "[optional] Mongo collection, same as Agenda collection name, default agendaJobs",
-    "agendaJobs"
-  )
-  .option(
-    "-p, --port <port>",
-    "[optional] Server port, default 3000",
-    (n, d) => Number(n) || d,
-    3000
-  )
-  .option(
-    "-t, --title <title>",
-    "[optional] Page title, default Agendash",
-    "Agendash"
-  )
-  .option(
-    "-p, --path <path>",
-    "[optional] Path to bind Agendash to, default /",
-    "/"
-  )
+  .option("-t, --dataSourceType <type>", "Data source type (mongo or postgres)", /^(mongo|postgres)$/i)
+  .option("-d, --db <connection>", "DB connection string")
+  .option("-c, --collection <name>", "Mongo collection name", "agendaJobs")
+  .option("-p, --port <number>", "Server port", parseInt, 3000)
+  .option("-t, --title <string>", "Page title", "Agendash")
+  .option("-p, --path <path>", "Path to bind Agendash to", "/")
   .parse(process.argv);
 
-if (!program.db) {
+const options = program.opts();
+
+// Validation
+if (!options.dataSourceType) {
+  console.error("--dataSourceType required (mongo or postgres)");
+  process.exit(1);
+}
+
+if (!options.db) {
   console.error("--db required");
   process.exit(1);
 }
 
-if (!program.path.startsWith("/")) {
+if (!options.path.startsWith("/")) {
   console.error("--path must begin with /");
   process.exit(1);
 }
 
-const app = express();
+// DB Configuration
+const dbConfig = {
+  [DataSource.POSTGRES]: {
+    dataSource: DataSource.POSTGRES,
+    dataSourceOptions: { 
+      db: {
+        host: 'localhost',
+        port: 5432,
+        user: 'postgres',
+        password: 'root',
+        ssl: false,
+        database: 'celito-local'
+      }
+    }
+  },
+  [DataSource.MONGO]: {
+    dataSource: DataSource.MONGO,
+    dataSourceOptions: { db: { address: options.db, collection: options.collection } }
+  }
+}[options.dataSourceType];
 
-const agenda = new Agenda().database(program.db, program.collection);
-app.use(
-  program.path,
-  agendash(agenda, {
-    title: program.title,
-  })
-);
+if (!dbConfig) {
+  console.error("Unsupported data source");
+  process.exit(1);
+}
 
-app.set("port", program.port);
+// Setup and start server
+async function startServer() {
+  try {
+    const agenda = new Agenda();
+    await agenda.database(dbConfig);
 
-const server = http.createServer(app);
-server.listen(program.port, () => {
-  console.log(
-    `Agendash started http://localhost:${program.port}${program.path}`
-  );
-});
+    const app = express();
+    app.use(options.path, agendash(agenda, { title: options.title }));
+    app.set("port", options.port);
+
+    const server = http.createServer(app);
+    server.listen(options.port, () => {
+      console.log(`Agendash started http://localhost:${options.port}${options.path}`);
+    });
+  } catch (error) {
+    console.error("Failed to start Agendash:", error);
+    process.exit(1);
+  }
+}
+
+startServer();

@@ -10,15 +10,15 @@ const jobList = Vue.component("job-list", {
       var sortedJobs = this.jobs.sort((a, b) => {
         let displayA, displayB;
         if (this.currentSort === "name") {
-          displayA = a.job[this.currentSort]
-            ? a.job[this.currentSort].toLowerCase()
+          displayA = a[this.currentSort]
+            ? a[this.currentSort].toLowerCase()
             : "";
-          displayB = a.job[this.currentSort]
-            ? b.job[this.currentSort].toLowerCase()
+          displayB = a[this.currentSort]
+            ? b[this.currentSort].toLowerCase()
             : "";
         } else {
-          displayA = moment(a.job[this.currentSort]);
-          displayB = moment(b.job[this.currentSort]);
+          displayA = moment(a[this.currentSort]);
+          displayB = moment(b[this.currentSort]);
         }
         let modifier = 1;
         if (this.currentSortDir === "desc") modifier = -1;
@@ -29,8 +29,8 @@ const jobList = Vue.component("job-list", {
 
       /** Show recurring jobs first */
       return Array.prototype.concat(
-        sortedJobs.filter(job => job.repeating === true),
-        sortedJobs.filter(job => job.repeating === false),
+        sortedJobs.filter(job => !!job.repeatInterval),
+        sortedJobs.filter(job => !job.repeatInterval),
       )
     },
   },
@@ -74,10 +74,10 @@ const jobList = Vue.component("job-list", {
       }
     },
     toggleList(job) {
-      if (this.multijobs.includes(job.job._id)) {
-        this.multijobs.splice(this.multijobs.indexOf(job.job._id), 1);
+      if (this.multijobs.includes(job._id || job.id)) {
+        this.multijobs.splice(this.multijobs.indexOf(job._id || job.id), 1);
       } else {
-        this.multijobs.push(job.job._id);
+        this.multijobs.push(job._id || job.id);
       }
     },
   },
@@ -138,21 +138,21 @@ const jobList = Vue.component("job-list", {
           <tbody v-else>
             <tr v-for="job in sortedJobs">
                   <td width="10" class="mult-select">
-                    <input v-model="multijobs" :id='job.job._id' class="checkbox-triggerable" type="checkbox" :value="job.job._id"></input>
+                    <input v-model="multijobs" :id='job._id || job.id' class="checkbox-triggerable" type="checkbox" :value="job._id || job.id"></input>
                   </td>
                   <td th scope="row" class="job-name">
-                    <i v-if="job.repeating" class="oi oi-timer pill-own bg-info"><span>{{job.job.repeatInterval}}</span></i>
+                    <i v-if="job.repeating" class="oi oi-timer pill-own bg-info"><span>{{job.repeatInterval}}</span></i>
                     <i v-if="job.scheduled" class="pill-own bg-info pill-withoutIcon"><span>Scheduled</span></i>
                     <i v-if="job.completed" class="pill-own bg-success pill-withoutIcon"><span>Completed</span></i>
                     <i v-if="job.queued" class="pill-own bg-primary pill-withoutIcon"><span>Queued</span></i>
                     <i v-if="job.failed" class="pill-own bg-danger pill-withoutIcon"><span>Failed</span></i>
                     <i v-if="job.running" class="pill-own bg-warning pill-withoutIcon"><span>Running</span></i>
                   </td>
-                  <td class="job-name"  @click="toggleList(job)"> {{job.job.name}} </td>
-                  <td class="job-lastRunAt" :title="formatTitle(job.job.lastRunAt)" @click="toggleList(job)"> {{ formatDate(job.job.lastRunAt) }} </td>
-                  <td class="job-nextRunAt" :title="formatTitle(job.job.nextRunAt)" @click="toggleList(job)"> {{ formatDate(job.job.nextRunAt) }} </td>
-                  <td class="job-finishedAt" :title="formatTitle(job.job.lastFinishedAt)" @click="toggleList(job)"> {{ formatDate(job.job.lastFinishedAt) }} </td>
-                  <td class="job-lockedAt" :title="formatTitle(job.job.lockedAt)" @click="toggleList(job)"> {{ formatDate(job.job.lockedAt) }} </td>
+                  <td class="job-name"  @click="toggleList(job)"> {{job.name}} </td>
+                  <td class="job-lastRunAt" :title="formatTitle(job.lastRunAt)" @click="toggleList(job)"> {{ formatDate(job.lastRunAt) }} </td>
+                  <td class="job-nextRunAt" :title="formatTitle(job.nextRunAt)" @click="toggleList(job)"> {{ formatDate(job.nextRunAt) }} </td>
+                  <td class="job-finishedAt" :title="formatTitle(job.lastFinishedAt)" @click="toggleList(job)"> {{ formatDate(job.lastFinishedAt) }} </td>
+                  <td class="job-lockedAt" :title="formatTitle(job.lockedAt)" @click="toggleList(job)"> {{ formatDate(job.lockedAt) }} </td>
                   <td class="job-actions">
                     <i class="material-icons md-dark md-custom action-btn viewData text-primary" data-toggle="modal" data-target="#modalRequeueSure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
                     <i class="material-icons md-dark md-custom action-btn viewData text-success" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data">visibility</i>
@@ -169,11 +169,11 @@ const jobList = Vue.component("job-list", {
               <div class="card bg-light" >
                 <div class="card-header card-responsive-title-container">
                   <div class="card-responsive-name"  @click="toggleList(job)">
-                    {{job.job.name}}
+                    {{job.name}}
                   </div>
                   <div class="d-flex align-items-center">
                     <div class="card-responsive-status-title mr-2" style="font-size: 18px; display: flex; align-items: center">
-                      <input v-model="multijobs" :id='job.job._id' type="checkbox" :value="job.job._id" class="card-responsive-checkbox"></input>
+                      <input v-model="multijobs" :id='job._id' type="checkbox" :value="job._id" class="card-responsive-checkbox"></input>
                     </div>
                     <i class="material-icons md-dark md-custom action-btn viewData text-primary material-icons-size mr-1" data-toggle="modal" data-target="#modalRequeueSure" @click="$emit('confirm-requeue', job)" data-placement="left" title="Requeue">update</i>
                     <i class="material-icons md-dark md-custom action-btn viewData text-success material-icons-size mr-1" data-toggle="modal" data-target="#modalData" @click="$emit('show-job-detail', job)" data-placement="top" title="Job Data">visibility</i>
@@ -182,7 +182,7 @@ const jobList = Vue.component("job-list", {
                 </div>
                 <div class="card-body">
                   <div class="d-flex justify-content-center mb-2">
-                    <i v-if="job.repeating" class="oi oi-timer pill-own mr-2 bg-info pill-own-card"><span class="pill-own-card-info">{{job.job.repeatInterval}}</span></i>
+                    <i v-if="job.repeating" class="oi oi-timer pill-own mr-2 bg-info pill-own-card"><span class="pill-own-card-info">{{job.repeatInterval}}</span></i>
                     <i v-if="job.scheduled" class="pill-own mr-2 bg-info pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Scheduled</span></i>
                     <i v-if="job.completed" class="pill-own mr-2 bg-success pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Completed</span></i>
                     <i v-if="job.queued" class="pill-own mr-2 bg-primary pill-withoutIcon pill-own-card"><span class="pill-own-card-info">Queued</span></i>
@@ -194,28 +194,28 @@ const jobList = Vue.component("job-list", {
                       <div class="card-responsive-status-title">
                         Last run started
                       </div>
-                      <div class="mb-3" :title="formatTitle(job.job.lastRunAt)">
-                        {{ formatDate(job.job.lastRunAt) }}
+                      <div class="mb-3" :title="formatTitle(job.lastRunAt)">
+                        {{ formatDate(job.lastRunAt) }}
                       </div>
                       <div class="card-responsive-status-title">
                         Last finished
                       </div>
-                      <div :title="formatTitle(job.job.lastFinishedAt)">
-                        {{ formatDate(job.job.lastFinishedAt) }}
+                      <div :title="formatTitle(job.lastFinishedAt)">
+                        {{ formatDate(job.lastFinishedAt) }}
                       </div>
                     </div>
                     <div class="col col-md-6 text-center">
                       <div class="card-responsive-status-title">
                         Next run starts
                       </div>
-                      <div class="mb-3" :title="formatTitle(job.job.nextRunAt)">
-                        {{ formatDate(job.job.nextRunAt) }}
+                      <div class="mb-3" :title="formatTitle(job.nextRunAt)">
+                        {{ formatDate(job.nextRunAt) }}
                       </div>
                       <div class="card-responsive-status-title">
                         Locked
                       </div>
-                      <div :title="formatTitle(job.job.lockedAt)">
-                        {{ formatDate(job.job.lockedAt) || "-" }}
+                      <div :title="formatTitle(job.lockedAt)">
+                        {{ formatDate(job.lockedAt) || "-" }}
                       </div>
                     </div>
                   </div>

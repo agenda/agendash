@@ -26,11 +26,11 @@ const confirmRequeue = Vue.component("confirm-requeue", {
           </button>
         </div>
         <div class="modal-body">
-          <p>ID: {{job.job._id}}</p>
-          <p>Name: {{job.job.name}}</p>
+          <p>ID: {{job._id || job.id}}</p>
+          <p>Name: {{job.name}}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" data-dismiss="modal" @click="RequeueOne(job.job._id)">Requeue Job</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal" @click="RequeueOne(job._id || job.id)">Requeue Job</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
       </div>
