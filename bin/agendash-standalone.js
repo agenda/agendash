@@ -42,12 +42,7 @@ const dbConfig = {
     dataSource: DataSource.POSTGRES,
     dataSourceOptions: { 
       db: {
-        host: 'localhost',
-        port: 5432,
-        user: 'postgres',
-        password: 'root',
-        ssl: false,
-        database: 'celito-local'
+        connectionString: options.db
       }
     }
   },
