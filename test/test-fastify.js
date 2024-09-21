@@ -1,37 +1,35 @@
 const test = require("ava");
 const supertest = require("supertest");
 const Fastify = require("fastify");
-let Agenda = require("agenda");
-Agenda = Agenda.Agenda || Agenda;
+const { setupAgenda } = require("./helpers/test-setup");
 
-const agenda = new Agenda().database(
-  "mongodb://127.0.0.1/agendash-test-db",
-  "agendash-test-collection",
-  { useUnifiedTopology: true }
-);
-
-const fastify = Fastify();
-
-fastify.register(
-  require("../app")(agenda, {
-    middleware: "fastify",
-  })
-);
-
-const request = supertest(fastify.server);
-
-test.before.cb((t) => {
-  agenda.on("ready", () => {
-    t.end();
-  });
-});
+let agenda;
+let fastify;
+let request;
 
 test.before(async () => {
+  agenda = await setupAgenda()
+  
+  await agenda.start();
+  fastify = Fastify();
+
+  await fastify.register(
+    require("../app")(agenda, {
+      middleware: "fastify",
+    })
+  );
+
   await fastify.ready();
+  request = supertest(fastify.server);
+
 });
 
 test.beforeEach(async () => {
-  await agenda._collection.deleteMany({}, null);
+  await agenda.cancel({});
+});
+
+test.after.always(async () => {
+  await agenda.stop();
 });
 
 test.serial(
@@ -59,12 +57,8 @@ test.serial(
 
     t.true("created" in response.body);
 
-    agenda._collection.count({}, null, (error, result) => {
-      t.falsy(error);
-      if (result !== 1) {
-        throw new Error("Expected one document in database");
-      }
-    });
+    const jobCount = await agenda.jobs({});
+    t.is(jobCount.length, 1, "Expected one document in database");
   }
 );
 
@@ -83,8 +77,8 @@ test.serial("POST /api/jobs/delete should delete the job", async (t) => {
 
   t.true("deleted" in response.body);
 
-  const count = await agenda._collection.count({}, null);
-  t.is(count, 0);
+  const jobs = await agenda.jobs();
+  t.is(jobs.length, 0);
 });
 
 test.serial("POST /api/jobs/requeue should requeue the job", async (t) => {
@@ -102,6 +96,6 @@ test.serial("POST /api/jobs/requeue should requeue the job", async (t) => {
 
   t.false("newJobs" in response.body);
 
-  const count = await agenda._collection.count({}, null);
-  t.is(count, 2);
+  const jobs = await agenda.jobs();
+  t.is(jobs.length, 2);
 });
