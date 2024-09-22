@@ -22,6 +22,8 @@ jobs:
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT }}" >> .npmrc
       - run: npm cache clean --force
       - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PAT }}
       - run: npm test
 
   publish-gpr:
