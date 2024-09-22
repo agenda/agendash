@@ -15,6 +15,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      
+      - name: Create .npmrc
+        run: |
+          echo "PAT ${{ secrets.GH_PAT }}"
+          echo "@cawstudios:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT }}" >> .npmrc
       - run: npm ci
       - run: npm test
 
