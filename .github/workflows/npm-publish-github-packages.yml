@@ -22,18 +22,10 @@ jobs:
         run: |
           echo "@cawstudios:registry=https://npm.pkg.github.com" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT }}" >> .npmrc
-
-      - name: Clear npm cache
-        run: npm cache clean --force
-
-      - name: Install dependencies
-        run: |
-          npm config set registry https://npm.pkg.github.com
-          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT }}
-          npm ci --verbose
+      - run: npm cache clean --force
+      - run: npm ci --verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PAT }}
-
       - run: npm test
 
   publish-gpr:
