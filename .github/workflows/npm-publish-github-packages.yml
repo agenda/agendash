@@ -37,9 +37,8 @@ jobs:
       - name: Create .npmrc
         run: |
           echo "@cawstudios:registry=https://npm.pkg.github.com" > .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.MY_NPM_TOKEN }}" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT }}" >> .npmrc
 
       - run: npm publish --registry=https://npm.pkg.github.com
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MY_NPM_TOKEN: ${{ secrets.MY_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PAT }}
