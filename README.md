@@ -1,3 +1,12 @@
+> [!CAUTION]
+> **This repository has been archived.**
+> 
+> Agendash is now part of the Agenda monorepo: **https://github.com/agenda/agenda/tree/main/packages/agendash**
+> 
+> Please open all new issues and PRs in the main Agenda repository: https://github.com/agenda/agenda
+
+---
+
 # Agendash
 
 A Dashboard for [Agenda](https://github.com/agenda/agenda).
